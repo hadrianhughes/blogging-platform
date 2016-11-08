@@ -17,6 +17,7 @@
 {
     width: 15%;
     background-color: #fbfbfb;
+    margin: 0 auto;
 }
 
 #social-media-container
@@ -35,6 +36,27 @@
 }
 
 /* END OF MAIN PAGE LAYOUT */
+
+/* GLOBAL ELEMENT ATTRIBUTES */
+button
+{
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #eaeaea;
+    padding: 15px;
+    width: 100%;
+}
+
+button:hover
+{
+    box-shadow: 0 0 3px 2px #e3f7bb;
+}
+
+button:focus
+{
+    outline: 0;
+}
+/* END OF GLOBAL ELEMENT ATTRIBUTES */
 
 /* CLASSES */
 
@@ -106,18 +128,3 @@
     bottom: 0;
 }
 /* END OF SOCIAL MEDIA BAR */
-
-/* ARCHIVE BAR */
-#btnChooseMonth
-{
-    width: 100%;
-}
-
-#dropDownMenu
-{
-    width: 100%;
-    
-    background-color: #e3f7bb;
-    border-radius: 10px;
-}
-/* END OF ARCHIVE BAR */

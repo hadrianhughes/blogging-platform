@@ -1,0 +1,29 @@
+#archiveApp div > *
+{
+    margin-bottom: 3%;
+}
+
+#archiveApp ul
+{
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #eaeaea;
+    width: 100%;
+    
+    list-style-type: none;
+}
+
+#archiveApp li
+{
+    padding: 2% 0 2% 0;
+}
+
+#archiveApp li:hover
+{
+    background-color: #e3f7bb;
+}
+
+#archiveApp button
+{
+    margin-right: auto;
+}
