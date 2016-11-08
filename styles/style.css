@@ -106,3 +106,18 @@
     bottom: 0;
 }
 /* END OF SOCIAL MEDIA BAR */
+
+/* ARCHIVE BAR */
+#btnChooseMonth
+{
+    width: 100%;
+}
+
+#dropDownMenu
+{
+    width: 100%;
+    
+    background-color: #e3f7bb;
+    border-radius: 10px;
+}
+/* END OF ARCHIVE BAR */
