@@ -4,12 +4,18 @@ export default class OptionList extends React.Component
 {
     render()
     {
-        let list = this.props.items.map((item) => <li key={item.id}>{item.value}</li>);
-        
-        return(
-            <ul>
-                {list}
-            </ul>
-        );
+        let list = this.props.items.map((item) => <li key={item.id}><a href="#" onClick={this.props.onClick}>{item.value}</a></li>);
+
+        let retVal;
+        if(this.props.active)
+        {
+            retVal = <ul className="active border" id="monthList">{list}</ul>
+        }
+        else
+        {
+            retVal = <ul id="monthList"></ul>
+        }
+
+        return(retVal);
     }
 }
