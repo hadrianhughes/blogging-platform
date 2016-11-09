@@ -14,11 +14,12 @@ export default class Archive extends React.Component
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
+        this.handlePostClick = this.handlePostClick.bind(this);
     }
 
     componentDidMount()
     {
-        //Get data from server here
+        //Get month list from server
         $.get('/getMonths', function(data)
         {
             let counter = 0;
@@ -31,7 +32,8 @@ export default class Archive extends React.Component
             this.setState({ months: months });
         }.bind(this));
 
-        $.get('/getPosts', { month: this.state.currentMonth }, function(data)
+        //Get post list from server based on current month
+        $.get('/getPostList', { month: this.state.currentMonth }, function(data)
         {
             let counter = 0;
             let posts = data.map(function(post)
@@ -43,7 +45,7 @@ export default class Archive extends React.Component
             this.setState({ posts: posts });
         }.bind(this));
 
-        this.setState({ currentMonth: 'January 2016' });
+        this.setState({ currentMonth: 'January 2016' }); //Change this for a get request to get default month
     }
 
     handleButtonClick()
@@ -57,7 +59,7 @@ export default class Archive extends React.Component
     {
         this.setState({ currentMonth: e.target.text });
 
-        $.get('/getPosts', { month: e.target.text }, function(data)
+        $.get('/getPostList', { month: e.target.text }, function(data)
         {
             let counter = 0;
             let posts = data.map(function(post)
@@ -69,6 +71,11 @@ export default class Archive extends React.Component
             this.setState({ posts: posts });
         }.bind(this));
     }
+    
+    handlePostClick(e)
+    {
+        console.log(e);
+    }
 
     render()
     {
@@ -76,7 +83,7 @@ export default class Archive extends React.Component
             <div>
                 <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
                 <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
-                <PostList items={this.state.posts} />
+                <PostList onClick={this.handlePostClick} items={this.state.posts} />
             </div>
         );
     }

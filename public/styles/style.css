@@ -2,6 +2,8 @@
 {
     margin: 0;
     padding: 0;
+    
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
 /* MAIN PAGE LAYOUT */
@@ -23,10 +25,12 @@
 #social-media-container
 {
     border-right: 1px solid #eaeaea;
+    overflow-y: auto;
 }
 #archive-container
 {
     border-left: 1px solid #eaeaea;
+    overflow-y: auto;
 }
 
 #content-container
@@ -34,7 +38,6 @@
     background-color: white;
     margin: 0 auto;
 }
-
 /* END OF MAIN PAGE LAYOUT */
 
 /* GLOBAL ELEMENT ATTRIBUTES */
@@ -61,10 +64,14 @@ button:focus
 {
     outline: 0;
 }
+
+button:active
+{
+    background-color: #f6f6f6;
+}
 /* END OF GLOBAL ELEMENT ATTRIBUTES */
 
 /* CLASSES */
-
 .center-text
 {
     text-align: center;
@@ -89,7 +96,6 @@ button:focus
 {
     vertical-align: top;
 }
-
 /* END OF CLASSES */
 
 /* CONTENT */
@@ -108,28 +114,3 @@ button:focus
     background-position: center;
 }
 /* END OF CONTENT */
-
-/* SOCIAL MEDIA BAR */
-#about
-{
-    max-height: 30%;
-}
-
-#photo > img
-{
-    width: 10vw;
-    height: 10vw;
-}
-
-#bio
-{
-    height: 30vh;
-    overflow-y: auto;
-}
-
-#footer
-{
-    position: absolute;
-    bottom: 0;
-}
-/* END OF SOCIAL MEDIA BAR */
