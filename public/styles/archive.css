@@ -29,9 +29,11 @@
     background-color: #e3f7bb;
 }
 
-#archiveApp button
+#btnDate
 {
     margin-right: auto;
+    width: 100%;
+    padding: 15px;
 }
 
 #archiveApp a
@@ -45,7 +47,7 @@
     width: 95%;
     height: 20%;
     max-width: 100%;
-    
+
     text-align: left;
 }
 
@@ -58,6 +60,22 @@
 #commentsBox li
 {
     padding: 4%;
+}
+
+#commentsBox div
+{
+    width: 100%;
+}
+
+#commentsBox div textarea
+{
+    width: 70%;
+}
+
+#commentsBox div button
+{
+    width: 25%;
+    padding: 5px;
 }
 /* END OF ELEMENTS */
 

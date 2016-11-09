@@ -12,7 +12,7 @@ export default class CommentsBox extends React.Component
             <div id="commentsBox">
                 <h4>Comments</h4>
                 <ul className="border">{items}</ul>
-                <InputBox />
+                <InputBox onSubmit={(comment) => this.props.onSendComment(comment)} />
             </div>
         );
     }

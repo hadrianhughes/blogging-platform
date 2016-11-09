@@ -16,6 +16,7 @@ export default class Archive extends React.Component
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
         this.handlePostClick = this.handlePostClick.bind(this);
+        this.sendComment = this.sendComment.bind(this);
     }
 
     componentDidMount()
@@ -78,6 +79,11 @@ export default class Archive extends React.Component
         //Load selected article
     }
 
+    sendComment(comment)
+    {
+        console.log(comment);
+    }
+
     render()
     {
         return(
@@ -85,7 +91,7 @@ export default class Archive extends React.Component
                 <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
                 <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
                 <PostList onClick={this.handlePostClick} items={this.state.posts} />
-                <CommentsBox items={this.state.comments} />
+                <CommentsBox items={this.state.comments} onSendComment={(comment) => this.sendComment(comment)} />
             </div>
         );
     }

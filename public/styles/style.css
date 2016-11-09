@@ -2,7 +2,7 @@
 {
     margin: 0;
     padding: 0;
-    
+
     font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
@@ -43,9 +43,6 @@
 /* GLOBAL ELEMENT ATTRIBUTES */
 button
 {
-    width: 100%;
-    padding: 15px;
-
     background-color: white;
     border: 1px solid #eaeaea;
     border-radius: 10px;
@@ -53,6 +50,7 @@ button
     transition: all 0.2s linear;
 
     font-size: 18px;
+    text-align: center;
 }
 
 button:hover
