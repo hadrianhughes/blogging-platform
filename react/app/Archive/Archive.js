@@ -3,6 +3,7 @@ import React from 'react';
 import Button from './Button';
 import OptionList from './OptionList';
 import PostList from './PostList';
+import CommentsBox from './CommentsBox';
 
 export default class Archive extends React.Component
 {
@@ -10,7 +11,7 @@ export default class Archive extends React.Component
     {
         super();
 
-        this.state = { listOpen: false, currentMonth: '', months: [], posts: [] };
+        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], comments: [{ id: 1, author: 'Joe Bloggs', comment: 'Hello world' }, { id: 2, author: 'Jane Doe', comment: 'Lorem ipsum' }, { id: 3, author: 'John Smith', comment: 'Blah blah' }] };
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
@@ -74,7 +75,7 @@ export default class Archive extends React.Component
     
     handlePostClick(e)
     {
-        console.log(e);
+        //Load selected article
     }
 
     render()
@@ -84,6 +85,7 @@ export default class Archive extends React.Component
                 <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
                 <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
                 <PostList onClick={this.handlePostClick} items={this.state.posts} />
+                <CommentsBox items={this.state.comments} />
             </div>
         );
     }
