@@ -3,7 +3,7 @@ import React from 'react';
 import Button from './Button';
 import OptionList from './OptionList';
 import PostList from './PostList';
-import CommentsBox from './CommentsBox';
+import CommentsBox from './CommentsBox/CommentsBox';
 
 export default class Archive extends React.Component
 {
@@ -72,7 +72,7 @@ export default class Archive extends React.Component
             this.setState({ posts: posts });
         }.bind(this));
     }
-    
+
     handlePostClick(e)
     {
         //Load selected article
