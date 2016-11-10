@@ -74,12 +74,16 @@
     width: 25%;
 }
 
+#commentsBox p
+{
+    font-size: 14px;
+    font-style: italic;
+}
+
 #commentInput
 {
     width: 70%;
 }
-
-
 /* END OF ELEMENTS */
 
 /* CLASSES */
