@@ -26,7 +26,7 @@ export default class InputBox extends React.Component
     {
         return(
             <form>
-                <input id="commentInput" type="text" onChange={this.handleChange} />
+                <input className="textInput" id="commentInput" type="text" onChange={this.handleChange} />
                 <input className="button" type="button" onClick={this.sendComment} value="Send" />
             </form>
         );
