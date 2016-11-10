@@ -15,7 +15,7 @@ export default class CommentsBox extends React.Component
     
     handleChange(length)
     {
-        var newVal = this.state.charLimit - length;
+        let newVal = this.state.charLimit - length;
         this.setState({ remainingChars: newVal });
     }
     

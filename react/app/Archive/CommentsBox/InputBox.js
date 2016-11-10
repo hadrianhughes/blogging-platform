@@ -25,11 +25,24 @@ export default class InputBox extends React.Component
 
     render()
     {
+        let colorActive = false;
+        let pColor;
+        if(this.props.remainingChars < 1)
+        {
+            pColor = 'red';
+            colorActive = true;
+        }
+        else if(this.props.remainingChars < 20)
+        {
+            colorActive = true;
+            pColor = 'orange';
+        }
+        
         return(
             <form>
                 <input className="textInput" id="commentInput" type="text" onChange={this.handleChange} />
                 <input className="button" type="button" onClick={this.sendComment} value="Send" />
-                <p>{this.props.remainingChars}</p>
+                {colorActive ? <p className={pColor}>{this.props.remainingChars}</p> : <p>{this.props.remainingChars}</p>}
             </form>
         );
     }
