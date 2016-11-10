@@ -5,7 +5,7 @@ export default class Button extends React.Component
     render()
     {
         return(
-            <button id="btnDate" onClick={this.props.onClick}>{this.props.month}</button>
+            <button className="button" id="btnDate" onClick={this.props.onClick}>{this.props.month}</button>
         );
     }
 }

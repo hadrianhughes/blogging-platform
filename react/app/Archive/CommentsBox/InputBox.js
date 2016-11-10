@@ -25,10 +25,10 @@ export default class InputBox extends React.Component
     render()
     {
         return(
-            <div>
-                <textarea rows="3" cols="10" onChange={this.handleChange} />
-                <button onClick={this.sendComment}>Send</button>
-            </div>
+            <form>
+                <input id="commentInput" type="text" onChange={this.handleChange} />
+                <input className="button" type="button" onClick={this.sendComment} value="Send" />
+            </form>
         );
     }
 }
