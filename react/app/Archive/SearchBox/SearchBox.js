@@ -12,15 +12,15 @@ export default class SearchBox extends React.Component
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    handleSubmit()
+    handleSubmit(value)
     {
-        console.log('submitted');
+        console.log(value);
     }
     
     render()
     {
         return(
-            <Form onSubmit={this.handleSubmit} />
+            <Form onSubmit={(value) => this.handleSubmit(value)} />
             /*<ResultsList />*/
         );
     }

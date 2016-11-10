@@ -18,6 +18,7 @@ export default class Archive extends React.Component
         this.handleMonthClick = this.handleMonthClick.bind(this);
         this.handlePostClick = this.handlePostClick.bind(this);
         this.sendComment = this.sendComment.bind(this);
+        this.addKeys = this.addKeys.bind(this);
     }
 
     componentDidMount()
@@ -25,25 +26,15 @@ export default class Archive extends React.Component
         //Get month list from server
         $.get('/getMonths', function(data)
         {
-            let counter = 0;
-            let months = data.map(function(date)
-            {
-                counter++;
-                return { id: counter, month: date.month, year: date.year };
-            });
-
+            let months = this.addKeys(data);
+            
             this.setState({ months: months });
         }.bind(this));
 
         //Get post list from server based on current month
         $.get('/getPostList', { month: this.state.currentMonth }, function(data)
         {
-            let counter = 0;
-            let posts = data.map(function(post)
-            {
-                counter++;
-                return { id: counter, articleId: post.id, name: post.name };
-            });
+            let posts = this.addKeys(data);
 
             this.setState({ posts: posts });
         }.bind(this));
@@ -64,12 +55,7 @@ export default class Archive extends React.Component
 
         $.get('/getPostList', { month: e.target.text }, function(data)
         {
-            let counter = 0;
-            let posts = data.map(function(post)
-            {
-                counter++;
-                return { id: counter, articleId: post.id, name: post.name };
-            });
+            let posts = this.addKeys(data);
 
             this.setState({ posts: posts });
         }.bind(this));
@@ -83,6 +69,19 @@ export default class Archive extends React.Component
     sendComment(comment)
     {
         console.log(comment);
+    }
+    
+    addKeys(set)
+    {
+        let counter = 0;
+        let retSet = set.map(function(item)
+        {
+            counter++;
+            item.id = counter;
+            return item;
+        });
+        
+        return retSet;
     }
 
     render()
