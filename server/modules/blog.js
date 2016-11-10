@@ -1,5 +1,6 @@
 var blog = {};
 
+/* FUNCTIONS TO BE EXPORTED */
 blog.getMonths = function(db, callback)
 {
     try
@@ -67,7 +68,9 @@ blog.getMonths = function(db, callback)
         callback();
     }
 }
+/* END OF FUNCTIONS TO BE EXPORTED */
 
+/* FUNCTIONS USED INTERNALLY */
 function sortMonths(months, callback)
 {
     var monthList = months;
@@ -133,5 +136,6 @@ function sortMonths(months, callback)
     
     callback(retArray);
 }
+/* END OF INTERNAL FUNCTIONS */
 
 module.exports = blog;
