@@ -25,10 +25,10 @@ export default class Archive extends React.Component
         $.get('/getMonths', function(data)
         {
             let counter = 0;
-            let months = data.map(function(month)
+            let months = data.map(function(date)
             {
                 counter++;
-                return { id: counter, value: month };
+                return { id: counter, month: date.month, year: date.year };
             });
 
             this.setState({ months: months });

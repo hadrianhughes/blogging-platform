@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
 //Import other modules
+var blog = require('./modules/blog');
 
 //Set up modules
 app.use(bodyParser.json());
@@ -45,9 +46,11 @@ app.get('/', function(req, res)
 
 app.get('/getMonths', function(req, res)
 {
-    var months = ['January 2016', 'December 2015', 'November 2015'];
-
-    res.send(months);
+    //Get list of months for posts
+    blog.getMonths(database, function(months)
+    {
+        res.send(months);
+    });
 });
 
 app.get('/getPostList', function(req, res)
