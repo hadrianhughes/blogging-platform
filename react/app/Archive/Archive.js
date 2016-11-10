@@ -71,11 +71,15 @@ export default class Archive extends React.Component
         console.log(comment);
     }
     
+    //For sets of items to be put into a list
     addKeys(set)
     {
         let counter = 0;
+        
+        //For each item in the set
         let retSet = set.map(function(item)
         {
+            //Give it an id value equal to counter
             counter++;
             item.id = counter;
             return item;
