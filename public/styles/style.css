@@ -85,10 +85,11 @@
     background-color: white;
     border: 1px solid #eaeaea;
     border-radius: 10px;
+    padding: 2%;
 
     transition: all 0.2s linear;
 
-    font-size: 18px;
+    font-size: 14px;
     text-align: center;
 }
 

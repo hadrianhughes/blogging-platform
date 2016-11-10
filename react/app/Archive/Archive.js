@@ -4,6 +4,7 @@ import Button from './Button';
 import OptionList from './OptionList';
 import PostList from './PostList';
 import CommentsBox from './CommentsBox/CommentsBox';
+import SearchBox from './SearchBox/Searchbox';
 
 export default class Archive extends React.Component
 {
@@ -88,6 +89,7 @@ export default class Archive extends React.Component
     {
         return(
             <div>
+                <SearchBox />
                 <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
                 <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
                 <PostList onClick={this.handlePostClick} items={this.state.posts} />
