@@ -3,8 +3,14 @@ import ReactDOM from 'react-dom';
 
 import Archive from './Archive/Archive';
 
-var archiveApp = document.getElementById('archiveApp');
-if(archiveApp)
+//Add all elements and apps to this array
+let elementList = [{ element: 'archiveApp', component: <Archive /> }];
+
+for(let i = 0;i < elementList.length;i++)
 {
-    ReactDOM.render(<Archive />, archiveApp);
+    let element = document.getElementById(elementList[i].element);
+    if(element)
+    {
+        ReactDOM.render(elementList[i].component, element);
+    }
 }
