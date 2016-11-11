@@ -12,13 +12,15 @@ export default class Archive extends React.Component
     {
         super();
 
-        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], comments: [{ id: 1, author: 'Joe Bloggs', comment: 'Hello world' }, { id: 2, author: 'Jane Doe', comment: 'Lorem ipsum' }, { id: 3, author: 'John Smith', comment: 'Blah blah' }] };
+        this.state = { listOpen: false, searchOpen: false, currentMonth: '', months: [], posts: [], comments: [{ id: 1, author: 'Joe Bloggs', comment: 'Hello world' }, { id: 2, author: 'Jane Doe', comment: 'Lorem ipsum' }, { id: 3, author: 'John Smith', comment: 'Blah blah' }], searchResults: [] };
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
         this.handlePostClick = this.handlePostClick.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
         this.sendComment = this.sendComment.bind(this);
         this.addKeys = this.addKeys.bind(this);
+        this.closeSearch = this.closeSearch.bind(this);
     }
 
     componentDidMount()
@@ -71,6 +73,21 @@ export default class Archive extends React.Component
         console.log(comment);
     }
     
+    handleSearch(value)
+    {
+        $.get('/search', { query: value }, function(data)
+        {
+            let results = this.addKeys(data);
+            
+            this.setState({ searchResults: results, searchOpen: true });
+        }.bind(this));
+    }
+    
+    closeSearch()
+    {
+        this.setState({ searchOpen: false });
+    }
+    
     //For sets of items to be put into a list
     addKeys(set)
     {
@@ -92,10 +109,13 @@ export default class Archive extends React.Component
     {
         return(
             <div>
-                <SearchBox />
-                <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
-                <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
-                <PostList onClick={this.handlePostClick} items={this.state.posts} />
+                <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={this.state.searchOpen ? this.closeSearch : (value) => this.handleSearch(value)} />
+                <div>
+                    <h4>Archive</h4>
+                    <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
+                    <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
+                    <PostList onClick={this.handlePostClick} items={this.state.posts} />
+                </div>
                 <CommentsBox items={this.state.comments} onSendComment={(comment) => this.sendComment(comment)} />
             </div>
         );

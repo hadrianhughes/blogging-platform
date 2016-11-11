@@ -67,7 +67,12 @@ blog.getMonths = function(db, callback)
         console.log(ex);
         callback();
     }
-}
+};
+
+blog.searchPosts = function(db, query, callback)
+{
+    callback();
+};
 /* END OF FUNCTIONS TO BE EXPORTED */
 
 /* FUNCTIONS USED INTERNALLY */

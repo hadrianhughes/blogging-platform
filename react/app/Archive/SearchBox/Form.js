@@ -27,7 +27,7 @@ export default class Form extends React.Component
         return(
             <form id="searchForm">
                 <input id="searchInput" className="textInput" type="text" onChange={this.handleChange} />
-                <input className="button" type="button" onClick={this.handleClick} value="Search" />
+                <input id="btnSearch" className="button" type="button" onClick={this.handleClick} value={this.props.active ? 'Close' : 'Search'} />
             </form>
         );
     }

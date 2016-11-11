@@ -38,7 +38,7 @@ var server = app.listen(app.get('port'), function()
     console.log('Listening on port ' + port + '...');
 });
 
-//Gets
+/* GETS */
 app.get('/', function(req, res)
 {
     res.sendFile('index.html');
@@ -65,4 +65,12 @@ app.get('/getPostList', function(req, res)
     }
 
     res.send(posts);
+});
+
+app.get('/search', function(req, res)
+{
+    blog.searchPosts(database, req.query.query, function(results)
+    {
+        res.send([{ id: 32, name: 'Example 1' }, { id: 80, name: 'Example 2' }]);
+    });
 });

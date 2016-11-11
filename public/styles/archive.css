@@ -7,6 +7,11 @@
     height: 100%;
 }
 
+#archiveApp > div > div
+{
+    margin-bottom: 10%;
+}
+
 #archiveApp div > *
 {
     margin-bottom: 3%;
@@ -45,13 +50,16 @@
     text-decoration: none;
 }
 
+#archiveApp h4
+{
+    text-align: left;
+}
+
 #commentsBox
 {
     width: 100%;
     height: 20%;
     max-width: 100%;
-
-    text-align: left;
 }
 
 #commentsBox ul

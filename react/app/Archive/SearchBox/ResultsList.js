@@ -4,7 +4,7 @@ export default class ResultsList extends React.Component
 {
     render()
     {
-        let items = this.props.results.map((result) => <li key={result.id}>{result.name}</li>);
+        let items = this.props.items.map((result) => <li key={result.id}>{result.name}</li>);
         
         let retVal;
         if(this.props.active)

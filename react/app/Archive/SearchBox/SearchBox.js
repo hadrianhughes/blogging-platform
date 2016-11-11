@@ -5,26 +5,13 @@ import ResultsList from './ResultsList';
 
 export default class SearchBox extends React.Component
 {
-    constructor()
-    {
-        super();
-        
-        this.state = { results: [] };
-        
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    
-    handleSubmit(value)
-    {
-        console.log(value);
-    }
-    
     render()
     {
         return(
             <div>
-                <Form onSubmit={(value) => this.handleSubmit(value)} />
-                <ResultsList results={this.state.results} />
+                <h4>Search</h4>
+                <Form active={this.props.active} onSubmit={(value) => this.props.onSubmit(value)} />
+                <ResultsList items={this.props.results} active={this.props.active} />
             </div>
         );
     }
