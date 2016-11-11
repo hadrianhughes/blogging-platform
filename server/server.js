@@ -80,3 +80,11 @@ app.get('/loadPost', function(req, res)
 {
     //blog.loadPost(database, id, callback)
 });
+/* END OF GETS */
+
+/* POSTS */
+app.post('/sendComment', function(req, res)
+{
+    //blog.sendComment(database, postID, comment, callback)
+});
+/* END OF POSTS */

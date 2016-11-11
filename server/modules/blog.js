@@ -92,6 +92,13 @@ blog.loadPost = function(db, id, callback)
         //Find post with selected ID
     //Callback
 };
+
+blog.sendComment = function(db, id, comment, callback)
+{
+    //Find post in database with selected ID
+        //If it exists, push the comment into the comments array
+    //Callback
+}
 /* END OF FUNCTIONS TO BE EXPORTED */
 
 /* FUNCTIONS USED INTERNALLY */
