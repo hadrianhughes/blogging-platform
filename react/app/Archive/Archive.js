@@ -29,7 +29,7 @@ export default class Archive extends React.Component
         $.get('/getMonths', function(data)
         {
             let months = this.addKeys(data);
-            
+
             this.setState({ months: months, currentMonth: this.makeMonth(months[0]) });
         }.bind(this));
 
@@ -71,22 +71,22 @@ export default class Archive extends React.Component
     {
         //Sanitize comment and send to server
     }
-    
+
     handleSearch(value)
     {
         $.get('/search', { query: value }, function(data)
         {
             let results = this.addKeys(data);
-            
+
             this.setState({ searchResults: results, searchOpen: true });
         }.bind(this));
     }
-    
+
     //For sets of items to be put into a list
     addKeys(set)
     {
         let counter = 0;
-        
+
         //For each item in the set
         let retSet = set.map(function(item)
         {
@@ -95,20 +95,30 @@ export default class Archive extends React.Component
             item.id = counter;
             return item;
         });
-        
+
         return retSet;
     }
-    
+
     makeMonth(value)
     {
         //List of all months of year
         const possibleMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-        //Line up month integer value with respective index in possibleMonths
-        let month = possibleMonths[value.month - 1];
-        
-        //Make string out of month and year and return it
-        return month + ' ' + value.year;
+        let retVal;
+        if(value)
+        {
+            //Line up month integer value with respective index in possibleMonths
+            let month = possibleMonths[value.month - 1];
+
+            //Make string out of month and year and return it
+            retVal = month + ' ' + value.year;
+        }
+        else
+        {
+            retVal = value;
+        }
+
+        return retVal;
     }
 
     render()
@@ -120,10 +130,10 @@ export default class Archive extends React.Component
             months[i] = {};
             months[i].value = this.makeMonth(this.state.months[i]);
         }
-        
+
         //Add keys to months array
         let monthOptions = this.addKeys(months);
-        
+
         return(
             <div>
                 <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} />

@@ -3,4 +3,8 @@ import ReactDOM from 'react-dom';
 
 import Archive from './Archive/Archive';
 
-ReactDOM.render(<Archive />, document.getElementById('archiveApp'));
+var archiveApp = document.getElementById('archiveApp');
+if(archiveApp)
+{
+    ReactDOM.render(<Archive />, archiveApp);
+}
