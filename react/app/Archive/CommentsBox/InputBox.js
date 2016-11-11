@@ -40,7 +40,7 @@ export default class InputBox extends React.Component
         
         return(
             <form>
-                <input className="textInput" id="commentInput" type="text" onChange={this.handleChange} placeholder="Leave a comment..." />
+                <input className="textInput" id="commentInput" type="text" placeholder="Leave a comment..." onChange={this.handleChange} />
                 <input className="button" type="button" onClick={this.sendComment} value="Send" />
                 {colorActive ? <p className={pColor}>{this.props.remainingChars}</p> : <p>{this.props.remainingChars}</p>}
             </form>

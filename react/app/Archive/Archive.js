@@ -12,7 +12,7 @@ export default class Archive extends React.Component
     {
         super();
 
-        this.state = { listOpen: false, searchOpen: false, currentMonth: '', months: [], posts: [], comments: [{ id: 1, author: 'Joe Bloggs', comment: 'Hello world' }, { id: 2, author: 'Jane Doe', comment: 'Lorem ipsum' }, { id: 3, author: 'John Smith', comment: 'Blah blah' }], searchResults: [] };
+        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], comments: [{ id: 1, author: 'Joe Bloggs', comment: 'Hello world' }, { id: 2, author: 'Jane Doe', comment: 'Lorem ipsum' }, { id: 3, author: 'John Smith', comment: 'Blah blah' }], searchResults: [] };
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
@@ -20,7 +20,6 @@ export default class Archive extends React.Component
         this.handleSearch = this.handleSearch.bind(this);
         this.sendComment = this.sendComment.bind(this);
         this.addKeys = this.addKeys.bind(this);
-        this.closeSearch = this.closeSearch.bind(this);
     }
 
     componentDidMount()
@@ -83,11 +82,6 @@ export default class Archive extends React.Component
         }.bind(this));
     }
     
-    closeSearch()
-    {
-        this.setState({ searchOpen: false });
-    }
-    
     //For sets of items to be put into a list
     addKeys(set)
     {
@@ -109,7 +103,7 @@ export default class Archive extends React.Component
     {
         return(
             <div>
-                <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={this.state.searchOpen ? this.closeSearch : (value) => this.handleSearch(value)} />
+                <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} />
                 <div>
                     <h4>Archive</h4>
                     <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
