@@ -69,9 +69,28 @@ blog.getMonths = function(db, callback)
     }
 };
 
+blog.getPosts = function(db, month, callback)
+{
+    //Query database
+        //Find all posts published on the selected month
+    //Put all into array
+    //Callback
+};
+
 blog.searchPosts = function(db, query, callback)
 {
-    callback();
+    //Query database
+        //Find all posts with tags matching the query
+        //Find all posts which contain the query in their name
+    //Add all to array
+    //Callback
+};
+
+blog.loadPost = function(db, id, callback)
+{
+    //Query database
+        //Find post with selected ID
+    //Callback
 };
 /* END OF FUNCTIONS TO BE EXPORTED */
 

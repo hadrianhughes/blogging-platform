@@ -55,6 +55,7 @@ app.get('/getMonths', function(req, res)
 
 app.get('/getPostList', function(req, res)
 {
+    //blog.getPosts(database, month, callback)
     if(req.query.month == 'January 2016')
     {
         var posts = [{ id: 32, name: 'Example 1' }, { id: 21, name: 'Example 2' }, { id: 3, name: 'Example 3' }];
@@ -73,4 +74,9 @@ app.get('/search', function(req, res)
     {
         res.send([{ id: 32, name: 'Example 1' }, { id: 80, name: 'Example 2' }]);
     });
+});
+
+app.get('/loadPost', function(req, res)
+{
+    //blog.loadPost(database, id, callback)
 });
