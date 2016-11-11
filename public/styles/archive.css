@@ -50,7 +50,8 @@
     text-decoration: none;
 }
 
-#archiveApp h4
+#archiveApp h4,
+#commentsBox
 {
     text-align: left;
 }

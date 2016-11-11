@@ -9,7 +9,6 @@ export default class SearchBox extends React.Component
     {
         return(
             <div>
-                <h4>Search</h4>
                 <Form active={this.props.active} onSubmit={(value) => this.props.onSubmit(value)} />
                 <ResultsList items={this.props.results} active={this.props.active} />
             </div>
