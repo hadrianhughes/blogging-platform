@@ -20,6 +20,7 @@ export default class Archive extends React.Component
         this.handleSearch = this.handleSearch.bind(this);
         this.sendComment = this.sendComment.bind(this);
         this.addKeys = this.addKeys.bind(this);
+        this.makeMonth = this.makeMonth.bind(this);
     }
 
     componentDidMount()
@@ -29,7 +30,7 @@ export default class Archive extends React.Component
         {
             let months = this.addKeys(data);
             
-            this.setState({ months: months });
+            this.setState({ months: months, currentMonth: this.makeMonth(months[0]) });
         }.bind(this));
 
         //Get post list from server based on current month
@@ -39,12 +40,11 @@ export default class Archive extends React.Component
 
             this.setState({ posts: posts });
         }.bind(this));
-
-        this.setState({ currentMonth: 'January 2016' }); //Change this for a get request to get default month
     }
 
     handleButtonClick()
     {
+        //Toggle listOpen variable
         let value = this.state.listOpen ? false : true;
 
         this.setState({ listOpen: value });
@@ -69,7 +69,7 @@ export default class Archive extends React.Component
 
     sendComment(comment)
     {
-        console.log(comment);
+        //Sanitize comment and send to server
     }
     
     handleSearch(value)
@@ -98,16 +98,39 @@ export default class Archive extends React.Component
         
         return retSet;
     }
+    
+    makeMonth(value)
+    {
+        //List of all months of year
+        const possibleMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        //Line up month integer value with respective index in possibleMonths
+        let month = possibleMonths[value.month - 1];
+        
+        //Make string out of month and year and return it
+        return month + ' ' + value.year;
+    }
 
     render()
     {
+        //Make string version of months array in state
+        let months = [];
+        for(let i = 0;i < this.state.months.length;i++)
+        {
+            months[i] = {};
+            months[i].value = this.makeMonth(this.state.months[i]);
+        }
+        
+        //Add keys to months array
+        let monthOptions = this.addKeys(months);
+        
         return(
             <div>
                 <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} />
                 <div>
                     <h4>Archive</h4>
                     <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
-                    <OptionList onClick={this.handleMonthClick} items={this.state.months} active={this.state.listOpen} />
+                    <OptionList onClick={this.handleMonthClick} items={monthOptions} active={this.state.listOpen} />
                     <PostList onClick={this.handlePostClick} items={this.state.posts} />
                 </div>
                 <CommentsBox items={this.state.comments} onSendComment={(comment) => this.sendComment(comment)} />
