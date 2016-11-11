@@ -3,6 +3,8 @@
     margin: 0;
     padding: 0;
 
+    vertical-align: top;
+
     font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
@@ -17,6 +19,19 @@
     height: 100vh;
     max-height: 100vh;
     border-spacing: 0;
+}
+
+hr
+{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #dadada;
 }
 
 /* CLASSES */

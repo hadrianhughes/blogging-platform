@@ -84,6 +84,7 @@ blog.searchPosts = function(db, query, callback)
         //Find all posts which contain the query in their name
     //Add all to array
     //Callback
+    callback();
 };
 
 blog.loadPost = function(db, id, callback)

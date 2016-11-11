@@ -1,10 +1,24 @@
-#layout-table
+#options-window
 {
-    
+    background-color: #fbfbfb;
+    border-right: 1px solid #eaeaea;
 }
 
 #main-window
 {
     width: 75%;
-    background-color: grey;
+}
+
+#options-window,
+#main-window
+{
+    padding: 1%;
+}
+
+#branding-section
+{
+    height: 20%;
+    background: url('http://placehold.it/480x210');
+    background-size: cover;
+    background-position: center;
 }
