@@ -22,3 +22,13 @@
     background-size: cover;
     background-position: center;
 }
+
+#postOptionsApp div > *
+{
+    margin-bottom: 3%;
+}
+
+#postOptionsApp .textInput
+{
+    width: 97%;
+}
