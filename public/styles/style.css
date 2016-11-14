@@ -112,8 +112,18 @@ hr
     background-color: #eaeaea;
 }
 
+.shade-text
+{
+    color: #a9a9a9;
+}
+
 .clickable
 {
     cursor: pointer;
+}
+
+.small-text
+{
+    font-size: 12px;
 }
 /* END OF CLASSES */

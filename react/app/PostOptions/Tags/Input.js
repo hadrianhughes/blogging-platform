@@ -5,7 +5,10 @@ export default class Input extends React.Component
     render()
     {
         return(
-            <input type="text" value={this.props.value} className="textInput" onChange={this.props.onChange} />
+            <div>
+                <input type="text" value={this.props.value} className="textInput no-margin" onChange={this.props.onChange} />
+                <p className="small-text shade-text">Separate tags with commas</p>
+            </div>
         );
     }
 }

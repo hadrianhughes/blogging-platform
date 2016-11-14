@@ -40,8 +40,12 @@
     display: inline-block;
     margin-right: 1%;
 }
-.tag:active
+.tag:hover
 {
     background-color: #d2eBa0;
+}
+.tag:active
+{
+    box-shadow: 0 0 10px 5px #e3f7bb;
 }
 /* END OF CLASSES */
