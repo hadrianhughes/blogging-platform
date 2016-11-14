@@ -48,4 +48,13 @@
 {
     box-shadow: 0 0 10px 5px #e3f7bb;
 }
+
+.btnActive
+{
+    background-color: green;
+}
+.btnInactive
+{
+    background-color: red;
+}
 /* END OF CLASSES */
