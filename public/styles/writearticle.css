@@ -31,7 +31,8 @@
 #postOptionsApp .textInput,
 #editorApp .textInput
 {
-    width: 97%;
+    padding: 1%;
+    width: 98%;
 }
 
 #postOptionsApp .numInput
@@ -44,12 +45,6 @@
     margin-right: 2%;
 }
 
-#editorApp .textInput
-{
-    padding: 1%;
-    width: 95%;
-}
-
 #articleTitle
 {
     width: 100%;
@@ -57,13 +52,24 @@
 }
 
 #editorMain,
-#editorMain h1
+#editorMain h1,
+#documentContainer
 {
     border: 1px solid #eaeaea;
     border-radius: 10px;
-    width: 95%;
+    width: 98%;
     padding: 1%;
     margin-bottom: 2%;
+}
+
+#editorMain button
+{
+    margin-bottom: 1%;
+}
+
+#documentContainer
+{
+    height: 50vh;
 }
 
 /* CLASSES */

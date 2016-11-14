@@ -14,6 +14,8 @@ export default class Article extends React.Component
                     <Button text="U" />
                     <Button text="I" />
                 </div>
+                <div id="documentContainer" contentEditable>
+                </div>
             </div>
         );
     }
