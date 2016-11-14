@@ -33,6 +33,16 @@
     width: 97%;
 }
 
+#postOptionsApp .numInput
+{
+    width: auto;
+}
+
+#postOptionsApp button
+{
+    margin-right: 2%;
+}
+
 /* CLASSES */
 .tag
 {
@@ -49,12 +59,31 @@
     box-shadow: 0 0 10px 5px #e3f7bb;
 }
 
+.option-button
+{
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    padding: 2%;
+
+    transition: all 0.2s linear;
+
+    font-size: 85%;
+    text-align: center;
+}
 .btnActive
 {
-    background-color: green;
+    background-color: #e3f7bb;
+}
+.btnActive:hover
+{
+    box-shadow: 0 0 10px 1px #e3f7bb;
 }
 .btnInactive
 {
-    background-color: red;
+    background-color: #f7bebb;
+}
+.btnInactive:hover
+{
+    box-shadow: 0 0 10px 1px #f7bebb;
 }
 /* END OF CLASSES */

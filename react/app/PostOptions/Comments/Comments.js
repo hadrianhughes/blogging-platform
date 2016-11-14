@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from './Button';
+import NumInput from './NumInput';
 
 export default class Comments extends React.Component
 {
@@ -8,14 +9,50 @@ export default class Comments extends React.Component
     {
         super();
         
-        this.state = { profanity: false }
+        this.state = { comments:true, profanity: false, limit: false, length: 0 }
         
-        this.handleClick = this.handleClick.bind(this);
+        this.toggleProfanity = this.toggleProfanity.bind(this);
+        this.toggleComments = this.toggleComments.bind(this);
+        this.toggleLimit = this.toggleLimit.bind(this);
+        this.handleNumChange = this.handleNumChange.bind(this);
     }
     
-    handleClick()
+    toggleComments()
     {
-        console.log('.');
+        let newVal = this.state.comments ? false : true;
+        
+        if(!newVal)
+        {
+            //Add all state variables to this
+            this.setState({ comments: newVal, profanity: newVal, limit: newVal });
+        }
+        else
+        {
+            this.setState({ comments: newVal });
+        }
+    }
+    
+    toggleProfanity()
+    {
+        if(this.state.comments)
+        {
+            let newVal = this.state.profanity ? false : true;
+            this.setState({ profanity: newVal });
+        }
+    }
+    
+    toggleLimit()
+    {
+        if(this.state.comments)
+        {
+            let newVal = this.state.limit ? false : true;
+            this.setState({ limit: newVal });
+        }
+    }
+    
+    handleNumChange(e)
+    {
+        this.setState({ length: e.target.value });
     }
     
     render()
@@ -23,7 +60,12 @@ export default class Comments extends React.Component
         return(
             <div>
                 <h3>Comments</h3>
-                <Button value="Allow profanity" active={this.state.profanity} onClick={this.handleClick} />
+                <Button value="Allow comments" active={this.state.comments} onClick={this.toggleComments} />
+                <Button value="Allow profanity" active={this.state.profanity} onClick={this.toggleProfanity} />
+                <div>
+                    <Button value="Limit length" active={this.state.limit} onClick={this.toggleLimit} />
+                    {this.state.limit ? <NumInput onChange={this.handleNumChange} /> : null}
+                </div>
             </div>
         );
     }

@@ -7,15 +7,15 @@ export default class Button extends React.Component
         let classes;
         if(this.props.active)
         {
-            classes = "button btnActive";
+            classes = "option-button btnActive";
         }
         else
         {
-            classes = "button btnInactive";
+            classes = "option-button btnInactive";
         }
         
         return(
-            <button className="button" onClick={this.props.onClick}>{this.props.value}</button>
+            <button className={classes} onClick={this.props.onClick}>{this.props.value}</button>
         );
     }
 }
