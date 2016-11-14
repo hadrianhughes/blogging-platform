@@ -12,6 +12,7 @@ export default class Tags extends React.Component
         this.state = { tags: [], inputValue: '' };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.addKeys = this.addKeys.bind(this);
     }
 
@@ -19,19 +20,39 @@ export default class Tags extends React.Component
     {
         const input = e.target.value;
 
-        if(input[input.length - 1] == ',')
+        if(input)
         {
-            let tag = {};
-            tag.value = e.target.value.substring(0, e.target.value.length - 1);
-
-            let tagContainer = this.state.tags;
-            tagContainer.push(tag);
-            this.setState({ tags: tagContainer, inputValue: '' });
+            if(input[input.length - 1] == ',')
+            {
+                let tag = {};
+                tag.value = e.target.value.substring(0, e.target.value.length - 1);
+    
+                let tagContainer = this.state.tags;
+                tagContainer.push(tag);
+                this.setState({ tags: tagContainer, inputValue: '' });
+            }
+            else
+            {
+                this.setState({ inputValue: input });
+            }
         }
-        else
+    }
+        
+    handleDelete(id)
+    {
+        const idNum = id.split('-')[1];
+        let tags = this.state.tags;
+        
+        for(let i = 0;i < tags.length;i++)
         {
-            this.setState({ inputValue: input });
+            if(tags[i].id == idNum)
+            {
+                tags.splice(i, 1);
+                break;
+            }
         }
+        
+        this.setState({ tags: tags });
     }
 
     addKeys(set)
@@ -58,7 +79,7 @@ export default class Tags extends React.Component
             <div>
                 <h3>Tags</h3>
                 <Input value={this.state.inputValue} onChange={this.handleChange} />
-                <TagList items={tags} />
+                <TagList items={tags} onDelete={(id) => this.handleDelete(id)} />
             </div>
         );
     }

@@ -32,3 +32,16 @@
 {
     width: 97%;
 }
+
+/* CLASSES */
+.tag
+{
+    background-color: #e3f7bb;
+    display: inline-block;
+    margin-right: 1%;
+}
+.tag:active
+{
+    background-color: #d2eBa0;
+}
+/* END OF CLASSES */

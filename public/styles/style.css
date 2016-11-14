@@ -111,4 +111,9 @@ hr
 {
     background-color: #eaeaea;
 }
+
+.clickable
+{
+    cursor: pointer;
+}
 /* END OF CLASSES */
