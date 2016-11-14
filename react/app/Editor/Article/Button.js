@@ -5,7 +5,7 @@ export default class Button extends React.Component
     render()
     {
         return(
-            <button className="btnFormat">{this.props.text}</button>
+            <button className="btnFormat" onClick={this.props.onClick}>{this.props.text}</button>
         );
     }
 }

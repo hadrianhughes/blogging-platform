@@ -38,6 +38,7 @@
 #postOptionsApp .numInput
 {
     width: auto;
+    padding: 2%;
 }
 
 #postOptionsApp button
@@ -70,6 +71,7 @@
 #documentContainer
 {
     height: 50vh;
+    overflow-y: auto;
 }
 
 /* CLASSES */
