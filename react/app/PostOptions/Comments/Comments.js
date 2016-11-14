@@ -24,7 +24,7 @@ export default class Comments extends React.Component
         if(!newVal)
         {
             //Add all state variables to this
-            this.setState({ comments: newVal, profanity: newVal, limit: newVal });
+            this.setState({ comments: newVal, profanity: newVal, limit: newVal, length: 0 });
         }
         else
         {
@@ -46,7 +46,15 @@ export default class Comments extends React.Component
         if(this.state.comments)
         {
             let newVal = this.state.limit ? false : true;
-            this.setState({ limit: newVal });
+            
+            if(!newVal)
+            {
+                this.setState({ limit: newVal, length: 0 });
+            }
+            else
+            {
+                this.setState({ limit: newVal });
+            }
         }
     }
     
