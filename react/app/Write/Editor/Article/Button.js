@@ -5,7 +5,7 @@ export default class Button extends React.Component
     render()
     {
         return(
-            <button className="button" onClick={this.props.onClick}>Publish</button>
+            <button id={this.props.id} className="button" onClick={this.props.onClick}>Publish</button>
         );
     }
 }

@@ -1,13 +1,13 @@
 $(document).ready(function()
 {
 
-    $('#archiveApp').on('click', '#btnDate', function()
+    $('#archive').on('click', '#btnDate', function()
     {
         $('#monthList').slideUp();
         $('#monthList').slideDown();
     });
     
-    $('#archiveApp').on('click', '#btnSearch', function()
+    $('#archive').on('click', '#btnSearch', function()
     {
         $('#resultsList').slideUp();
         $('#resultsList').slideDown();

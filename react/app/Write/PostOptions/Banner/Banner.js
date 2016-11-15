@@ -30,6 +30,7 @@ export default class Banner extends React.Component
     {
         return(
             <div>
+                <h3>Banner</h3>
                 <div>
                     <Input onChange={this.handleChange} />
                     <Button onClick={this.handleClick} />

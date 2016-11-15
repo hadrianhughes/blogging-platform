@@ -7,7 +7,7 @@ export default class Input extends React.Component
         return(
             <div>
                 <input type="text" value={this.props.value} className="textInput no-margin" onChange={this.props.onChange} />
-                <p className="small-text shade-text">Separate tags with commas</p>
+                <p className="small-text shade-text">Separate tags with commas or spaces</p>
             </div>
         );
     }

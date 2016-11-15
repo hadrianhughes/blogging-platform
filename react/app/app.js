@@ -1,18 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Archive from './Archive/Archive';
-import PostOptions from './PostOptions/PostOptions';
-import Editor from './Editor/Editor';
+import Index from './Index/Index';
+import Write from './Write/Write';
 
-//Add all elements and apps to this array
-let elementList = [{ element: 'archiveApp', component: <Archive /> }, { element: 'postOptionsApp', component: <PostOptions /> }, { element: 'editorApp', component: <Editor /> }];
-
-for(let i = 0;i < elementList.length;i++)
+class App extends React.Component
 {
-    let element = document.getElementById(elementList[i].element);
-    if(element)
+    constructor()
     {
-        ReactDOM.render(elementList[i].component, element);
+        super();
+        
+        this.state = { isIndex: true, isWrite: false };
+        
+        this.changeToWrite = this.changeToWrite.bind(this);
+        this.changeToIndex = this.changeToIndex.bind(this);
+    }
+    
+    changeToWrite()
+    {
+        this.setState({ isIndex: false, isWrite: true });
+    }
+    
+    changeToIndex()
+    {
+        this.setState({ isIndex: true, isWrite: false });
+    }
+    
+    render()
+    {
+        return(
+            <div>
+                {this.state.isIndex ? <Index onPageChange={this.changeToWrite} /> : null}
+                {this.state.isWrite ? <Write onPageChange={this.changeToIndex} /> : null}
+            </div>
+        );
     }
 }
+
+ReactDOM.render(<App />, document.getElementById('app'));

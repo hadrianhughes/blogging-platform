@@ -17,10 +17,16 @@ export default class Article extends React.Component
         this.italicize = this.italicize.bind(this);
         this.insertImage = this.insertImage.bind(this);
         this.insertLink = this.insertLink.bind(this);
+        this.handleFontSize = this.handleFontSize.bind(this);
         this.handleModalSubmit = this.handleModalSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.publish = this.publish.bind(this);
         this.moveCaret = this.moveCaret.bind(this);
+    }
+    
+    componentDidMount()
+    {
+        this.refs.documentEdit.focus();
     }
     
     embolden()
@@ -57,6 +63,12 @@ export default class Article extends React.Component
         this.setState({ modal: 2, previousRange: window.getSelection().getRangeAt(0) });
     }
     
+    handleFontSize()
+    {
+        
+        this.setState({ modal: 3, previousRange: window.getSelection().getRangeAt(0) });
+    }
+    
     handleModalSubmit(object)
     {
         switch(object.type)
@@ -71,6 +83,10 @@ export default class Article extends React.Component
                 document.execCommand('createLink', false, object.value);
                 this.setState({ modal: 0 });
                 break;
+            case 3:
+                this.moveCaret();
+                document.execCommand('fontSize', false, object.value);
+                this.setState({ modal: 0 });
             default:
                 console.log('Error: function handleModalSubmit should not be called by a Modal with a type of 0.');
                 break;
@@ -85,7 +101,7 @@ export default class Article extends React.Component
     publish()
     {
         let article = document.getElementById('documentContainer');
-        console.log(article.innerHTML);
+        this.props.onPublish(article.innerHTML);
     }
     
     moveCaret()
@@ -103,11 +119,12 @@ export default class Article extends React.Component
                 <Modal type={this.state.modal} onSubmit={(object) => this.handleModalSubmit(object)} onClose={this.closeModal} />
                 <h1 id="articleTitle">{this.props.title}</h1>
                 <div>
-                    <FormatButton text="B" active={this.state.bold} onClick={this.embolden} />
-                    <FormatButton text="U" active={this.state.underline} onClick={this.underline} />
-                    <FormatButton text="I" active={this.state.italic} onClick={this.italicize} />
+                    <FormatButton text="B" onClick={this.embolden} />
+                    <FormatButton text="U" onClick={this.underline} />
+                    <FormatButton text="I" onClick={this.italicize} />
                     <FormatButton text="IMG" onClick={this.insertImage} />
                     <FormatButton text="Link" onClick={this.insertLink} />
+                    <FormatButton text="Font Size" onClick={this.handleFontSize} />
                 </div>
                 <div ref="documentEdit" id="documentContainer" contentEditable></div>
                 <Button onClick={this.publish} />

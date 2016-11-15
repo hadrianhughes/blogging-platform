@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Set up static paths
 app.use(express.static('../public'));
-app.use(express.static('../public/pages'));
 
 //Set up database details
 var config = require('./config.json');

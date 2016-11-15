@@ -12,11 +12,17 @@ export default class Editor extends React.Component
         this.state = { title: '' };
         
         this.handleChange = this.handleChange.bind(this);
+        this.handlePublish = this.handlePublish.bind(this);
     }
     
     handleChange(e)
     {
         this.setState({ title: e.target.value });
+    }
+    handlePublish(content)
+    {
+        const article = { title: title, content: content };
+        this.props.onPublish(article);
     }
     
     render()
@@ -25,7 +31,7 @@ export default class Editor extends React.Component
             <div>
                 <Title onChange={this.handleChange} />
                 <br />
-                <Article title={this.state.title} />
+                <Article title={this.state.title} onPublish={(content) => this.handlePublish(content)} />
             </div>
         );
     }
