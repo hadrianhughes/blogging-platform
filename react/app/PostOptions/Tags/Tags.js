@@ -22,7 +22,7 @@ export default class Tags extends React.Component
 
         if(input)
         {
-            if(input[input.length - 1] == ',')
+            if((input[input.length - 1] == ',') || (input[input.length - 1] == ' '))
             {
                 let tag = {};
                 tag.value = e.target.value.substring(0, e.target.value.length - 1);
