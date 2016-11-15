@@ -10,7 +10,7 @@ export default class Article extends React.Component
     {
         super();
         
-        this.state = { bold: false, underline: false, italic: false, modal: 0 };
+        this.state = { bold: false, underline: false, italic: false, modal: 0, previousRange: {} };
         
         this.embolden = this.embolden.bind(this);
         this.underline = this.underline.bind(this);
@@ -20,6 +20,7 @@ export default class Article extends React.Component
         this.handleModalSubmit = this.handleModalSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.publish = this.publish.bind(this);
+        this.moveCaret = this.moveCaret.bind(this);
     }
     
     embolden()
@@ -48,12 +49,12 @@ export default class Article extends React.Component
     
     insertImage()
     {
-        this.setState({ modal: 1 });
+        this.setState({ modal: 1, previousRange: window.getSelection().getRangeAt(0) });
     }
     
     insertLink()
     {
-        this.setState({ modal: 2 });
+        this.setState({ modal: 2, previousRange: window.getSelection().getRangeAt(0) });
     }
     
     handleModalSubmit(object)
@@ -61,12 +62,12 @@ export default class Article extends React.Component
         switch(object.type)
         {
             case 1:
-                this.refs.documentEdit.focus();
+                this.moveCaret();
                 document.execCommand('insertImage', false, object.value);
                 this.setState({ modal: 0 });
                 break;
             case 2:
-                this.refs.documentEdit.focus();
+                this.moveCaret();
                 document.execCommand('createLink', false, object.value);
                 this.setState({ modal: 0 });
                 break;
@@ -85,6 +86,14 @@ export default class Article extends React.Component
     {
         let article = document.getElementById('documentContainer');
         console.log(article.innerHTML);
+    }
+    
+    moveCaret()
+    {
+        this.refs.documentEdit.focus();
+        let selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(this.state.previousRange);
     }
     
     render()
