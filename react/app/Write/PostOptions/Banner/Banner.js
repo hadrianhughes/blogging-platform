@@ -10,7 +10,7 @@ export default class Banner extends React.Component
     {
         super();
         
-        this.state = { currentUrl: '', finalUrl: '' };
+        this.state = { currentUrl: '' };
         
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -23,7 +23,7 @@ export default class Banner extends React.Component
     
     handleClick()
     {
-        this.setState({ finalUrl: this.state.currentUrl });
+        this.props.onSubmit(this.state.currentUrl);
     }
     
     render()
@@ -35,7 +35,7 @@ export default class Banner extends React.Component
                     <Input onChange={this.handleChange} />
                     <Button onClick={this.handleClick} />
                 </div>
-                <Image src={this.state.finalUrl} />
+                <Image src={this.props.banner} />
             </div>
         );
     }
