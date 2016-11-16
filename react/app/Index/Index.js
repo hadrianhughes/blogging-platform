@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Archive from './Archive/Archive';
+import Article from './Article/Article';
 
 export default class Index extends React.Component
 {
@@ -29,13 +30,7 @@ export default class Index extends React.Component
                             </div>
                         </td>
                         <td className="content-to-top" id="content-container">
-                            <div>
-                                <div className="center-text" id="header">
-                                </div>
-                                <div className="normal-padding" id="article">
-                                    Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum dolor sit amet
-                                </div>
-                            </div>
+                            <Article />
                         </td>
                         <td className="content-to-top center-text smaller-padding" id="archive-container">
                             <div id="archive">

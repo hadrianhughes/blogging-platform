@@ -87,11 +87,29 @@ blog.searchPosts = function(db, query, callback)
     callback();
 };
 
-blog.loadPost = function(db, id, callback)
+blog.loadPost = function(db, callback)
 {
     //Query database
-        //Find post with selected ID
-    //Callback
+    try
+    {
+        db.collection('posts').findOne({ 'title' : 'Test' }, function(err, doc)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                console.log(doc);
+                callback(null, doc);
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex, null);
+    }
 };
 
 blog.sendComment = function(db, id, comment, callback)
@@ -99,7 +117,27 @@ blog.sendComment = function(db, id, comment, callback)
     //Find post in database with selected ID
         //If it exists, push the comment into the comments array
     //Callback
-}
+};
+
+blog.makePost = function(db, post, callback)
+{
+    try
+    {
+        db.collection('posts').save({ title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            callback();
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+};
 /* END OF FUNCTIONS TO BE EXPORTED */
 
 /* FUNCTIONS USED INTERNALLY */

@@ -21,7 +21,7 @@ export default class Editor extends React.Component
     }
     handlePublish(content)
     {
-        const article = { title: title, content: content };
+        const article = { title: this.state.title, content: content };
         this.props.onPublish(article);
     }
     

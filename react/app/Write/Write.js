@@ -19,6 +19,7 @@ export default class Write extends React.Component
         this.handleTagInputChange = this.handleTagInputChange.bind(this);
         this.handleDeleteTag = this.handleDeleteTag.bind(this);
         this.handleSubmitBanner = this.handleSubmitBanner.bind(this);
+        this.handlePublish = this.handlePublish.bind(this);
     }
     
     addKeys(set)
@@ -39,9 +40,13 @@ export default class Write extends React.Component
     
     toggleComments()
     {
+        //newVal is equal to the opposite of allowComments in state
         let newVal = this.state.allowComments ? false : true;
+        
+        //If newVal is false
         if(!newVal)
         {
+            //Make all other comment settings default to false
             this.setState({ allowComments: newVal, allowProfanity: newVal, limit: newVal });
         }
         else
@@ -50,6 +55,7 @@ export default class Write extends React.Component
         }
     }
     
+    //If comments are allowed, toggle the profanity setting
     toggleProfanity()
     {
         if(this.state.allowComments)
@@ -73,20 +79,28 @@ export default class Write extends React.Component
         this.setState({ length: e.target.value });
     }
     
+    //When the value of the tag text box changes
     handleTagInputChange(e)
     {
+        //Get the value of the text box
         const input = e.target.value;
 
+        //If it isn't empty...
         if(input)
         {
+            //...if the last character is a comma or a space
             if((input[input.length - 1] == ',') || (input[input.length - 1] == ' '))
             {
+                //Make a new tag with a value equal to the text box value without the last character
                 let tag = {};
                 tag.value = e.target.value.substring(0, e.target.value.length - 1);
     
+                //Add the new tag to the tags array
                 let tagContainer = this.state.tags;
                 tagContainer.push(tag);
                 tagContainer = this.addKeys(tagContainer);
+                
+                //Set to state and reset tag input box
                 this.setState({ tags: tagContainer, tagInputValue: '' });
             }
             else
@@ -98,13 +112,17 @@ export default class Write extends React.Component
     
     handleDeleteTag(id)
     {
+        //Split the id string into 2 string ('tag' & an integer) and get the integer
         const idNum = id.split('-')[1];
         let tags = this.state.tags;
         
+        //For each tag in the array
         for(let i = 0;i < tags.length;i++)
         {
+            //If the tag's id value is equal to the passed integer
             if(tags[i].id == idNum)
             {
+                //Remove that tag
                 tags.splice(i, 1);
                 break;
             }
@@ -116,6 +134,32 @@ export default class Write extends React.Component
     handleSubmitBanner(url)
     {
         this.setState({ banner: url });
+    }
+    
+    handlePublish(article)
+    {
+        let post = {
+            title: article.title,
+            content: article.content,
+            banner: this.state.banner,
+            tags: this.state.tags,
+            allowComments: this.state.allowComments,
+            allowProfanity: this.state.allowProfanity,
+            limit: this.state.limit,
+            length: this.state.length
+        };
+        
+        $.post('/post', { post: post }, function(successful)
+        {
+            if(successful)
+            {
+                console.log('Succesfully submitted post.');
+            }
+            else
+            {
+                console.log('Post creation failed.');
+            }
+        });
     }
     
     render()
@@ -136,7 +180,7 @@ export default class Write extends React.Component
                             </td>
                             <td id="main-window">
                                 <div id="editorApp">
-                                    <Editor />
+                                    <Editor onPublish={(article) => this.handlePublish(article)} />
                                 </div>
                             </td>
                         </tr>

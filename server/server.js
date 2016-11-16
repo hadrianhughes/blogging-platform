@@ -78,11 +78,50 @@ app.get('/search', function(req, res)
 
 app.get('/loadPost', function(req, res)
 {
-    //blog.loadPost(database, id, callback)
+    blog.loadPost(database, function(err, result)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.end();
+        }
+        else
+        {
+            if(result)
+            {
+                res.send(result);
+            }
+            else
+            {
+                res.end();
+            }
+        }
+    });
 });
 /* END OF GETS */
 
 /* POSTS */
+app.post('/post', function(req, res)
+{
+    //Send post to database
+    if(req.body.post)
+    {
+        blog.makePost(database, req.body.post, function(err)
+        {
+            if(err)
+            {
+                console.log('Post creation failed with error: ' + err);
+                res.send(false);
+            }
+            else
+            {
+                console.log('Post successfully added to database.');
+                res.send(true);
+            }
+        });
+    }
+});
+
 app.post('/sendComment', function(req, res)
 {
     //blog.sendComment(database, postID, comment, callback)

@@ -119,9 +119,9 @@ export default class Article extends React.Component
                 <Modal type={this.state.modal} onSubmit={(object) => this.handleModalSubmit(object)} onClose={this.closeModal} />
                 <h1 id="articleTitle">{this.props.title}</h1>
                 <div>
-                    <FormatButton text="B" onClick={this.embolden} />
-                    <FormatButton text="U" onClick={this.underline} />
-                    <FormatButton text="I" onClick={this.italicize} />
+                    <FormatButton text="B" active={this.state.bold} onClick={this.embolden} />
+                    <FormatButton text="U" active={this.state.underline} onClick={this.underline} />
+                    <FormatButton text="I" active={this.state.italic} onClick={this.italicize} />
                     <FormatButton text="IMG" onClick={this.insertImage} />
                     <FormatButton text="Link" onClick={this.insertLink} />
                     <FormatButton text="Font Size" onClick={this.handleFontSize} />
