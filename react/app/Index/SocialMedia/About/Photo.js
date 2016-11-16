@@ -5,8 +5,8 @@ export default class Photo extends React.Component
     render()
     {
         return(
-            <div className="larger-padding center-text" id="photo">
-                <img src="http://placehold.it/300x300" />
+            <div className="larger-padding center-text" id="photo" onClick={this.props.onClick}>
+                <img className="logged-in" src="http://placehold.it/300x300" />
             </div>
         );
     }
