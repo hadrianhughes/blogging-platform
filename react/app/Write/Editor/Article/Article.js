@@ -9,9 +9,9 @@ export default class Article extends React.Component
     constructor()
     {
         super();
-        
+
         this.state = { bold: false, underline: false, italic: false, modal: 0, previousRange: {} };
-        
+
         this.embolden = this.embolden.bind(this);
         this.underline = this.underline.bind(this);
         this.italicize = this.italicize.bind(this);
@@ -23,52 +23,52 @@ export default class Article extends React.Component
         this.publish = this.publish.bind(this);
         this.moveCaret = this.moveCaret.bind(this);
     }
-    
+
     componentDidMount()
     {
         this.refs.documentEdit.focus();
     }
-    
+
     embolden()
     {
         document.execCommand('bold', false, null);
-        
+
         let newVal = this.state.bold ? false : true;
         this.setState({ bold: newVal });
     }
-    
+
     underline()
     {
         document.execCommand('underline', false, null);
-        
+
         let newVal = this.state.underline ? false : true;
         this.setState({ underline: newVal });
     }
-    
+
     italicize()
     {
         document.execCommand('italic', false, null);
-        
+
         let newVal = this.state.italic ? false : true;
         this.setState({ italic: newVal });
     }
-    
+
     insertImage()
     {
         this.setState({ modal: 1, previousRange: window.getSelection().getRangeAt(0) });
     }
-    
+
     insertLink()
     {
         this.setState({ modal: 2, previousRange: window.getSelection().getRangeAt(0) });
     }
-    
+
     handleFontSize()
     {
-        
+
         this.setState({ modal: 3, previousRange: window.getSelection().getRangeAt(0) });
     }
-    
+
     handleModalSubmit(object)
     {
         switch(object.type)
@@ -92,26 +92,26 @@ export default class Article extends React.Component
                 break;
         }
     }
-    
+
     closeModal()
     {
         this.setState({ modal: 0 });
     }
-    
+
     publish()
     {
         let article = document.getElementById('documentContainer');
         this.props.onPublish(article.innerHTML);
     }
-    
+
     moveCaret()
     {
-        this.refs.documentEdit.focus();
-        let selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(this.state.previousRange);
+        this.refs.documentEdit.focus(); //Move cursor to editable div
+        let selection = window.getSelection(); //Selection will always have 0 range and be the start of the div
+        selection.removeAllRanges(); //Failsafe in case bug causes something to highlight
+        selection.addRange(this.state.previousRange); //Make a new range equal to the user's previous selection
     }
-    
+
     render()
     {
         return(
@@ -119,9 +119,9 @@ export default class Article extends React.Component
                 <Modal type={this.state.modal} onSubmit={(object) => this.handleModalSubmit(object)} onClose={this.closeModal} />
                 <h1 id="articleTitle">{this.props.title}</h1>
                 <div>
-                    <FormatButton text="B" active={this.state.bold} onClick={this.embolden} />
-                    <FormatButton text="U" active={this.state.underline} onClick={this.underline} />
-                    <FormatButton text="I" active={this.state.italic} onClick={this.italicize} />
+                    <FormatButton text="B" onClick={this.embolden} />
+                    <FormatButton text="U" onClick={this.underline} />
+                    <FormatButton text="I" onClick={this.italicize} />
                     <FormatButton text="IMG" onClick={this.insertImage} />
                     <FormatButton text="Link" onClick={this.insertLink} />
                     <FormatButton text="Font Size" onClick={this.handleFontSize} />

@@ -6,6 +6,7 @@ export default class OptionList extends React.Component
     {
         let list = this.props.items.map((item) => <li key={item.id}><a href="#" onClick={this.props.onClick}>{item.value}</a></li>);
 
+        //Only render list items if the list is active
         let retVal;
         if(this.props.active)
         {

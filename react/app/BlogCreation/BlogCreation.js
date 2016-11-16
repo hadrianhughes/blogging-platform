@@ -8,16 +8,16 @@ export default class BlogCreation extends React.Component
     constructor()
     {
         super();
-        
+
         this.state = { isSignIn: true, isSignUp: false };
-        
+
         this.togglePage = this.togglePage.bind(this);
-        
         this.login = this.login.bind(this);
     }
-    
+
     togglePage()
     {
+        //If the sign in page is active and the sign up page is not
         if(this.state.isSignIn && !this.state.isSignUp)
         {
             this.setState({ isSignIn: false, isSignUp: true });
@@ -27,12 +27,12 @@ export default class BlogCreation extends React.Component
             this.setState({ isSignIn: true, isSignUp: false });
         }
     }
-    
+
     login()
     {
-        
+        //Send login details to server which will return a cookie to keep user logged in
     }
-    
+
     render()
     {
         return(

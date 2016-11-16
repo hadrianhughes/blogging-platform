@@ -13,7 +13,7 @@ blog.getMonths = function(db, callback)
             {
                 throw err;
             }
-            
+
             try
             {
                 //Declare array of months
@@ -24,14 +24,14 @@ blog.getMonths = function(db, callback)
                     {
                         throw err;
                     }
-                    
+
                     if(doc)
                     {
                         //Get month and year from date of post
                         var dateParts = doc.date.split('/');
                         var month = dateParts[0];
                         var year = dateParts[1];
-                        
+
                         //If not already present in the array...
                         var exists = false;
                         for(var i = 0;i < months.length;i++)
@@ -42,7 +42,7 @@ blog.getMonths = function(db, callback)
                                 break;
                             }
                         }
-                        
+
                         if(!exists)
                         {
                             months.push({ month: month, year: year });
@@ -75,7 +75,7 @@ blog.getPosts = function(db, month, callback)
 {
     //Query database
     const monthString = month.month + '/' + month.year;
-    
+
     try
     {
         db.collection('posts').find({ date: monthString }, function(err, cursor)
@@ -84,7 +84,7 @@ blog.getPosts = function(db, month, callback)
             {
                 throw err;
             }
-            
+
             try
             {
                 let posts = [];
@@ -94,7 +94,7 @@ blog.getPosts = function(db, month, callback)
                     {
                         throw err;
                     }
-                    
+
                     if(doc)
                     {
                         posts.push(doc);
@@ -115,9 +115,6 @@ blog.getPosts = function(db, month, callback)
     {
         callback(ex, null);
     }
-        //Find all posts published on the selected month
-    //Put all into array
-    //Callback
 };
 
 blog.searchPosts = function(db, query, callback)
@@ -141,7 +138,7 @@ blog.loadPost = function(db, callback)
             {
                 throw err;
             }
-            
+
             if(doc)
             {
                 callback(null, doc);
@@ -166,7 +163,7 @@ blog.sendComment = function(db, id, comment, callback)
             {
                 throw err;
             }
-            
+
             callback();
         });
     }
@@ -180,7 +177,7 @@ blog.makePost = function(db, post, callback)
 {
     const date = new Date();
     const dateString = (date.getMonth() + 1) + '/' + date.getFullYear();
-    
+
     try
     {
         db.collection('posts').save({ date: dateString, comments: [], title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
@@ -189,7 +186,7 @@ blog.makePost = function(db, post, callback)
             {
                 throw err;
             }
-            
+
             callback();
         });
     }
@@ -204,7 +201,7 @@ blog.makePost = function(db, post, callback)
 function sortMonths(months, callback)
 {
     var monthList = months;
-    
+
     //Sort by year first (bubble sort)
     for(var i = 0;i < monthList.length;i++)
     {
@@ -218,7 +215,7 @@ function sortMonths(months, callback)
             }
         }
     }
-    
+
     //Split monthList array into separate arrays
     var yearContainer = []; //Will be 2D array
     var currentIndex = 0;
@@ -226,7 +223,7 @@ function sortMonths(months, callback)
     for(var i = 0;i < monthList.length;i++)
     {
         yearContainer[currentIndex].push(monthList[i]);
-        
+
         //If there is an array element in monthList after the current one
         if(monthList[i + 1])
         {
@@ -239,7 +236,7 @@ function sortMonths(months, callback)
             }
         }
     }
-    
+
     //Sort each array in yearContainer by month
     for(var i = 0;i < yearContainer.length;i++)
     {
@@ -256,14 +253,14 @@ function sortMonths(months, callback)
             }
         }
     }
-    
+
     //Merge arrays back together
     var retArray = yearContainer[0];
     for(var i = 1;i < yearContainer.length;i++)
     {
         retArray = retArray.concat(yearContainer[i]);
     }
-    
+
     callback(retArray);
 }
 /* END OF INTERNAL FUNCTIONS */

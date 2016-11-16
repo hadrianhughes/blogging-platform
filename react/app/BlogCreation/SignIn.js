@@ -5,30 +5,30 @@ export default class SignIn extends React.Component
     constructor()
     {
         super();
-        
+
         this.state = { username: '', password: '' };
-        
+
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-    
+
     handleUsernameChange(e)
     {
         this.setState({ username: e.target.value });
     }
-    
+
     handlePasswordChange(e)
     {
         this.setState({ password: e.target.value });
     }
-    
+
     handleClick()
     {
         const login = { username: this.state.username, password: this.state.password };
         this.props.onSubmit(login);
     }
-    
+
     render()
     {
         return(

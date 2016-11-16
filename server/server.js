@@ -26,7 +26,7 @@ MongoClient.connect(dbURL, function(err, db)
     {
         throw err;
     }
-    
+
     database = db;
 });
 
@@ -70,16 +70,16 @@ app.get('/getPostList', function(req, res)
                 {
                     //Only ID and Title need to be sent in response
                     let postList = [];
-                    
+
                     for(let i = 0;i < posts.length;i++)
                     {
                         let post = {};
                         post.id = posts[i].id;
                         post.title = posts[i].title;
-                        
+
                         postList.push(post);
                     }
-                    
+
                     res.send(postList);
                 }
             }
@@ -124,7 +124,7 @@ app.get('/loadPost', function(req, res)
 
 app.get('/getComments', function(req, res)
 {
-    
+    //Get comments related to postID passed in query
 });
 /* END OF GETS */
 
@@ -159,7 +159,7 @@ app.post('/sendComment', function(req, res)
         {
             console.log(err);
         }
-        
+
         res.end();
     });
 });

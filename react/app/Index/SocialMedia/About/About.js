@@ -8,23 +8,18 @@ export default class About extends React.Component
     constructor()
     {
         super();
-        
-        let bio = 'Lorem ipsum dolor sit amet';
+
+        let bio = 'Lorem ipsum dolor sit amet'; //Bio should be gotten from server
         let maxLength = 300;
         this.state = { isEditingPhoto: false, isEditingBio: false, bioValue: bio, maxBioLength: maxLength };
-        
-        this.handlePhotoClick = this.handlePhotoClick.bind(this);
+
         this.handleBioClick = this.handleBioClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    
-    handlePhotoClick()
-    {
-        console.log('clicked photo');
-    }
-    
+
     handleBioClick()
     {
+        //Toggle isEditingBio
         let newVal;
         if(this.state.isEditingBio)
         {
@@ -36,15 +31,16 @@ export default class About extends React.Component
         }
         this.setState({ isEditingBio: newVal });
     }
-    
+
     handleChange(e)
     {
+        //Only update bioValue if the maxLength hasn't been reached
         if(e.target.value.length <= this.state.maxBioLength)
         {
             this.setState({ bioValue: e.target.value });
         }
     }
-    
+
     render()
     {
         return(

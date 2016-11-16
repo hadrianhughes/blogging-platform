@@ -5,25 +5,26 @@ export default class Modal extends React.Component
     constructor()
     {
         super();
-        
+
         this.state = { value: '' };
-        
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+
     handleChange(e)
     {
         this.setState({ value: e.target.value });
     }
-    
+
     handleSubmit()
     {
         this.props.onSubmit({ type: this.props.type, value: this.state.value });
     }
-    
+
     render()
     {
+        //Modal has different contents depending on the context in which it was opened
         let retVal;
         switch(this.props.type)
         {
@@ -42,7 +43,7 @@ export default class Modal extends React.Component
             default:
                 retVal = null;
         }
-        
+
         return retVal;
     }
 }

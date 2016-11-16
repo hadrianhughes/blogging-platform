@@ -25,17 +25,17 @@ export default class Archive extends React.Component
 
     componentDidMount()
     {
-        //Get month list from server
+        //Get list of months on which posts were published from server
         $.get('/getMonths', function(data)
         {
             let months = this.addKeys(data);
 
             this.setState({ months: months, currentMonth: months[0], currentMonthString: this.makeMonth(months[0]) });
-            
+
             $.get('/getPostList', { month: this.state.currentMonth }, function(data)
             {
                 let posts = this.addKeys(data);
-    
+
                 this.setState({ posts: posts });
             }.bind(this));
         }.bind(this));
@@ -53,6 +53,7 @@ export default class Archive extends React.Component
     {
         this.setState({ currentMonth: e.target.text });
 
+        //Get list of posts for current month from server
         $.get('/getPostList', { month: e.target.text }, function(data)
         {
             let posts = this.addKeys(data);
@@ -74,6 +75,7 @@ export default class Archive extends React.Component
 
     handleSearch(value)
     {
+        //Send search query to server and get results
         $.get('/search', { query: value }, function(data)
         {
             let results = this.addKeys(data);

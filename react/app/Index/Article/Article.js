@@ -4,9 +4,6 @@ export default class Article extends React.Component
 {
     render()
     {
-        const parser = new DOMParser();
-        let html = parser.parseFromString(this.props.content, 'text/html');
-        
         return(
             <div>
                 <div id="header">
