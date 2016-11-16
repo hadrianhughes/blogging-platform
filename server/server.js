@@ -68,7 +68,19 @@ app.get('/getPostList', function(req, res)
             {
                 if(posts)
                 {
-                    res.send(posts);
+                    //Only ID and Title need to be sent in response
+                    let postList = [];
+                    
+                    for(let i = 0;i < posts.length;i++)
+                    {
+                        let post = {};
+                        post.id = posts[i].id;
+                        post.title = posts[i].title;
+                        
+                        postList.push(post);
+                    }
+                    
+                    res.send(postList);
                 }
             }
         });
