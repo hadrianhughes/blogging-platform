@@ -49,7 +49,7 @@ export default class About extends React.Component
     {
         return(
             <div className="larger-padding" id="about">
-                <Photo onClick={this.handlePhotoClick} editing={this.state.isEditingPhoto} />
+                <Photo onClick={this.props.onClick} editing={this.state.isEditingPhoto} />
                 <Bio onClick={this.handleBioClick} onChange={this.handleChange} editing={this.state.isEditingBio} value={this.state.bioValue} />
             </div>
         );

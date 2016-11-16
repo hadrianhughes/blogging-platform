@@ -7,7 +7,7 @@ export default class SocialMedia extends React.Component
     render()
     {
         return(
-            <About />
+            <About onClick={this.props.onPhotoClick} />
         );
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ImageInput from '../../../ImageInput';
 import Input from './Input';
 import Button from './Button';
 import Image from './Image';
@@ -10,20 +11,12 @@ export default class Banner extends React.Component
     {
         super();
         
-        this.state = { currentUrl: '' };
-        
-        this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    handleChange(e)
+    handleSubmit(url)
     {
-        this.setState({ currentUrl: e.target.value });
-    }
-    
-    handleClick()
-    {
-        this.props.onSubmit(this.state.currentUrl);
+        this.props.onSubmit(url);
     }
     
     render()
@@ -31,10 +24,7 @@ export default class Banner extends React.Component
         return(
             <div>
                 <h3>Banner</h3>
-                <div>
-                    <Input onChange={this.handleChange} />
-                    <Button onClick={this.handleClick} />
-                </div>
+                <ImageInput onSubmit={(url) => this.handleSubmit(url)} />
                 <Image src={this.props.banner} />
             </div>
         );

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ImageInput from '../ImageInput';
 import SocialMedia from './SocialMedia/SocialMedia';
 import Article from './Article/Article';
 import Archive from './Archive/Archive';
@@ -10,7 +11,10 @@ export default class Index extends React.Component
     {
         super();
         
-        this.state = { id: '', banner: '', title: '', content: '', comments: [] };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '' };
+        
+        this.handlePhotoClick = this.handlePhotoClick.bind(this);
+        this.handleImageSubmit = this.handleImageSubmit.bind(this);
     }
     
     componentDidMount()
@@ -21,29 +25,43 @@ export default class Index extends React.Component
         }.bind(this));
     }
     
+    handlePhotoClick()
+    {
+        this.setState({ isModal: true, modalContents: <div><h3>Change photo</h3><ImageInput onSubmit={(url) => this.handleImageSubmit(url)} /></div> });
+    }
+    
+    handleImageSubmit(url)
+    {
+        console.log(url);
+        this.setState({ isModal: false });
+    }
+    
     render()
     {
         return(
-            <table id="layout-table">
-                <tbody>
-                    <tr id="body">
-                        <td className="content-to-top" id="social-media-container">
-                            <SocialMedia />
-                        </td>
-                        <td className="content-to-top" id="content-container">
-                            <Article banner={this.state.banner} title={this.state.title} content={this.state.content} />
-                        </td>
-                        <td className="content-to-top center-text smaller-padding" id="archive-container">
-                            <div id="archive">
-                                <Archive postId={this.state.id} comments={this.state.comments} />
-                            </div>
-                            <div className="footer">
-                                <button id="btnChangePage" className="button" onClick={this.props.onPageChange}>Write an article</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div>
+                {this.state.isModal ? <div id="modal">{this.state.modalContents}</div> : null}
+                <table id="layout-table">
+                    <tbody>
+                        <tr id="body">
+                            <td className="content-to-top" id="social-media-container">
+                                <SocialMedia onPhotoClick={this.handlePhotoClick} />
+                            </td>
+                            <td className="content-to-top" id="content-container">
+                                <Article banner={this.state.banner} title={this.state.title} content={this.state.content} />
+                            </td>
+                            <td className="content-to-top center-text smaller-padding" id="archive-container">
+                                <div id="archive">
+                                    <Archive postId={this.state.id} comments={this.state.comments} />
+                                </div>
+                                <div className="footer">
+                                    <button id="btnChangePage" className="button" onClick={this.props.onPageChange}>Write an article</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }
