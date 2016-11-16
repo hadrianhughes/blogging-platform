@@ -120,9 +120,12 @@ blog.sendComment = function(db, id, comment, callback)
 
 blog.makePost = function(db, post, callback)
 {
+    const date = new Date();
+    const dateString = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    
     try
     {
-        db.collection('posts').save({ title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
+        db.collection('posts').save({ date: dateString, title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
         {
             if(err)
             {
