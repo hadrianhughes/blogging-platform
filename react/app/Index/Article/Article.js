@@ -10,7 +10,7 @@ export default class Article extends React.Component
         return(
             <div>
                 <div id="header">
-                    <img src={this.props.banner} />
+                    <img src={(this.props.banner.length > 0) ? this.props.banner : null} />
                 </div>
                 <div id="title">
                     {this.props.title}

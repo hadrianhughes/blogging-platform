@@ -50,7 +50,7 @@ export default class Index extends React.Component
                                 <Archive postId={this.state.id} comments={this.state.comments} />
                             </div>
                             <div className="footer">
-                                <button className="button" onClick={this.props.onPageChange}>Write an article</button>
+                                <button id="btnChangePage" className="button" onClick={this.props.onPageChange}>Write an article</button>
                             </div>
                         </td>
                     </tr>
