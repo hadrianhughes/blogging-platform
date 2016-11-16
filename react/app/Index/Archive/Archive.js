@@ -12,7 +12,7 @@ export default class Archive extends React.Component
     {
         super();
 
-        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], comments: [{ id: 1, author: 'Joe Bloggs', comment: 'Hello world' }, { id: 2, author: 'Jane Doe', comment: 'Lorem ipsum' }, { id: 3, author: 'John Smith', comment: 'Blah blah' }], searchResults: [] };
+        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], currentPost: [], searchResults: [] };
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
@@ -35,16 +35,10 @@ export default class Archive extends React.Component
             $.get('/getPostList', { month: this.state.currentMonth }, function(data)
             {
                 let posts = this.addKeys(data);
-                console.log(posts[0]);
     
                 this.setState({ posts: posts });
             }.bind(this));
         }.bind(this));
-
-        //Get comments attached to current post from server
-        
-
-        //Get post list from server based on current month
     }
 
     handleButtonClick()
@@ -74,7 +68,8 @@ export default class Archive extends React.Component
 
     sendComment(comment)
     {
-        //Sanitize comment and send to server
+        //Need to sanitize
+        $.post('/sendComment', { id: this.props.postId, comment: comment });
     }
 
     handleSearch(value)
@@ -148,7 +143,7 @@ export default class Archive extends React.Component
                     <OptionList onClick={this.handleMonthClick} items={monthOptions} active={this.state.listOpen} />
                     <PostList onClick={this.handlePostClick} items={this.state.posts} />
                 </div>
-                <CommentsBox items={this.state.comments} onSendComment={(comment) => this.sendComment(comment)} />
+                <CommentsBox items={this.addKeys(this.props.comments)} onSendComment={(comment) => this.sendComment(comment)} />
             </div>
         );
     }

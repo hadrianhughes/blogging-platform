@@ -5,7 +5,20 @@ import Article from './Article/Article';
 
 export default class Index extends React.Component
 {
+    constructor()
+    {
+        super();
+        
+        this.state = { id: '', banner: '', title: '', content: '', comments: [] };
+    }
     
+    componentDidMount()
+    {
+        $.get('/loadPost', function(data)
+        {
+            this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments });
+        }.bind(this));
+    }
     
     render()
     {
@@ -30,11 +43,11 @@ export default class Index extends React.Component
                             </div>
                         </td>
                         <td className="content-to-top" id="content-container">
-                            <Article />
+                            <Article banner={this.state.banner} title={this.state.title} content={this.state.content} />
                         </td>
                         <td className="content-to-top center-text smaller-padding" id="archive-container">
                             <div id="archive">
-                                <Archive />
+                                <Archive postId={this.state.id} comments={this.state.comments} />
                             </div>
                             <div className="footer">
                                 <button className="button" onClick={this.props.onPageChange}>Write an article</button>

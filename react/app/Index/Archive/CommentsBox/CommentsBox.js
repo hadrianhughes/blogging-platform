@@ -21,7 +21,7 @@ export default class CommentsBox extends React.Component
     
     render()
     {
-        let items = this.props.items.map((item) => <li key={item.id} className="comment"><div className="commentAuthor">{item.author}</div><div className="commentBody">{item.comment}</div></li>);
+        let items = this.props.items.map((item) => <li key={item.id} className="comment"><div className="commentAuthor">{item.author}</div><div className="commentBody">{item.value}</div></li>);
 
         return(
             <div id="commentsBox">

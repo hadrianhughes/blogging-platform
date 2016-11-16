@@ -89,18 +89,6 @@ app.get('/getPostList', function(req, res)
     {
         res.end();
     }
-    
-    //blog.getPosts(database, month, callback)
-    /*if(req.query.month == 'January 2016')
-    {
-        var posts = [{ id: 32, name: 'Example 1' }, { id: 21, name: 'Example 2' }, { id: 3, name: 'Example 3' }];
-    }
-    else
-    {
-        var posts = [{ id: 14, name: 'Example 4' }, { id: 80, name: 'Example 5' }, { id: 33, name: 'Example 6' }];
-    }
-
-    res.send(posts);*/
 });
 
 app.get('/search', function(req, res)
@@ -133,6 +121,11 @@ app.get('/loadPost', function(req, res)
         }
     });
 });
+
+app.get('/getComments', function(req, res)
+{
+    
+});
 /* END OF GETS */
 
 /* POSTS */
@@ -160,5 +153,14 @@ app.post('/post', function(req, res)
 app.post('/sendComment', function(req, res)
 {
     //blog.sendComment(database, postID, comment, callback)
+    blog.sendComment(database, req.body.id, req.body.comment, function(err)
+    {
+        if(err)
+        {
+            console.log(err);
+        }
+        
+        res.end();
+    });
 });
 /* END OF POSTS */

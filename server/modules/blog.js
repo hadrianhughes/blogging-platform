@@ -1,3 +1,5 @@
+var ObjectId = require('mongodb').ObjectID;
+
 var blog = {};
 
 /* FUNCTIONS TO BE EXPORTED */
@@ -155,8 +157,23 @@ blog.loadPost = function(db, callback)
 blog.sendComment = function(db, id, comment, callback)
 {
     //Find post in database with selected ID
-        //If it exists, push the comment into the comments array
-    //Callback
+    console.log(comment);
+    try
+    {
+        db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            callback();
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
 };
 
 blog.makePost = function(db, post, callback)
