@@ -27,8 +27,8 @@ blog.getMonths = function(db, callback)
                     {
                         //Get month and year from date of post
                         var dateParts = doc.date.split('/');
-                        var month = dateParts[1];
-                        var year = dateParts[2];
+                        var month = dateParts[0];
+                        var year = dateParts[1];
                         
                         //If not already present in the array...
                         var exists = false;
@@ -72,6 +72,47 @@ blog.getMonths = function(db, callback)
 blog.getPosts = function(db, month, callback)
 {
     //Query database
+    const monthString = month.month + '/' + month.year;
+    
+    try
+    {
+        db.collection('posts').find({ date: monthString }, function(err, cursor)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            try
+            {
+                let posts = [];
+                cursor.each(function(err, doc)
+                {
+                    if(err)
+                    {
+                        throw err;
+                    }
+                    
+                    if(doc)
+                    {
+                        posts.push(doc);
+                    }
+                    else
+                    {
+                        callback(null, posts);
+                    }
+                });
+            }
+            catch(ex)
+            {
+                callback(ex, null);
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex, null);
+    }
         //Find all posts published on the selected month
     //Put all into array
     //Callback
@@ -121,11 +162,11 @@ blog.sendComment = function(db, id, comment, callback)
 blog.makePost = function(db, post, callback)
 {
     const date = new Date();
-    const dateString = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    const dateString = (date.getMonth() + 1) + '/' + date.getFullYear();
     
     try
     {
-        db.collection('posts').save({ date: dateString, title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
+        db.collection('posts').save({ date: dateString, comments: [], title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
         {
             if(err)
             {

@@ -55,8 +55,31 @@ app.get('/getMonths', function(req, res)
 
 app.get('/getPostList', function(req, res)
 {
+    if(req.query.month)
+    {
+        blog.getPosts(database, req.query.month, function(err, posts)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(posts)
+                {
+                    res.send(posts);
+                }
+            }
+        });
+    }
+    else
+    {
+        res.end();
+    }
+    
     //blog.getPosts(database, month, callback)
-    if(req.query.month == 'January 2016')
+    /*if(req.query.month == 'January 2016')
     {
         var posts = [{ id: 32, name: 'Example 1' }, { id: 21, name: 'Example 2' }, { id: 3, name: 'Example 3' }];
     }
@@ -65,7 +88,7 @@ app.get('/getPostList', function(req, res)
         var posts = [{ id: 14, name: 'Example 4' }, { id: 80, name: 'Example 5' }, { id: 33, name: 'Example 6' }];
     }
 
-    res.send(posts);
+    res.send(posts);*/
 });
 
 app.get('/search', function(req, res)

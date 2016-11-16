@@ -30,16 +30,21 @@ export default class Archive extends React.Component
         {
             let months = this.addKeys(data);
 
-            this.setState({ months: months, currentMonth: this.makeMonth(months[0]) });
+            this.setState({ months: months, currentMonth: months[0], currentMonthString: this.makeMonth(months[0]) });
+            
+            $.get('/getPostList', { month: this.state.currentMonth }, function(data)
+            {
+                let posts = this.addKeys(data);
+                console.log(posts[0]);
+    
+                this.setState({ posts: posts });
+            }.bind(this));
         }.bind(this));
 
-        //Get post list from server based on current month
-        /*$.get('/getPostList', { month: this.state.currentMonth }, function(data)
-        {
-            let posts = this.addKeys(data);
+        //Get comments attached to current post from server
+        
 
-            this.setState({ posts: posts });
-        }.bind(this));*/
+        //Get post list from server based on current month
     }
 
     handleButtonClick()
@@ -139,7 +144,7 @@ export default class Archive extends React.Component
                 <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} />
                 <div>
                     <h4>Archive</h4>
-                    <Button onClick={this.handleButtonClick} month={this.state.currentMonth} />
+                    <Button onClick={this.handleButtonClick} month={this.state.currentMonthString} />
                     <OptionList onClick={this.handleMonthClick} items={monthOptions} active={this.state.listOpen} />
                     <PostList onClick={this.handlePostClick} items={this.state.posts} />
                 </div>
