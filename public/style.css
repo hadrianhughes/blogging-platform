@@ -168,8 +168,10 @@ hr
 #header
 {
     height: 30%;
-    background: url('http://placehold.it/1000x300');
-    background-position: center;
+}
+#header img
+{
+    width: 100%;
 }
 /* END OF MAIN STRUCTURE */
 
@@ -303,9 +305,17 @@ hr
 /* END OF ARCHIVE */
 
 /* ARTICLE */
+#title
+{
+    text-align: center;
+    font-size: 36px;
+    font-weight: bolder;
+}
+
 #article
 {
     font-size: 14px;
+    padding: 1%;
 }
 /* END OF ARTICLE */
 

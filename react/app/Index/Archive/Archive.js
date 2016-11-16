@@ -23,7 +23,7 @@ export default class Archive extends React.Component
         this.makeMonth = this.makeMonth.bind(this);
     }
 
-    componentDidMount()
+    /*componentDidMount()
     {
         //Get month list from server
         $.get('/getMonths', function(data)
@@ -40,7 +40,7 @@ export default class Archive extends React.Component
 
             this.setState({ posts: posts });
         }.bind(this));
-    }
+    }*/
 
     handleButtonClick()
     {

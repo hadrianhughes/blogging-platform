@@ -101,7 +101,6 @@ blog.loadPost = function(db, callback)
             
             if(doc)
             {
-                console.log(doc);
                 callback(null, doc);
             }
         });
