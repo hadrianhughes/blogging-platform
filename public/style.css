@@ -60,6 +60,15 @@ hr
     padding: 5%;
 }
 
+.margin-bottom
+{
+    margin-bottom: 3%;
+}
+.margin-right
+{
+    margin-right: 3%;
+}
+
 .content-to-top
 {
     vertical-align: top;
@@ -488,6 +497,15 @@ hr
     margin-bottom: 1%;
 }
 
+#loginForm
+{
+    margin: 0 auto;
+    width: 50%;
+    transform: translateY(50%);
+    background-color: #fbfbfb;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+}
 /* CLASSES */
 .tag
 {
