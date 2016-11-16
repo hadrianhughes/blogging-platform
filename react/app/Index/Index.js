@@ -15,6 +15,7 @@ export default class Index extends React.Component
         
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
     
     componentDidMount()
@@ -27,12 +28,17 @@ export default class Index extends React.Component
     
     handlePhotoClick()
     {
-        this.setState({ isModal: true, modalContents: <div><h3>Change photo</h3><ImageInput onSubmit={(url) => this.handleImageSubmit(url)} /></div> });
+        this.setState({ isModal: true, modalContents: <div><h3>Change photo</h3><ImageInput onSubmit={(url) => this.handleImageSubmit(url)} isClosable={true} onClose={this.closeModal} /></div> });
     }
     
     handleImageSubmit(url)
     {
         console.log(url);
+        this.setState({ isModal: false });
+    }
+    
+    closeModal()
+    {
         this.setState({ isModal: false });
     }
     

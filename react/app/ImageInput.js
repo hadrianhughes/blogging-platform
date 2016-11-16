@@ -27,7 +27,8 @@ export default class ImageInput extends React.Component
         return(
             <div>
                 <input type="text" placeholder="Image URL..." className="textInput" onChange={this.handleChange} />
-                <button className="button" onClick={this.handleClick}>Submit image</button>
+                <button className="button" onClick={this.handleClick}>Submit image</button><br />
+                {this.props.isClosable ? <button className="button" onClick={this.props.onClose}>Close</button> : null}
             </div>
         );
     }
