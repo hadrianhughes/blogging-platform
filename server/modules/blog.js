@@ -151,10 +151,32 @@ blog.loadPost = function(db, callback)
     }
 };
 
+blog.getComments = function(db, id, callback)
+{
+    try
+    {
+        db.collection('posts').findOne({ _id: ObjectId(id) }, function(err, doc)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                callback(null, doc.comments);
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex, null);
+    }
+};
+
 blog.sendComment = function(db, id, comment, callback)
 {
     //Find post in database with selected ID
-    console.log(comment);
     try
     {
         db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)

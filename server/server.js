@@ -125,6 +125,21 @@ app.get('/loadPost', function(req, res)
 app.get('/getComments', function(req, res)
 {
     //Get comments related to postID passed in query
+    blog.getComments(database, req.query.id, function(err, comments)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.end();
+        }
+        else
+        {
+            if(comments)
+            {
+                res.send(comments);
+            }
+        }
+    });
 });
 /* END OF GETS */
 

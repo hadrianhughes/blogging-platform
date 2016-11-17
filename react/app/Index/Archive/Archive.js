@@ -71,6 +71,7 @@ export default class Archive extends React.Component
     {
         //Need to sanitize
         $.post('/sendComment', { id: this.props.postId, comment: comment });
+        this.props.onSendComment();
     }
 
     handleSearch(value)
@@ -145,7 +146,7 @@ export default class Archive extends React.Component
                     <OptionList onClick={this.handleMonthClick} items={monthOptions} active={this.state.listOpen} />
                     <PostList onClick={this.handlePostClick} items={this.state.posts} />
                 </div>
-                <CommentsBox items={this.addKeys(this.props.comments)} onSendComment={(comment) => this.sendComment(comment)} />
+                <CommentsBox items={this.addKeys(this.props.comments.reverse())} onSendComment={(comment) => this.sendComment(comment)} />
             </div>
         );
     }

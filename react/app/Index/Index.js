@@ -16,6 +16,7 @@ export default class Index extends React.Component
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.getComments = this.getComments.bind(this);
     }
 
     componentDidMount()
@@ -43,6 +44,14 @@ export default class Index extends React.Component
     {
         this.setState({ isModal: false });
     }
+    
+    getComments()
+    {
+        $.get('/getComments', { id: this.state.id }, function(data)
+        {
+            this.setState({ comments: data });
+        }.bind(this));
+    }
 
     render()
     {
@@ -60,7 +69,7 @@ export default class Index extends React.Component
                             </td>
                             <td className="content-to-top center-text smaller-padding" id="archive-container">
                                 <div id="archive">
-                                    <Archive postId={this.state.id} comments={this.state.comments} />
+                                    <Archive postId={this.state.id} comments={this.state.comments} onSendComment={this.getComments} />
                                 </div>
                                 <div className="footer">
                                     <button className="button" onClick={this.props.changeToBlogCreation}>Login/Sign Up</button>
