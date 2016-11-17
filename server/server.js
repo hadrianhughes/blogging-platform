@@ -89,12 +89,13 @@ app.get('/getPostList', function(req, res)
                     for(let i = 0;i < posts.length;i++)
                     {
                         let post = {};
-                        post.id = posts[i].id;
+                        post._id = posts[i]._id;
                         post.title = posts[i].title;
 
                         postList.push(post);
                     }
 
+                    postList = postList.reverse();
                     res.send(postList);
                 }
             }
@@ -116,25 +117,28 @@ app.get('/search', function(req, res)
 
 app.get('/loadPost', function(req, res)
 {
-    blog.loadPost(database, function(err, result)
+    if(req.query.postId)
     {
-        if(err)
+        blog.loadPost(database, req.query.postId, function(err, result)
         {
-            console.log(err);
-            res.end();
-        }
-        else
-        {
-            if(result)
+            if(err)
             {
-                res.send(result);
+                console.log(err);
+                res.end();
             }
             else
             {
-                res.end();
+                if(result)
+                {
+                    res.send(result);
+                }
+                else
+                {
+                    res.end();
+                }
             }
-        }
-    });
+        });
+    }
 });
 
 app.get('/getComments', function(req, res)

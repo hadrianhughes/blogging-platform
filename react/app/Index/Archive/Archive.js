@@ -37,6 +37,7 @@ export default class Archive extends React.Component
                 let posts = this.addKeys(data);
 
                 this.setState({ posts: posts });
+                this.props.onReceivePosts(posts);
             }.bind(this));
         }.bind(this));
     }

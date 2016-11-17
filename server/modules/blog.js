@@ -127,18 +127,18 @@ blog.searchPosts = function(db, query, callback)
     callback();
 };
 
-blog.loadPost = function(db, callback)
+blog.loadPost = function(db, postId, callback)
 {
     //Query database
     try
     {
-        db.collection('posts').findOne({ 'title' : 'Test' }, function(err, doc)
+        db.collection('posts').findOne({ '_id' : ObjectId(postId) }, function(err, doc)
         {
             if(err)
             {
                 throw err;
             }
-
+            
             if(doc)
             {
                 callback(null, doc);
@@ -147,7 +147,7 @@ blog.loadPost = function(db, callback)
     }
     catch(ex)
     {
-        callback(ex, null);
+        callback(ex);
     }
 };
 
