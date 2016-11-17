@@ -6,16 +6,9 @@ export default class InputBox extends React.Component
     {
         super();
 
-        this.state = { value: '', remainingChars: 100 };
+        this.state = { remainingChars: 100 };
 
-        this.handleChange = this.handleChange.bind(this);
         this.sendComment = this.sendComment.bind(this);
-    }
-
-    handleChange(e)
-    {
-        this.props.onChange(e.target.value.length);
-        this.setState({ value: e.target.value });
     }
 
     sendComment()
@@ -40,7 +33,7 @@ export default class InputBox extends React.Component
         
         return(
             <form>
-                <input className="textInput" id="commentInput" type="text" placeholder="Leave a comment..." onChange={this.handleChange} />
+                <input value={this.props.value} className="textInput" id="commentInput" type="text" placeholder="Leave a comment..." onChange={this.props.onChange} />
                 <input className="button" type="button" onClick={this.sendComment} value="Send" />
                 {colorActive ? <p className={pColor}>{this.props.remainingChars}</p> : <p>{this.props.remainingChars}</p>}
             </form>
