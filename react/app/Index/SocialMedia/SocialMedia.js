@@ -9,9 +9,18 @@ export default class SocialMedia extends React.Component
         super();
         
         this.state = { bio: '', photo: '' };
+        
+        this.getBlogInfo = this.getBlogInfo.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
     
     componentDidMount()
+    {
+        this.getBlogInfo();
+    }
+    
+    getBlogInfo()
     {
         $.get('/getBlogInfo', function(data)
         {
@@ -20,10 +29,23 @@ export default class SocialMedia extends React.Component
         }.bind(this));
     }
     
+    handleChange(string)
+    {
+        this.setState({ bio: string });
+    }
+    
+    updateBio()
+    {
+        $.post('/updateBio', { bio: this.state.bio }, function()
+        {
+            getBlogInfo();
+        });
+    }
+    
     render()
     {
         return(
-            <About bio={this.state.bio} photo={this.state.photo} onClick={this.props.onPhotoClick} />
+            <About bio={this.state.bio} photo={this.state.photo} onClick={this.props.onPhotoClick} onChange={this.handleChange} onUpdateBio={this.updateBio} />
         );
     }
 }

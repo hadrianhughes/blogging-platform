@@ -179,6 +179,26 @@ app.post('/makeBlog', function(req, res)
     }
 });
 
+app.post('/updateBio', function(req, res)
+{
+    if(req.body.bio)
+    {
+        login.updateBio(req.body.bio, function(err)
+        {
+            if(err)
+            {
+                console.log(err);
+            }
+            
+            res.end();
+        });
+    }
+    else
+    {
+        res.end();
+    }
+});
+
 app.post('/post', function(req, res)
 {
     //Send post to database

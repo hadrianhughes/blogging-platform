@@ -41,4 +41,19 @@ login.makeBlog = function(name, password, callback)
     }
 };
 
+login.updateBio = function(bio, callback)
+{
+    try
+    {
+        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
+        jsonData.bio = bio;
+        fs.writeFile(fileName, JSON.stringify(jsonData));
+        callback();
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+};
+
 module.exports = login;

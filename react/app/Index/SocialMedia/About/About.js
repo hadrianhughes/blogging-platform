@@ -9,8 +9,7 @@ export default class About extends React.Component
     {
         super();
 
-        let maxLength = 300;
-        this.state = { isEditingPhoto: false, isEditingBio: false, maxBioLength: maxLength };
+        this.state = { isEditingPhoto: false, isEditingBio: false, maxBioLength: 300 };
 
         this.handleBioClick = this.handleBioClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -29,6 +28,7 @@ export default class About extends React.Component
             newVal = true;
         }
         this.setState({ isEditingBio: newVal });
+        this.props.onUpdateBio();
     }
 
     handleChange(e)
@@ -36,7 +36,7 @@ export default class About extends React.Component
         //Only update bioValue if the maxLength hasn't been reached
         if(e.target.value.length <= this.state.maxBioLength)
         {
-            this.setState({ bioValue: e.target.value });
+            this.props.onChange(e.target.value);
         }
     }
 
