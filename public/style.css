@@ -34,6 +34,12 @@ hr
     border-top: 1px solid #dadada;
 }
 
+p
+{
+    margin: 0;
+    float: right;
+}
+
 /* CLASSES */
 .center-text
 {
@@ -124,6 +130,11 @@ hr
 .shade-text
 {
     color: #a9a9a9;
+}
+
+.red-text
+{
+    color: red;
 }
 
 .clickable

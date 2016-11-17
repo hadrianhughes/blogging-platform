@@ -162,6 +162,8 @@ export default class Write extends React.Component
                 console.log('Post creation failed.');
             }
         });
+        
+        this.props.onPageChange();
     }
 
     render()

@@ -87,6 +87,12 @@ export default class Article extends React.Component
                 this.moveCaret();
                 document.execCommand('fontSize', false, object.value);
                 this.setState({ modal: 0 });
+                break;
+            case 4:
+                let article = document.getElementById('documentContainer');
+                this.props.onPublish(article.innerHTML);
+                this.setState({ modal: 0 });
+                break;
             default:
                 console.log('Error: function handleModalSubmit should not be called by a Modal with a type of 0.');
                 break;
@@ -100,8 +106,7 @@ export default class Article extends React.Component
 
     publish()
     {
-        let article = document.getElementById('documentContainer');
-        this.props.onPublish(article.innerHTML);
+        this.setState({ modal: 4 });
     }
 
     moveCaret()
@@ -128,6 +133,7 @@ export default class Article extends React.Component
                 </div>
                 <div ref="documentEdit" id="documentContainer" contentEditable></div>
                 <Button onClick={this.publish} />
+                {(this.props.errMsg.length > 0) ? <p className="red-text">{this.props.errMsg}</p> : null}
             </div>
         );
     }

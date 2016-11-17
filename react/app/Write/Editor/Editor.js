@@ -9,7 +9,7 @@ export default class Editor extends React.Component
     {
         super();
         
-        this.state = { title: '' };
+        this.state = { title: '', errMsg: '' };
         
         this.handleChange = this.handleChange.bind(this);
         this.handlePublish = this.handlePublish.bind(this);
@@ -22,7 +22,25 @@ export default class Editor extends React.Component
     handlePublish(content)
     {
         const article = { title: this.state.title, content: content };
-        this.props.onPublish(article);
+        if(article.title && article.content)
+        {
+            this.props.onPublish(article);
+        }
+        else
+        {
+            if(!article.title && !article.content)
+            {
+                this.setState({ errMsg: 'You must have a title and content.' });
+            }
+            else if(!article.title)
+            {
+                this.setState({ errMsg: 'You must have a title.' });
+            }
+            else
+            {
+                this.setState({ errMsg: 'You must have content.' });
+            }
+        }
     }
     
     render()
@@ -31,7 +49,7 @@ export default class Editor extends React.Component
             <div>
                 <Title onChange={this.handleChange} />
                 <br />
-                <Article title={this.state.title} onPublish={(content) => this.handlePublish(content)} />
+                <Article title={this.state.title} errMsg={this.state.errMsg} onPublish={(content) => this.handlePublish(content)} />
             </div>
         );
     }

@@ -40,6 +40,9 @@ export default class Modal extends React.Component
             case 3:
                 retVal = <div id="modal"><input type="number" min="1" max="7" placeholder="3" className="textInput numInput" onChange={this.handleChange} /><button className="button" onClick={this.handleSubmit}>Change</button><br /><button className="button" onClick={this.props.onClose}>Close</button></div>;
                 break;
+            case 4:
+                retVal = <div id="modal"><h3>Are you sure you want to submit the article with the currently selected settings?</h3><button className="button" onClick={this.handleSubmit}>Yes</button><button className="button" onClick={this.props.onClose}>No</button></div>;
+                break;
             default:
                 retVal = null;
         }
