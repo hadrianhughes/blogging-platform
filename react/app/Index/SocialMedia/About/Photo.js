@@ -7,7 +7,7 @@ export default class Photo extends React.Component
         //src for img should ultimately be gotten from server
         return(
             <div className="larger-padding center-text" id="photo" onClick={this.props.onClick}>
-                <img className="logged-in" src="http://placehold.it/300x300" />
+                <img className="logged-in" src={this.props.src} />
             </div>
         );
     }

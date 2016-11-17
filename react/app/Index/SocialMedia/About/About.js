@@ -9,9 +9,8 @@ export default class About extends React.Component
     {
         super();
 
-        let bio = 'Lorem ipsum dolor sit amet'; //Bio should be gotten from server
         let maxLength = 300;
-        this.state = { isEditingPhoto: false, isEditingBio: false, bioValue: bio, maxBioLength: maxLength };
+        this.state = { isEditingPhoto: false, isEditingBio: false, maxBioLength: maxLength };
 
         this.handleBioClick = this.handleBioClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -45,8 +44,8 @@ export default class About extends React.Component
     {
         return(
             <div className="larger-padding" id="about">
-                <Photo onClick={this.props.onClick} editing={this.state.isEditingPhoto} />
-                <Bio onClick={this.handleBioClick} onChange={this.handleChange} editing={this.state.isEditingBio} value={this.state.bioValue} />
+                <Photo src={this.props.photo} onClick={this.props.onClick} editing={this.state.isEditingPhoto} />
+                <Bio onClick={this.handleBioClick} onChange={this.handleChange} editing={this.state.isEditingBio} value={this.props.bio} />
             </div>
         );
     }

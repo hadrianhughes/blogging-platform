@@ -13,6 +13,7 @@ export default class BlogCreation extends React.Component
 
         this.togglePage = this.togglePage.bind(this);
         this.login = this.login.bind(this);
+        this.makeBlog = this.makeBlog.bind(this);
     }
 
     togglePage()
@@ -31,6 +32,15 @@ export default class BlogCreation extends React.Component
     login()
     {
         //Send login details to server which will return a cookie to keep user logged in
+    }
+    
+    makeBlog(blogInfo)
+    {
+        console.log(blogInfo);
+        $.post('/makeBlog', { name: blogInfo.name, password: blogInfo.password }, function()
+        {
+            window.location.reload();
+        });
     }
 
     render()

@@ -25,7 +25,7 @@ export default class SignIn extends React.Component
 
     handleClick()
     {
-        const blogInfo = { name: this.state.username, password: this.state.password };
+        const blogInfo = { name: this.state.blogName, password: this.state.password };
         this.props.onSubmit(blogInfo);
     }
 

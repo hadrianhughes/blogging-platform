@@ -6,6 +6,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 //Import other modules
 var blog = require('./modules/blog');
+var login = require('./modules/login');
 
 //Set up modules
 app.use(bodyParser.json());
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('../public'));
 
 //Set up database details
-var config = require('./config.json');
+var config = require('./cfg/config.json');
 var dbURL = 'mongodb://' + config.database.ip + ':' + config.database.port + '/' + config.database.name;
 
 //Establish connection to database
@@ -42,6 +43,20 @@ var server = app.listen(app.get('port'), function()
 app.get('/', function(req, res)
 {
     res.sendFile('index.html');
+});
+
+app.get('/getBlogInfo', function(req, res)
+{
+    login.getBlogInfo(function(err, bio, photo)
+    {
+        if(err)
+        {
+            console.log(err);
+        }
+        
+        var blogInfo = { bio: bio, photo: photo };
+        res.send(blogInfo);
+    });
 });
 
 app.get('/getMonths', function(req, res)
@@ -144,6 +159,26 @@ app.get('/getComments', function(req, res)
 /* END OF GETS */
 
 /* POSTS */
+app.post('/makeBlog', function(req, res)
+{
+    if(req.body.name && req.body.password)
+    {
+        login.makeBlog(req.body.name, req.body.password, function(err)
+        {
+            if(err)
+            {
+                console.log(err);
+            }
+            
+            res.end();
+        });
+    }
+    else
+    {
+        res.end();
+    }
+});
+
 app.post('/post', function(req, res)
 {
     //Send post to database
@@ -162,6 +197,10 @@ app.post('/post', function(req, res)
                 res.send(true);
             }
         });
+    }
+    else
+    {
+        res.end();
     }
 });
 

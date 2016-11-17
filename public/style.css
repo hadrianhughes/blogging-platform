@@ -370,7 +370,7 @@ hr
 }
 #bio p
 {
-    word-break: break-all;
+    word-break: normal;
 }
 #bio-input
 {
