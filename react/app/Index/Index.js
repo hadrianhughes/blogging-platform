@@ -11,12 +11,15 @@ export default class Index extends React.Component
     {
         super();
 
-        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '' };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '' };
 
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
+        this.handleBioChange = this.handleBioChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.getBlogInfo = this.getBlogInfo.bind(this);
         this.getComments = this.getComments.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
 
     componentDidMount()
@@ -26,6 +29,8 @@ export default class Index extends React.Component
         {
             this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments });
         }.bind(this));
+        
+        this.getBlogInfo();
     }
 
     handlePhotoClick()
@@ -36,8 +41,19 @@ export default class Index extends React.Component
     handleImageSubmit(url)
     {
         //Send URL to server as new blog photo
-        console.log(url);
-        this.setState({ isModal: false });
+        $.post('/updatePhoto', { photo: url }, function()
+        {
+            this.getBlogInfo();
+            this.setState({ isModal: false });
+        }.bind(this));
+    }
+
+    handleBioChange(e)
+    {
+        if(e.target.value.length <= 300)
+        {
+            this.setState({ bio: e.target.value });
+        }
     }
 
     closeModal()
@@ -45,11 +61,27 @@ export default class Index extends React.Component
         this.setState({ isModal: false });
     }
     
+    getBlogInfo()
+    {
+        $.get('/getBlogInfo', function(data)
+        {
+            this.setState({ bio: data.bio, photo: data.photo });
+        }.bind(this));
+    }
+    
     getComments()
     {
         $.get('/getComments', { id: this.state.id }, function(data)
         {
             this.setState({ comments: data });
+        }.bind(this));
+    }
+    
+    updateBio()
+    {
+        $.post('/updateBio', { bio: this.state.bio }, function()
+        {
+            this.getBlogInfo();
         }.bind(this));
     }
 
@@ -62,7 +94,7 @@ export default class Index extends React.Component
                     <tbody>
                         <tr id="body">
                             <td className="content-to-top" id="social-media-container">
-                                <SocialMedia onPhotoClick={this.handlePhotoClick} />
+                                <SocialMedia bio={this.state.bio} photo={this.state.photo} onPhotoClick={this.handlePhotoClick} onBioChange={this.handleBioChange} updateBio={this.updateBio} updateBlog={this.getBlogInfo} />
                             </td>
                             <td className="content-to-top" id="content-container">
                                 <Article banner={this.state.banner} title={this.state.title} content={this.state.content} />

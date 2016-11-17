@@ -9,10 +9,9 @@ export default class About extends React.Component
     {
         super();
 
-        this.state = { isEditingPhoto: false, isEditingBio: false, maxBioLength: 300 };
+        this.state = { isEditingPhoto: false, isEditingBio: false };
 
         this.handleBioClick = this.handleBioClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     handleBioClick()
@@ -22,22 +21,13 @@ export default class About extends React.Component
         if(this.state.isEditingBio)
         {
             newVal = false;
+            this.props.onUpdateBio();
         }
         else
         {
             newVal = true;
         }
         this.setState({ isEditingBio: newVal });
-        this.props.onUpdateBio();
-    }
-
-    handleChange(e)
-    {
-        //Only update bioValue if the maxLength hasn't been reached
-        if(e.target.value.length <= this.state.maxBioLength)
-        {
-            this.props.onChange(e.target.value);
-        }
     }
 
     render()
@@ -45,7 +35,7 @@ export default class About extends React.Component
         return(
             <div className="larger-padding" id="about">
                 <Photo src={this.props.photo} onClick={this.props.onClick} editing={this.state.isEditingPhoto} />
-                <Bio onClick={this.handleBioClick} onChange={this.handleChange} editing={this.state.isEditingBio} value={this.props.bio} />
+                <Bio onClick={this.handleBioClick} onChange={this.props.onChange} editing={this.state.isEditingBio} value={this.props.bio} />
             </div>
         );
     }

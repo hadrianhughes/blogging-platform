@@ -199,6 +199,26 @@ app.post('/updateBio', function(req, res)
     }
 });
 
+app.post('/updatePhoto', function(req, res)
+{
+    if(req.body.photo)
+    {
+        login.updatePhoto(req.body.photo, function(err)
+        {
+            if(err)
+            {
+                console.log(err);
+            }
+            
+            res.end();
+        });
+    }
+    else
+    {
+        res.end();
+    }
+});
+
 app.post('/post', function(req, res)
 {
     //Send post to database

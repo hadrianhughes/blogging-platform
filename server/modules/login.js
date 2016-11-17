@@ -18,6 +18,7 @@ login.getBlogInfo = function(callback)
 
 login.makeBlog = function(name, password, callback)
 {
+    //Make JSON object full of login info and default blog info
     var blogInfo = {
         "name" : name,
         "password" : password,
@@ -27,11 +28,16 @@ login.makeBlog = function(name, password, callback)
     
     try
     {
+        //Get data currently stored in blog.json
         var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
+        
+        //Change all the data to the details in blogInfo object
         jsonData.name = blogInfo.name;
         jsonData.password = blogInfo.password;
         jsonData.bio = blogInfo.bio;
         jsonData.photo = blogInfo.photo;
+        
+        //Overwrite file with new details
         fs.writeFile(fileName, JSON.stringify(jsonData));
         callback();
     }
@@ -47,6 +53,21 @@ login.updateBio = function(bio, callback)
     {
         var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
         jsonData.bio = bio;
+        fs.writeFile(fileName, JSON.stringify(jsonData));
+        callback();
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+};
+
+login.updatePhoto = function(url, callback)
+{
+    try
+    {
+        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
+        jsonData.photo = url;
         fs.writeFile(fileName, JSON.stringify(jsonData));
         callback();
     }
