@@ -66,6 +66,13 @@ export default class Archive extends React.Component
     handlePostClick(e)
     {
         //Load selected article
+        for(let i = 0;i < this.state.posts.length;i++)
+        {
+            if(this.state.posts[i].title == e.target.text)
+            {
+                this.props.onPostClick(this.state.posts[i]._id);
+            }
+        }
     }
 
     sendComment(comment)

@@ -21,6 +21,7 @@ export default class Index extends React.Component
         this.getComments = this.getComments.bind(this);
         this.updateBio = this.updateBio.bind(this);
         this.handleReceivedPosts = this.handleReceivedPosts.bind(this);
+        this.loadPost = this.loadPost.bind(this);
     }
 
     componentDidMount()
@@ -88,7 +89,12 @@ export default class Index extends React.Component
     
     handleReceivedPosts(posts)
     {
-        $.get('/loadPost', { postId: posts[0]._id }, function(data)
+        this.loadPost(posts[0]._id);
+    }
+    
+    loadPost(postId)
+    {
+        $.get('/loadPost', { postId: postId }, function(data)
         {
             this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments });
         }.bind(this));
@@ -110,7 +116,7 @@ export default class Index extends React.Component
                             </td>
                             <td className="content-to-top center-text smaller-padding" id="archive-container">
                                 <div id="archive">
-                                    <Archive postId={this.state.id} onReceivePosts={(posts) => this.handleReceivedPosts(posts)} comments={this.state.comments} onSendComment={this.getComments} />
+                                    <Archive postId={this.state.id} onReceivePosts={(posts) => this.handleReceivedPosts(posts)} comments={this.state.comments} onSendComment={this.getComments} onPostClick={(postId) => this.loadPost(postId)} />
                                 </div>
                                 <div className="footer">
                                     <button className="button" onClick={this.props.changeToBlogCreation}>Login/Sign Up</button>
