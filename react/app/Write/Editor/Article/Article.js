@@ -133,7 +133,7 @@ export default class Article extends React.Component
                 </div>
                 <div ref="documentEdit" id="documentContainer" contentEditable></div>
                 <Button onClick={this.publish} />
-                {(this.props.errMsg.length > 0) ? <p className="red-text">{this.props.errMsg}</p> : null}
+                {(this.props.errMsg.length > 0) ? <p className="red-text float-right">{this.props.errMsg}</p> : null}
             </div>
         );
     }

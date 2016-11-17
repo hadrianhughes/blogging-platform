@@ -34,12 +34,6 @@ hr
     border-top: 1px solid #dadada;
 }
 
-p
-{
-    margin: 0;
-    float: right;
-}
-
 /* CLASSES */
 .center-text
 {
@@ -145,6 +139,11 @@ p
 .small-text
 {
     font-size: 12px;
+}
+
+.float-right
+{
+    float: right;
 }
 
 .footer

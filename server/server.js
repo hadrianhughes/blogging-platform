@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var cookieParser = require('cookie-parser');
 
 //Import other modules
 var blog = require('./modules/blog');
@@ -11,6 +12,7 @@ var login = require('./modules/login');
 //Set up modules
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //Set up static paths
 app.use(express.static('../public'));
@@ -43,6 +45,59 @@ var server = app.listen(app.get('port'), function()
 app.get('/', function(req, res)
 {
     res.sendFile('index.html');
+});
+
+app.get('/login', function(req, res)
+{
+    if(req.query.name && req.query.password)
+    {
+        login.login(req.query.name, req.query.password, function(err, successful, randString)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(successful)
+                {
+                    res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                    res.end();
+                }
+                else
+                {
+                    res.end();
+                }
+            }
+        });
+    }
+    else
+    {
+        res.end();
+    }
+});
+
+app.get('/isLoggedIn', function(req, res)
+{
+    if(req.cookies.loggedIn)
+    {
+        login.checkCookie(req.cookies.loggedIn, function(correct)
+        {
+            if(correct)
+            {
+                res.json({ loggedIn: true });
+            }
+            else
+            {
+                res.json({ loggedIn: false });
+            }
+        });
+    }
+    else
+    {
+        res.json({ loggedIn: false });
+    }
 });
 
 app.get('/getBlogInfo', function(req, res)
@@ -250,7 +305,6 @@ app.post('/post', function(req, res)
 
 app.post('/sendComment', function(req, res)
 {
-    //blog.sendComment(database, postID, comment, callback)
     blog.sendComment(database, req.body.id, req.body.comment, function(err)
     {
         if(err)

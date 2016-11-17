@@ -11,7 +11,7 @@ export default class Index extends React.Component
     {
         super();
 
-        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '' };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '', loggedIn: false };
 
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
@@ -31,6 +31,14 @@ export default class Index extends React.Component
         {
             this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments });
         }.bind(this));
+        
+        $.get('/isLoggedIn', function(data)
+        {
+            if(data.loggedIn)
+            {
+                this.setState({ loggedIn: true });
+            }
+        });
         
         this.getBlogInfo();
     }
@@ -109,7 +117,7 @@ export default class Index extends React.Component
                     <tbody>
                         <tr id="body">
                             <td className="content-to-top" id="social-media-container">
-                                <SocialMedia bio={this.state.bio} photo={this.state.photo} onPhotoClick={this.handlePhotoClick} onBioChange={this.handleBioChange} updateBio={this.updateBio} updateBlog={this.getBlogInfo} />
+                                <SocialMedia loggedIn={this.state.loggedIn} bio={this.state.bio} photo={this.state.photo} onPhotoClick={this.handlePhotoClick} onBioChange={this.handleBioChange} updateBio={this.updateBio} updateBlog={this.getBlogInfo} />
                             </td>
                             <td className="content-to-top" id="content-container">
                                 <Article banner={this.state.banner} title={this.state.title} content={this.state.content} />

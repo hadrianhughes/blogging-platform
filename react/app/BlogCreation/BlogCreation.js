@@ -29,9 +29,13 @@ export default class BlogCreation extends React.Component
         }
     }
 
-    login()
+    login(details)
     {
         //Send login details to server which will return a cookie to keep user logged in
+        $.get('/login', { name: details.name, password: details.password }, function()
+        {
+            window.location.reload();
+        });
     }
     
     makeBlog(blogInfo)
@@ -39,6 +43,7 @@ export default class BlogCreation extends React.Component
         console.log(blogInfo);
         $.post('/makeBlog', { name: blogInfo.name, password: blogInfo.password }, function()
         {
+            console.log('.');
             window.location.reload();
         });
     }
@@ -47,7 +52,7 @@ export default class BlogCreation extends React.Component
     {
         return(
             <div>
-                {this.state.isSignIn ? <SignIn onSubmit={this.login} onTogglePage={this.togglePage} onReturn={this.props.onReturn} /> : null}
+                {this.state.isSignIn ? <SignIn onSubmit={(details) => this.login(details)} onTogglePage={this.togglePage} onReturn={this.props.onReturn} /> : null}
                 {this.state.isSignUp ? <SignUp onSubmit={this.makeBlog} onTogglePage={this.togglePage} onReturn={this.props.onReturn} /> : null}
             </div>
         );

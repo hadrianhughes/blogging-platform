@@ -3,5 +3,10 @@
         "ip" : "localhost",
         "port" : "27017",
         "name" : "blog"
+    },
+    
+    "settings" : {
+        "authenticationPrefix" : "abc",
+        "cookieExpiration" : 60000
     }
 }
