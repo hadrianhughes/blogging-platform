@@ -164,9 +164,25 @@ app.get('/getPostList', function(req, res)
 
 app.get('/search', function(req, res)
 {
-    blog.searchPosts(database, req.query.query, function(results)
+    blog.searchPosts(database, req.query.query, function(err, results)
     {
-        res.send([{ id: 32, name: 'Example 1' }, { id: 80, name: 'Example 2' }]);
+        if(err)
+        {
+            console.log(err);
+            res.end();
+        }
+        else
+        {
+            if(results)
+            {
+                console.log(results);
+                res.send(results);
+            }
+            else
+            {
+                res.end();
+            }
+        }
     });
 });
 
@@ -185,7 +201,6 @@ app.get('/loadPost', function(req, res)
             {
                 if(result)
                 {
-                    console.log(result);
                     res.send(result);
                 }
                 else

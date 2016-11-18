@@ -117,14 +117,61 @@ blog.getPosts = function(db, month, callback)
     }
 };
 
-blog.searchPosts = function(db, query, callback)
+blog.searchPosts = function(db, term, callback)
 {
+    var QUERY = new RegExp(".*" + term + ".*", 'i');
+    
     //Query database
+    try
+    {
+        db.collection('posts').find({
+            "$or": [{
+                "title" : { $regex: QUERY }
+            },{
+                "tags.value" : term
+            }]
+        }, function(err, cursor)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            let posts = [];
+            
+            try
+            {
+                cursor.each(function(err, doc)
+                {
+                    if(err)
+                    {
+                        throw err;
+                    }
+                    
+                    if(doc)
+                    {
+                        posts.push(doc);
+                    }
+                    else
+                    {
+                        callback(null, posts);
+                    }
+                });
+            }
+            catch(ex)
+            {
+                callback(ex);
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
         //Find all posts with tags matching the query
         //Find all posts which contain the query in their name
     //Add all to array
     //Callback
-    callback();
 };
 
 blog.loadPost = function(db, postId, callback)
