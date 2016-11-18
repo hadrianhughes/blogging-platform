@@ -223,17 +223,77 @@ blog.getComments = function(db, id, callback)
 
 blog.sendComment = function(db, id, comment, callback)
 {
-    //Find post in database with selected ID
     try
     {
-        db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
+        //Find related post in DB
+        db.collection('posts').findOne({ _id: ObjectId(id) }, function(err, doc)
         {
             if(err)
             {
                 throw err;
             }
-
-            callback();
+            
+            //If the post is found
+            if(doc)
+            {
+                //If profanity is allowed
+                if(doc.allowProfanity == 'true')
+                {
+                    try
+                    {
+                        //Add the comment to the post
+                        db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
+                        {
+                            if(err)
+                            {
+                                throw err;
+                            }
+                
+                            callback();
+                        });
+                    }
+                    catch(ex)
+                    {
+                        callback(ex);
+                    }
+                }
+                else
+                {
+                    console.log(',');
+                    //Otherwise, look for profanity
+                    filterProfanity(db, comment, function(containsProfanity)
+                    {
+                        if(containsProfanity)
+                        {
+                            //Reject the comment if it contains profanity
+                            callback();
+                        }
+                        else
+                        {
+                            try
+                            {
+                                db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
+                                {
+                                    if(err)
+                                    {
+                                        throw err;
+                                    }
+                        
+                                    callback();
+                                });
+                            }
+                            catch(ex)
+                            {
+                                callback(ex);
+                            }
+                        }
+                    });
+                }
+            }
+            else
+            {
+                callback();
+            }
         });
     }
     catch(ex)
@@ -331,6 +391,55 @@ function sortMonths(months, callback)
     }
 
     callback(retArray);
+}
+
+function filterProfanity(db, text, callback)
+{
+    var containsProfanity = false;
+    try
+    {
+        //Get list of all banned words
+        db.collection('banned-words').find({}, function(err, cursor)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            try
+            {
+                //For each word
+                cursor.each(function(err, doc)
+                {
+                    if(err)
+                    {
+                        throw err;
+                    }
+                    
+                    if(doc)
+                    {
+                        //If the comment contains it
+                        if(text.toLowerCase().indexOf(doc.value) !== -1)
+                        {
+                            containsProfanity = true;
+                        }
+                    }
+                    else
+                    {
+                        callback(containsProfanity);
+                    }
+                });
+            }
+            catch(ex)
+            {
+                console.log(ex);
+            }
+        });
+    }
+    catch(ex)
+    {
+        console.log(ex);
+    }
 }
 /* END OF INTERNAL FUNCTIONS */
 
