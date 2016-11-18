@@ -44,7 +44,7 @@ export default class Archive extends React.Component
             }.bind(this));
         }.bind(this));
     }
-
+    
     handleButtonClick()
     {
         //Toggle listOpen variable
@@ -93,8 +93,10 @@ export default class Archive extends React.Component
     sendComment(comment)
     {
         //Need to sanitize
-        $.post('/sendComment', { id: this.props.postId, comment: comment });
-        this.props.onSendComment();
+        $.post('/sendComment', { id: this.props.postId, comment: comment }, function()
+        {
+            this.props.onSendComment();
+        }.bind(this));
     }
 
     handleSearch(value)
