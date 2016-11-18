@@ -127,10 +127,7 @@ login.checkCookie = function(cookie, callback)
         var cookiePrefix = cookie.substring(0, 3);
         var cookieValue = cookie.substring(3);
         
-        console.log(STRING + ' ' + cookiePrefix);
-        console.log(PREFIX + ' ' + cookieValue);
-        
-        if(cookiePrefix == PREFIX && cookieValue == STRING)
+        if(cookiePrefix === PREFIX && cookieValue === STRING.substring(3))
         {
             callback(true);
         }

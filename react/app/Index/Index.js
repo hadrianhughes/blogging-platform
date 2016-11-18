@@ -36,9 +36,10 @@ export default class Index extends React.Component
         {
             if(data.loggedIn)
             {
+                console.log(data.loggedIn);
                 this.setState({ loggedIn: true });
             }
-        });
+        }.bind(this));
         
         this.getBlogInfo();
     }

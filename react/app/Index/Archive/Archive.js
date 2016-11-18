@@ -63,12 +63,12 @@ export default class Archive extends React.Component
         }.bind(this));
     }
 
-    handlePostClick(e)
+    handlePostClick(id)
     {
         //Load selected article
         for(let i = 0;i < this.state.posts.length;i++)
         {
-            if(this.state.posts[i].title == e.target.text)
+            if(this.state.posts[i].id == id)
             {
                 this.props.onPostClick(this.state.posts[i]._id);
             }
@@ -152,7 +152,7 @@ export default class Archive extends React.Component
                     <h4>Archive</h4>
                     <Button onClick={this.handleButtonClick} month={this.state.currentMonthString} />
                     <OptionList onClick={this.handleMonthClick} items={monthOptions} active={this.state.listOpen} />
-                    <PostList onClick={this.handlePostClick} items={this.state.posts} />
+                    <PostList onClick={(id) => this.handlePostClick(id)} items={this.state.posts} />
                 </div>
                 <CommentsBox items={this.addKeys(this.props.comments.reverse())} onSendComment={(comment) => this.sendComment(comment)} />
             </div>
