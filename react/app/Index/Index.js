@@ -129,7 +129,7 @@ export default class Index extends React.Component
                                 </div>
                                 <div className="footer">
                                     <button className="button" onClick={this.props.changeToBlogCreation}>Login/Sign Up</button>
-                                    <button className="button" onClick={this.props.changeToWrite}>Write an article</button>
+                                    {this.state.loggedIn ? <button className="button" onClick={this.props.changeToWrite}>Write an article</button> : null}
                                 </div>
                             </td>
                         </tr>
