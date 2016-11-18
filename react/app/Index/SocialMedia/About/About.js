@@ -14,28 +14,31 @@ export default class About extends React.Component
         this.handleBioClick = this.handleBioClick.bind(this);
     }
 
-    handleBioClick()
+    handleBioClick(loggedIn)
     {
-        //Toggle isEditingBio
-        let newVal;
-        if(this.state.isEditingBio)
+        if(loggedIn)
         {
-            newVal = false;
-            this.props.onUpdateBio();
+            //Toggle isEditingBio
+            let newVal;
+            if(this.state.isEditingBio)
+            {
+                newVal = false;
+                this.props.onUpdateBio();
+            }
+            else
+            {
+                newVal = true;
+            }
+            this.setState({ isEditingBio: newVal });
         }
-        else
-        {
-            newVal = true;
-        }
-        this.setState({ isEditingBio: newVal });
     }
 
     render()
     {
         return(
             <div className="larger-padding" id="about">
-                <Photo loggedIn={this.props.loggedIn} src={this.props.photo} onClick={this.props.onClick} editing={this.state.isEditingPhoto} />
-                <Bio loggedIn={this.props.loggedIn} onClick={this.handleBioClick} onChange={this.props.onChange} editing={this.state.isEditingBio} value={this.props.bio} />
+                <Photo loggedIn={this.props.loggedIn} src={this.props.photo} onClick={(loggedIn) => this.props.onClick(loggedIn)} editing={this.state.isEditingPhoto} />
+                <Bio loggedIn={this.props.loggedIn} onClick={(loggedIn) => this.handleBioClick(loggedIn)} onChange={this.props.onChange} editing={this.state.isEditingBio} value={this.props.bio} />
             </div>
         );
     }

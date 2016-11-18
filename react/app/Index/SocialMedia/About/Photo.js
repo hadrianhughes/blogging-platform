@@ -11,7 +11,7 @@ export default class Photo extends React.Component
         }
         
         return(
-            <div className="larger-padding center-text" id="photo" onClick={this.props.onClick}>
+            <div className="larger-padding center-text" id="photo" onClick={() => this.props.onClick(this.props.loggedIn)}>
                 <img className={imgClass} src={this.props.src} />
             </div>
         );
