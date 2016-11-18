@@ -11,7 +11,7 @@ export default class Index extends React.Component
     {
         super();
 
-        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '', loggedIn: false };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '', commentLength: 100, loggedIn: false };
 
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
@@ -26,12 +26,6 @@ export default class Index extends React.Component
 
     componentDidMount()
     {
-        //Get latest post from server
-        $.get('/loadPost', function(data)
-        {
-            this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments });
-        }.bind(this));
-        
         $.get('/isLoggedIn', function(data)
         {
             if(data.loggedIn)
@@ -108,7 +102,8 @@ export default class Index extends React.Component
     {
         $.get('/loadPost', { postId: postId }, function(data)
         {
-            this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments });
+            this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments, commentLength: data.length });
+            
         }.bind(this));
     }
 
@@ -128,7 +123,7 @@ export default class Index extends React.Component
                             </td>
                             <td className="content-to-top center-text smaller-padding" id="archive-container">
                                 <div id="archive">
-                                    <Archive postId={this.state.id} onReceivePosts={(posts) => this.handleReceivedPosts(posts)} comments={this.state.comments} onSendComment={this.getComments} onPostClick={(postId) => this.loadPost(postId)} />
+                                    <Archive postId={this.state.id} commentLength={this.state.commentLength} onReceivePosts={(posts) => this.handleReceivedPosts(posts)} comments={this.state.comments} onSendComment={this.getComments} onPostClick={(postId) => this.loadPost(postId)} />
                                 </div>
                                 <div className="footer">
                                     <button className="button" onClick={this.props.changeToBlogCreation}>Login/Sign Up</button>

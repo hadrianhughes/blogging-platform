@@ -202,7 +202,7 @@ blog.makePost = function(db, post, callback)
 
     try
     {
-        db.collection('posts').save({ date: dateString, comments: [], title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit }, function(err)
+        db.collection('posts').save({ date: dateString, comments: [], title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit, length: post.length }, function(err)
         {
             if(err)
             {

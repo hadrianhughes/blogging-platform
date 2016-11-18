@@ -185,6 +185,7 @@ app.get('/loadPost', function(req, res)
             {
                 if(result)
                 {
+                    console.log(result);
                     res.send(result);
                 }
                 else

@@ -8,7 +8,8 @@ export default class CommentsBox extends React.Component
     {
         super();
         
-        this.state = { charLimit: 100, remainingChars: 100, value: '' };
+        
+        this.state = { value: '' };
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,19 +23,43 @@ export default class CommentsBox extends React.Component
     
     handleSubmit()
     {
-        this.props.onSendComment(this.state.value);
-        this.setState({ value: '' });
+        if(this.props.charLimit > 0)
+        {
+            if((this.props.charLimit - this.state.value.length) >= 0)
+            {
+                this.props.onSendComment(this.state.value);
+                this.setState({ value: '' });
+            }
+        }
+        else
+        {
+            if((100 - this.state.value.length) >= 0)
+            {
+                this.props.onSendComment(this.state.value);
+                this.setState({ value: '' });
+            }
+        }
     }
     
     render()
     {
         let items = this.props.items.map((item) => <li key={item.id} className="comment"><div className="commentAuthor">{item.author}</div><div className="commentBody">{item.value}</div></li>);
 
+        let remainingChars;
+        if(this.props.charLimit > 0)
+        {
+            remainingChars = this.props.charLimit - this.state.value.length;
+        }
+        else
+        {
+            remainingChars = 100 - this.state.value.length;
+        }
+
         return(
             <div id="commentsBox">
                 <h4>Comments</h4>
                 <ul className="border">{items}</ul>
-                <InputBox value={this.state.value} remainingChars={this.state.remainingChars} onChange={this.handleChange} onSubmit={this.handleSubmit} />
+                <InputBox value={this.state.value} remainingChars={remainingChars} onChange={this.handleChange} onSubmit={this.handleSubmit} />
             </div>
         );
     }

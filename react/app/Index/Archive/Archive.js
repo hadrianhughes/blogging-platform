@@ -12,7 +12,7 @@ export default class Archive extends React.Component
     {
         super();
 
-        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], currentPost: [], searchResults: [] };
+        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], currentPost: {}, searchResults: [] };
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
@@ -34,10 +34,12 @@ export default class Archive extends React.Component
 
             $.get('/getPostList', { month: this.state.currentMonth }, function(data)
             {
-                let posts = this.addKeys(data);
-
-                this.setState({ posts: posts });
-                this.props.onReceivePosts(posts);
+                if(data.length > 0)
+                {
+                    let posts = this.addKeys(data);
+                    this.setState({ posts: posts });
+                    this.props.onReceivePosts(posts);
+                }
             }.bind(this));
         }.bind(this));
     }
@@ -144,7 +146,7 @@ export default class Archive extends React.Component
 
         //Add keys to months array
         let monthOptions = this.addKeys(months);
-
+        
         return(
             <div>
                 <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} />
@@ -154,7 +156,7 @@ export default class Archive extends React.Component
                     <OptionList onClick={this.handleMonthClick} items={monthOptions} active={this.state.listOpen} />
                     <PostList onClick={(id) => this.handlePostClick(id)} items={this.state.posts} />
                 </div>
-                <CommentsBox items={this.addKeys(this.props.comments.reverse())} onSendComment={(comment) => this.sendComment(comment)} />
+                <CommentsBox items={this.addKeys(this.props.comments.reverse())} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
             </div>
         );
     }
