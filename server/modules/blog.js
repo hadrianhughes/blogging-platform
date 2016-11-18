@@ -227,7 +227,6 @@ blog.sendComment = function(db, id, comment, callback)
     {
         if(containsSpam)
         {
-            console.log('1');
             callback();
         }
         else
@@ -459,8 +458,9 @@ function filterSpam(text, callback)
 {
     var containsSpam = false;
     
-    //All caps is not allowed
+    //All caps and links are not allowed
     if(text === text.toUpperCase()) containsSpam = true;
+    if(text.indexOf('http://') > -1) containsSpam = true;
     
     var previousChar = '', charCount = 0;
     for(var i = 0;i < text.length;i++)
