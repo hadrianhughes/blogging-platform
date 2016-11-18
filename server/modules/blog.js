@@ -128,7 +128,7 @@ blog.searchPosts = function(db, term, callback)
             "$or": [{
                 "title" : { $regex: QUERY }
             },{
-                "tags.value" : term
+                "tags.value" : term.toLowerCase()
             }]
         }, function(err, cursor)
         {

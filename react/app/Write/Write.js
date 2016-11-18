@@ -86,27 +86,29 @@ export default class Write extends React.Component
         const input = e.target.value;
 
         //If it isn't empty...
-        if(input)
-        {
             //...if the last character is a comma or a space
+        if(input.length - 1 > 0)
+        {
             if((input[input.length - 1] == ',') || (input[input.length - 1] == ' '))
             {
                 //Make a new tag with a value equal to the text box value without the last character
                 let tag = {};
-                tag.value = e.target.value.substring(0, e.target.value.length - 1);
-
+                tag.value = e.target.value.substring(0, e.target.value.length - 1).toLowerCase();
                 //Add the new tag to the tags array
                 let tagContainer = this.state.tags;
                 tagContainer.push(tag);
                 tagContainer = this.addKeys(tagContainer);
-
-                //Set to state and reset tag input box
+                        //Set to state and reset tag input box
                 this.setState({ tags: tagContainer, tagInputValue: '' });
             }
             else
             {
                 this.setState({ tagInputValue: input });
             }
+        }
+        else
+        {
+            this.setState({ tagInputValue: input });
         }
     }
 

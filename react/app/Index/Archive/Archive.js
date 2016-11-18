@@ -17,6 +17,7 @@ export default class Archive extends React.Component
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
         this.handlePostClick = this.handlePostClick.bind(this);
+        this.handleResultClick = this.handleResultClick.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.sendComment = this.sendComment.bind(this);
         this.addKeys = this.addKeys.bind(this);
@@ -73,6 +74,18 @@ export default class Archive extends React.Component
             if(this.state.posts[i].id == id)
             {
                 this.props.onPostClick(this.state.posts[i]._id);
+            }
+        }
+    }
+    
+    handleResultClick(id)
+    {
+        //Load selected article
+        for(let i = 0;i < this.state.searchResults.length;i++)
+        {
+            if(this.state.searchResults[i].id == id)
+            {
+                this.props.onPostClick(this.state.searchResults[i]._id);
             }
         }
     }
@@ -149,7 +162,7 @@ export default class Archive extends React.Component
         
         return(
             <div>
-                <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} />
+                <SearchBox results={this.state.searchResults} active={this.state.searchOpen} onSubmit={(value) => this.handleSearch(value)} onClickPost={(id) => this.handleResultClick(id)} />
                 <div>
                     <h4>Archive</h4>
                     <Button onClick={this.handleButtonClick} month={this.state.currentMonthString} />

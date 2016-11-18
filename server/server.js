@@ -175,7 +175,6 @@ app.get('/search', function(req, res)
         {
             if(results)
             {
-                console.log(results);
                 res.send(results);
             }
             else
