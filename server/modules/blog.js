@@ -223,55 +223,35 @@ blog.getComments = function(db, id, callback)
 
 blog.sendComment = function(db, id, comment, callback)
 {
-    try
+    filterSpam(comment, function(containsSpam)
     {
-        //Find related post in DB
-        db.collection('posts').findOne({ _id: ObjectId(id) }, function(err, doc)
+        if(containsSpam)
         {
-            if(err)
+            console.log('1');
+            callback();
+        }
+        else
+        {
+            try
             {
-                throw err;
-            }
-            
-            //If the post is found
-            if(doc)
-            {
-                //If profanity is allowed
-                if(doc.allowProfanity == 'true')
+                //Find related post in DB
+                db.collection('posts').findOne({ _id: ObjectId(id) }, function(err, doc)
                 {
-                    try
+                    if(err)
                     {
-                        //Add the comment to the post
-                        db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
-                        {
-                            if(err)
-                            {
-                                throw err;
-                            }
-                
-                            callback();
-                        });
+                        throw err;
                     }
-                    catch(ex)
+                    
+                    //If the post is found
+                    if(doc)
                     {
-                        callback(ex);
-                    }
-                }
-                else
-                {
-                    console.log(',');
-                    //Otherwise, look for profanity
-                    filterProfanity(db, comment, function(containsProfanity)
-                    {
-                        if(containsProfanity)
+                        //If profanity is allowed
+                        if(doc.allowProfanity == 'true')
                         {
-                            //Reject the comment if it contains profanity
-                            callback();
-                        }
-                        else
-                        {
+                            console.log('1');
                             try
                             {
+                                //Add the comment to the post
                                 db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
                                 {
                                     if(err)
@@ -287,19 +267,51 @@ blog.sendComment = function(db, id, comment, callback)
                                 callback(ex);
                             }
                         }
-                    });
-                }
+                        else
+                        {
+                            //Otherwise, look for profanity
+                            filterProfanity(db, comment, function(containsProfanity)
+                            {
+                                if(containsProfanity)
+                                {
+                                    console.log('contains');
+                                    //Reject the comment if it contains profanity
+                                    callback();
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        db.collection('posts').updateOne({ _id: ObjectId(id) }, { $push: { comments: { value: comment }}}, function(err)
+                                        {
+                                            if(err)
+                                            {
+                                                throw err;
+                                            }
+                                
+                                            callback();
+                                        });
+                                    }
+                                    catch(ex)
+                                    {
+                                        callback(ex);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    else
+                    {
+                        callback();
+                    }
+                });
             }
-            else
+            catch(ex)
             {
-                callback();
+                callback(ex);
             }
-        });
-    }
-    catch(ex)
-    {
-        callback(ex);
-    }
+        }
+    });
 };
 
 blog.makePost = function(db, post, callback)
@@ -418,8 +430,9 @@ function filterProfanity(db, text, callback)
                     
                     if(doc)
                     {
-                        //If the comment contains it
-                        if(text.toLowerCase().indexOf(doc.value) !== -1)
+                        //If the comment contains it as a whole word
+                        var regex = new RegExp('\\b' + doc.value + '\\b');
+                        if(text.toLowerCase().search(regex) > -1)
                         {
                             containsProfanity = true;
                         }
@@ -440,6 +453,39 @@ function filterProfanity(db, text, callback)
     {
         console.log(ex);
     }
+}
+
+function filterSpam(text, callback)
+{
+    var containsSpam = false;
+    
+    //All caps is not allowed
+    if(text === text.toUpperCase()) containsSpam = true;
+    
+    var previousChar = '', charCount = 0;
+    for(var i = 0;i < text.length;i++)
+    {
+        //If the current character is the same as the previous
+        //Keep a record of how many times the same character has recurred
+        if(text[i] == previousChar)
+        {
+            charCount++;
+        }
+        else
+        {
+            charCount = 0;
+        }
+        
+        //If the same character recurs 4 times, block the comment
+        if(charCount > 3)
+        {
+            containsSpam = true;
+        }
+        
+        previousChar = text[i];
+    }
+    
+    callback(containsSpam);
 }
 /* END OF INTERNAL FUNCTIONS */
 
