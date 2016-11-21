@@ -586,15 +586,34 @@ hr
 
 
 /* MOBILE */
-#mobBlogInfo
+#btnMobBlogInfo
 {
     position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40vw;
+    height: 10vh;
+    font-size: 60px;
+}
+
+#mobBlogInfo
+{
+    top: -100vh;
+    
+    position: fixed;
     padding: 5%;
-    width: 90vw;
-    height: 90vh;
+    
+    width: 85vw;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    height: 80vh;
     text-align: center;
+    border-radius: 40px;
     
     font-size: 24px;
+    
+    background-color: #fbfbfb;
 }
 
 #mobPhoto
