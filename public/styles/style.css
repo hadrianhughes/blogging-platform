@@ -583,3 +583,23 @@ hr
     background-color: #e3f7bb;
 }
 /* END OF ARTICLE CREATION STYLING */
+
+
+/* MOBILE */
+#mobBlogInfo
+{
+    position: fixed;
+    padding: 5%;
+    width: 90vw;
+    height: 90vh;
+    text-align: center;
+    
+    font-size: 24px;
+}
+
+#mobPhoto
+{
+    height: 400px;
+    width: 400px;
+}
+/* END OF MOBILE */

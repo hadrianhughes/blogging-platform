@@ -61,6 +61,11 @@ app.get('/getDesktop', function(req, res)
     res.sendFile('js/bundle.js', { root: '../public' });
 });
 
+app.get('/getMobileStyle', function(req, res)
+{
+    res.sendFile('styles/style.css');
+});
+
 app.get('/login', function(req, res)
 {
     if(req.query.name && req.query.password)
