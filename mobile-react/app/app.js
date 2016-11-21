@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Content from './Content/Content';
 import BlogInfo from './BlogInfo/BlogInfo';
+import PostList from './PostList/PostList';
 
 class App extends React.Component
 {
@@ -27,6 +28,7 @@ class App extends React.Component
             <div>
                 <BlogInfo photo={this.state.photo} bio={this.state.bio} />
                 <Content title={this.state.title} text={this.state.text} />
+                <PostList />
             </div>
         );
     }

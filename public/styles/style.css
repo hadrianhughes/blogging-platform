@@ -586,7 +586,8 @@ hr
 
 
 /* MOBILE */
-#btnMobBlogInfo
+#btnMobBlogInfo,
+#btnMobPostList
 {
     position: fixed;
     left: 50%;
@@ -595,10 +596,18 @@ hr
     height: 10vh;
     font-size: 60px;
 }
-
-#mobBlogInfo
+#btnMobBlogInfo
 {
-    top: -100vh;
+    top: 0;
+}
+#btnMobPostList
+{
+    bottom: 0;
+}
+
+#mobBlogInfo,
+#mobPostList
+{
     
     position: fixed;
     padding: 5%;
@@ -614,6 +623,14 @@ hr
     font-size: 24px;
     
     background-color: #fbfbfb;
+}
+#mobBlogInfo
+{
+    top: -100vh;
+}
+#mobPostList
+{
+    bottom: -100vh;
 }
 
 #mobPhoto

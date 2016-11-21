@@ -4,8 +4,15 @@ $(document).ready(function()
     {
         setTimeout(function()
         {
-            console.log('.');
             $('#mobBlogInfo').animate({ top: 0 });
+        }, 100);
+    });
+    
+    $('#app').on('click', '#btnMobPostList', function()
+    {
+        setTimeout(function()
+        {
+            $('#mobPostList').animate({ bottom: 0 });
         }, 100);
     });
 });
