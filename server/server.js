@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var cookieParser = require('cookie-parser');
+var device = require('express-device');
 
 //Import other modules
 var blog = require('./modules/blog');
@@ -12,10 +13,13 @@ var login = require('./modules/login');
 //Set up modules
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(device.capture());
 app.use(cookieParser());
 
 //Set up static paths
-app.use(express.static('../public'));
+/*app.use(express.static('../public'));*/
+app.use('/js', express.static('../public/js'));
+app.use('/styles', express.static('../public/styles'));
 
 //Set up database details
 var config = require('./cfg/config.json');
@@ -44,7 +48,17 @@ var server = app.listen(app.get('port'), function()
 /* GETS */
 app.get('/', function(req, res)
 {
-    res.sendFile('index.html');
+    res.sendFile('index.html', { root: '../public' });
+});
+
+app.get('/getMobile', function(req, res)
+{
+    res.sendFile('js/mobile.js', { root: '../public' });
+});
+
+app.get('/getDesktop', function(req, res)
+{
+    res.sendFile('js/bundle.js', { root: '../public' });
 });
 
 app.get('/login', function(req, res)
