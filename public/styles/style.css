@@ -834,7 +834,6 @@ hr
         top: -100vh;
     }
 }
-
 @keyframes moveBottomDown
 {
     from
@@ -882,6 +881,7 @@ hr
     margin: 2% auto;
     overflow-y: auto;
     font-size: 24px;
+    text-align: left;
 }
 
 #mobBannerInput
