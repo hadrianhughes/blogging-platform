@@ -1,14 +1,15 @@
 $(document).ready(function()
 {
-
-    $('#archive').on('click', '#btnDate', function()
+    $('#app').on('click', '#btnDate', function()
     {
+        console.log('.');
         $('#monthList').slideUp();
         $('#monthList').slideDown();
     });
     
-    $('#archive').on('click', '#btnSearch', function()
+    $('#app').on('click', '#btnSearch', function()
     {
+        console.log('.');
         $('#resultsList').slideUp();
         $('#resultsList').slideDown();
     });

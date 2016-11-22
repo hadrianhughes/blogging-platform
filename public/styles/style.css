@@ -368,6 +368,8 @@ hr
 {
     width: 10vw;
     height: 10vw;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
 }
 
 #bio
@@ -635,7 +637,13 @@ hr
     right: 0;
     margin: 0 auto;
     
-    opacity: 0.8;
+    opacity: 0.5;
+}
+
+#arrowUp:active,
+#arrowDown:active
+{
+    opacity: 1;
 }
 
 #arrowUp
@@ -685,6 +693,48 @@ hr
     font-size: 36px;
     color: black;
     text-decoration: none;
+}
+
+#mobCommentsBox
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    width: 90%;
+}
+#mobCommentsBox h4
+{
+    font-size: 36px;
+}
+#mobCommentsBox form
+{
+    margin-top: 2%;
+    width: 100%;
+}
+.mobComment
+{
+    font-size: 30px;
+}
+#mobCommentInput,
+#mobSendComment
+{
+    background-color: white;
+    border: 1px solid #eaeaea;
+    padding: 3%;
+    border-radius: 20px;
+    font-size: 40px;
+}
+#mobCommentInput
+{
+    width: 70%;
+}
+#mobSendComment
+{
+    width: 10%;
+    text-align: center;
 }
 
 #mobBlogInfo.closed
