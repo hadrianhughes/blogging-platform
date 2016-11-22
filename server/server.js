@@ -182,6 +182,38 @@ app.get('/getPostList', function(req, res)
     }
 });
 
+app.get('/getAllPosts', function(req, res)
+{
+    blog.getAllPosts(database, function(err, posts)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.end();
+        }
+        else
+        {
+            if(posts)
+            {
+                //Only ID and Title need to be sent in response
+                let postList = [];
+
+                for(let i = 0;i < posts.length;i++)
+                {
+                    let post = {};
+                    post._id = posts[i]._id;
+                    post.title = posts[i].title;
+
+                    postList.push(post);
+                }
+
+                postList = postList.reverse();
+                res.send(postList);
+            }
+        }
+    });
+});
+
 app.get('/search', function(req, res)
 {
     blog.searchPosts(database, req.query.query, function(err, results)

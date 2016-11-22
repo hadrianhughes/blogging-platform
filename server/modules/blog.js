@@ -117,6 +117,42 @@ blog.getPosts = function(db, month, callback)
     }
 };
 
+blog.getAllPosts = function(db, callback)
+{
+    db.collection('posts').find({}, function(err, cursor)
+    {
+        if(err)
+        {
+            throw err;
+        }
+
+        try
+        {
+            let posts = [];
+            cursor.each(function(err, doc)
+            {
+                if(err)
+                {
+                    throw err;
+                }
+
+                if(doc)
+                {
+                    posts.push(doc);
+                }
+                else
+                {
+                    callback(null, posts);
+                }
+            });
+        }
+        catch(ex)
+        {
+            callback(ex, null);
+        }
+    });
+};
+
 blog.searchPosts = function(db, term, callback)
 {
     var QUERY = new RegExp(".*" + term + ".*", 'i');

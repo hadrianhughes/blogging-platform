@@ -6,8 +6,11 @@ export default class Content extends React.Component
     {
         return(
             <div>
-                <h2>{this.props.title}</h2>
-                <div id="article">
+                <div>
+                    <img src={this.props.banner} id="mobBanner" />
+                </div>
+                <h2 id="mobTitle">{this.props.title}</h2>
+                <div id="mobContent">
                     {this.props.text}
                 </div>
             </div>
