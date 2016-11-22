@@ -6,6 +6,8 @@
     vertical-align: top;
 
     font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    
+    word-break: break-all;
 }
 
 *:focus
@@ -19,6 +21,11 @@
     height: 100vh;
     max-height: 100vh;
     border-spacing: 0;
+}
+
+h1
+{
+    font-size: 40px;
 }
 
 hr
@@ -328,7 +335,6 @@ hr
 .commentBody
 {
     font-size: 12px;
-    word-break: break-all;
 }
 
 .red
@@ -354,7 +360,6 @@ hr
 {
     font-size: 14px;
     padding: 1%;
-    word-break: break-all;
 }
 /* END OF ARTICLE */
 
@@ -384,10 +389,6 @@ hr
     margin-bottom: 5%;
 
     font-size: 14px;
-}
-#bio p
-{
-    word-break: normal;
 }
 #bio-input
 {
@@ -678,6 +679,10 @@ hr
     border-radius: 5% 5% 0 0;
     bottom: -100vh;
 }
+#mobPostList > ul
+{
+    margin-bottom: 5%;
+}
 #mobPostList ul
 {
     max-height: 60vh;
@@ -702,7 +707,7 @@ hr
     text-decoration: none;
 }
 
-#mobCommentsBox
+/*#mobCommentsBox
 {
     position: absolute;
     bottom: 0;
@@ -711,7 +716,7 @@ hr
     margin: 0 auto;
     margin-bottom: 5%;
     width: 90%;
-}
+}*/
 #mobCommentsBox ul
 {
     max-height: 20vh;
@@ -720,7 +725,6 @@ hr
 #mobCommentsBox li
 {
     padding: 2%;
-    word-break: break-all;
 }
 #mobCommentsBox h4
 {
@@ -746,10 +750,12 @@ hr
 }
 #mobCommentInput
 {
+    margin-top: 2%;
     width: 70%;
 }
 #mobSendComment
 {
+    margin-top: 2%;
     width: 10%;
     text-align: center;
 }
@@ -776,6 +782,12 @@ hr
     bottom: 0;
 }
 
+#mobBio
+{
+    overflow-y: auto;
+    
+}
+
 #mobBanner
 {
     width: 100vw;
@@ -789,7 +801,15 @@ hr
 {
     font-size: 14px;
     padding: 2%;
-    word-break: break-all;
+}
+
+#btnChangePage
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 5% 2% 2% 2%;
+    border-radius: 20px;
 }
 
 @keyframes moveTopDown
@@ -837,4 +857,37 @@ hr
         bottom: 0;
     }
 }
+
+
+/* WRITE SECTION OF MOBILE */
+#mobWriteArticle
+{
+    text-align: center;
+}
+
+#mobTitleInput
+{
+    width: 85vw;
+    margin: 0 auto;
+    font-size: 40px;
+}
+
+#mobDocumentContainer
+{
+    border: 1px solid #eaeaea;
+    border-radius: 20px;
+    width: 90vw;
+    height: 50vh;
+    padding: 2%;
+    margin: 2% auto;
+    overflow-y: auto;
+    font-size: 24px;
+}
+
+#mobBannerInput
+{
+    width: 70vw;
+}
+/* END OF WRITE SECTION OF MOBILE */
+
 /* END OF MOBILE */

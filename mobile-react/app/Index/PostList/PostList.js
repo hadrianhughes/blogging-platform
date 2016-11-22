@@ -72,6 +72,7 @@ export default class PostList extends React.Component
             retVal = <div id="mobPostList" className="open">
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments.reverse())} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
+                        <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button>
                     </div>;
         }
         else if(this.props.closed)
@@ -79,13 +80,16 @@ export default class PostList extends React.Component
             retVal = <div id="mobPostList" className="closed">
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments.reverse())} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
+                        <button className="button">Write an article</button>
                     </div>;
         }
         else
         {
             retVal = <div id="mobPostList">
+                <button className="button">Write an article</button>
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments.reverse())} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
+                        <button className="button">Write an article</button>
                     </div>;
         }
         
