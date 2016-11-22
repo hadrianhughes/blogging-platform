@@ -2,41 +2,20 @@ import React from 'react';
 
 export default class PostList extends React.Component
 {
-    constructor()
-    {
-        super();
-        
-        this.state = { open: false };
-        
-        this.handleClick = this.handleClick.bind(this);
-    }
-    
-    handleClick()
-    {
-        let newVal;
-        if(this.state.open)
-        {
-            newVal = false;
-        }
-        else
-        {
-            newVal = true;
-        }
-        
-        this.setState({ open: newVal });
-    }
-    
     render()
     {
         let retVal;
-        if(this.state.open)
+        if(this.props.open)
         {
-            retVal = <div id="mobPostList">
-            </div>;
+            retVal = <div id="mobPostList" className="open"></div>;
+        }
+        else if(this.props.closed)
+        {
+            retVal = <div id="mobPostList" className="closed"></div>
         }
         else
         {
-            retVal = <button id="btnMobPostList" className="button" onClick={this.handleClick}>Open</button>;
+            retVal = <div id="mobPostList"></div>
         }
         
         return retVal;

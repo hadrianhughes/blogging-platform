@@ -2,45 +2,41 @@ import React from 'react';
 
 export default class BlogInfo extends React.Component
 {
-    constructor()
-    {
-        super();
-        
-        this.state = { open: false };
-        
-        this.handleClick = this.handleClick.bind(this);
-    }
-    
-    handleClick()
-    {
-        let newVal;
-        if(this.state.open)
-        {
-            newVal = false;
-        }
-        else
-        {
-            newVal = true;
-        }
-        
-        this.setState({ open: newVal });
-    }
-    
     render()
     {
         let retVal;
-        if(this.state.open)
+        if(this.props.open)
         {
-            retVal = <div id="mobBlogInfo">
-                <img src={this.props.photo} id="mobPhoto" />
-                <div id="mobBio">
-                    {this.props.bio}
+            retVal = <div id="mobBlogInfo" className="open">
+                <div>
+                    <img src={this.props.photo} id="mobPhoto" />
+                    <div id="mobBio">
+                        {this.props.bio}
+                    </div>
+                </div>
+            </div>;
+        }
+        else if(this.props.closed)
+        {
+            retVal = <div id="mobBlogInfo" className="closed">
+                <div>
+                    <img src={this.props.photo} id="mobPhoto" />
+                    <div id="mobBio">
+                        {this.props.bio}
+                    </div>
                 </div>
             </div>;
         }
         else
         {
-            retVal = <button id="btnMobBlogInfo" className="button" onClick={this.handleClick}>Open</button>;
+            retVal = <div id="mobBlogInfo">
+                <div>
+                    <img src={this.props.photo} id="mobPhoto" />
+                    <div id="mobBio">
+                        {this.props.bio}
+                    </div>
+                </div>
+            </div>;
         }
         
         return retVal;

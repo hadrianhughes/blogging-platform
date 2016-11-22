@@ -20,6 +20,7 @@ app.use(cookieParser());
 /*app.use(express.static('../public'));*/
 app.use('/js', express.static('../public/js'));
 app.use('/styles', express.static('../public/styles'));
+app.use('/img', express.static('../public/img'));
 
 //Set up database details
 var config = require('./cfg/config.json');

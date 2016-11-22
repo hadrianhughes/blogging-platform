@@ -586,43 +586,80 @@ hr
 
 
 /* MOBILE */
-#btnMobBlogInfo,
-#btnMobPostList
-{
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40vw;
-    height: 10vh;
-    font-size: 60px;
-}
-#btnMobBlogInfo
-{
-    top: 0;
-}
-#btnMobPostList
-{
-    bottom: 0;
-}
 
 #mobBlogInfo,
 #mobPostList
 {
-    
     position: fixed;
     padding: 5%;
     
-    width: 85vw;
+    width: 90vw;
     left: 50%;
     transform: translateX(-50%);
     
     height: 80vh;
     text-align: center;
-    border-radius: 40px;
     
     font-size: 24px;
     
     background-color: #fbfbfb;
+    border: 1px solid #eaeaea;
+    
+    z-index: 1;
+}
+
+#mobPhoto
+{
+    height: 400px;
+    width: 400px;
+}
+
+#mobBlogInfo > div
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto 50%;
+}
+
+#arrowUp
+{
+    width: 5vw;
+}
+
+#arrowUp,
+#arrowDown
+{
+    width: 10vw;
+    height: 10vw;
+    background-size: contain;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    
+    opacity: 0.8;
+}
+
+#arrowUp
+{
+    background-image: url('../img/arrowUp.png');
+    bottom: 0;
+    margin-bottom: 1%;
+}
+
+#arrowDown
+{
+    background-image: url('../img/arrowDown.png');
+    top: 0;
+    margin-top: 1%;
+}
+
+#mobBlogInfo,
+#mobPostList
+{
+    border-radius: 0 0 5% 5%;
 }
 #mobBlogInfo
 {
@@ -633,9 +670,71 @@ hr
     bottom: -100vh;
 }
 
-#mobPhoto
+#mobBlogInfo.closed
 {
-    height: 400px;
-    width: 400px;
+    animation: moveTopUp 1s;
+    top: -100vh;
+}
+#mobBlogInfo.open
+{
+    animation: moveTopDown 1s;
+    top: 0;
+}
+#mobPostList.closed
+{
+    animation: moveBottomDown 1s;
+    bottom: -100vh;
+    border-radius: 5% 5% 0 0;
+}
+#mobPostList.open
+{
+    animation: moveBottomUp 1s;
+    bottom: 0;
+}
+
+@keyframes moveTopDown
+{
+    from
+    {
+        top: -100vh;
+    }
+    to
+    {
+        top: 0;
+    }
+}
+@keyframes moveTopUp
+{
+    from
+    {
+        top: 0;
+    }
+    to
+    {
+        top: -100vh;
+    }
+}
+
+@keyframes moveBottomDown
+{
+    from
+    {
+        bottom: 0;
+    }
+    to
+    {
+        bottom: -100vh;
+    }
+}
+@keyframes moveBottomUp
+{
+    from
+    {
+        bottom: -100vh;
+    }
+    to
+    {
+        bottom: 0;
+    }
 }
 /* END OF MOBILE */
