@@ -202,7 +202,10 @@ hr
     max-width: 100%;
     overflow-y: auto;
 }
-
+#header
+{
+    width: 100%;
+}
 #header img
 {
     width: 100%;
@@ -351,6 +354,7 @@ hr
 {
     font-size: 14px;
     padding: 1%;
+    word-break: break-all;
 }
 /* END OF ARTICLE */
 
@@ -602,7 +606,7 @@ hr
     height: 80vh;
     text-align: center;
     
-    font-size: 24px;
+    font-size: 36px;
     
     background-color: #fbfbfb;
     border: 1px solid #eaeaea;
@@ -614,11 +618,14 @@ hr
 {
     height: 400px;
     width: 400px;
+    border: 1px solid #eaeaea;
+    border-radius: 20px;
 }
 
 #mobBlogInfo > div
 {
     margin: 20% auto;
+    max-width: 80%;
 }
 
 #arrowUp
@@ -705,6 +712,16 @@ hr
     margin-bottom: 5%;
     width: 90%;
 }
+#mobCommentsBox ul
+{
+    max-height: 20vh;
+    text-align: left;
+}
+#mobCommentsBox li
+{
+    padding: 2%;
+    word-break: break-all;
+}
 #mobCommentsBox h4
 {
     font-size: 36px;
@@ -770,8 +787,9 @@ hr
 }
 #mobContent
 {
-    font-size: 30px;
+    font-size: 14px;
     padding: 2%;
+    word-break: break-all;
 }
 
 @keyframes moveTopDown

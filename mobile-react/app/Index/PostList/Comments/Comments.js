@@ -16,8 +16,23 @@ export default class Comments extends React.Component
     
     handleChange(e)
     {
-        let newVal = this.state.charLimit - e.target.value.length;
-        this.setState({ remainingChars: newVal, value: e.target.value });
+        if(this.props.charLimit > 0)
+        {
+            if((this.props.charLimit - e.target.value.length) >= 0)
+            {
+                let newVal = this.state.charLimit - e.target.value.length;
+                this.setState({ remainingChars: newVal, value: e.target.value });
+            }
+        }
+        else
+        {
+            console.log(100 - e.target.value.length);
+            if((100 - e.target.value.length) >= 0)
+            {
+                let newVal = this.state.charLimit - e.target.value.length;
+                this.setState({ remainingChars: newVal, value: e.target.value });
+            }
+        }
     }
     
     handleSubmit()
