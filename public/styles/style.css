@@ -840,6 +840,25 @@ a:active
 {
     width: 70vw;
 }
+
+#mobLoginForm
+{
+    margin: 0 auto;
+    width: 90vw;
+    transform: translateY(35vh);
+    background-color: #fbfbfb;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    
+    padding: 2%;
+    text-align: center;
+}
+#mobLoginForm input,
+#mobLoginForm button
+{
+    font-size: 40px;
+    border-radius: 20px;
+}
 /* END OF WRITE SECTION OF MOBILE */
 
 /* END OF MOBILE */

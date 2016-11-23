@@ -10,7 +10,7 @@ export default class Index extends React.Component
     {
         super();
         
-        this.state = { id: '', banner: '', title: '', content: '', comments: [], commentLength: 100, photo: '', bio: '', blogInfoOpen: false, blogInfoClosed: false, postListOpen: false, postListClosed: false };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], commentLength: 100, photo: '', bio: '', blogInfoOpen: false, blogInfoClosed: false, postListOpen: false, postListClosed: false, loggedIn: false };
         
         this.handleBlogInfoClick = this.handleBlogInfoClick.bind(this);
         this.handlePostListClick = this.handlePostListClick.bind(this);
@@ -23,6 +23,11 @@ export default class Index extends React.Component
         $.get('/getBlogInfo', function(data)
         {
             this.setState({ photo: data.photo, bio: data.bio });
+        }.bind(this));
+        
+        $.get('/isLoggedIn', function(data)
+        {
+            this.setState({ loggedIn: data.loggedIn });
         }.bind(this));
     }
     
@@ -88,7 +93,7 @@ export default class Index extends React.Component
                 <div id="arrowDown" onClick={this.handleBlogInfoClick}></div>
                 <Content banner={this.state.banner} title={this.state.title} text={this.state.content} />
                 <div id="arrowUp" onClick={this.handlePostListClick}></div>
-                <PostList postId={this.state.id} open={this.state.postListOpen} closed={this.state.postListClosed} onClick={(id) => this.handlePostClick(id)} comments={this.state.comments} commentLength={this.state.commentLength} onSendComment={this.getComments} onChangePage={this.props.onChangePage} />
+                <PostList postId={this.state.id} open={this.state.postListOpen} closed={this.state.postListClosed} onClick={(id) => this.handlePostClick(id)} comments={this.state.comments} commentLength={this.state.commentLength} onSendComment={this.getComments} onChangePage={this.props.onChangePage} loggedIn={this.state.loggedIn} onLogin={this.props.onLogin} />
             </div>
         );
     }

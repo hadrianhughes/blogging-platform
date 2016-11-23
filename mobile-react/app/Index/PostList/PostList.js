@@ -72,7 +72,7 @@ export default class PostList extends React.Component
             retVal = <div id="mobPostList" className="open">
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments)} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
-                        <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button>
+                        {this.props.loggedIn ? <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button> : <button className="button" id="btnChangePage" onClick={this.props.onLogin}>Login/Sign up</button>}
                     </div>;
         }
         else if(this.props.closed)
@@ -80,7 +80,7 @@ export default class PostList extends React.Component
             retVal = <div id="mobPostList" className="closed">
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments)} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
-                        <button className="button">Write an article</button>
+                        {this.props.loggedIn ? <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button> : <button className="button" id="btnChangePage" onClick={this.props.onLogin}>Login/Sign up</button>}
                     </div>;
         }
         else
@@ -89,7 +89,7 @@ export default class PostList extends React.Component
                 <button className="button">Write an article</button>
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments)} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
-                        <button className="button">Write an article</button>
+                        {this.props.loggedIn ? <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button> : <button className="button" id="btnChangePage" onClick={this.props.onLogin}>Login/Sign up</button>}
                     </div>;
         }
         
