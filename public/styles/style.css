@@ -17,14 +17,9 @@
     outline: none;
 }
 
-body > div > div
+body > div > div.hideOverflow
 {
     overflow-y: hidden;
-}
-body > div > div.mobile
-{
-    overflow-y: visible;
-    overflow-x: hidden;
 }
 
 #app
@@ -197,6 +192,7 @@ a:active
     background-color: white;
     border-top: 1px solid #eaeaea;
     box-shadow: 0 0 10px 2px #e3f7bb;
+    opacity: 0.7;
 }
 .footer a
 {
@@ -242,6 +238,11 @@ a:active
 {
     background-color: white;
     margin: 0 auto;
+}
+
+#content-container p
+{
+    font-size: 16px;
 }
 
 #content-container > div
@@ -828,7 +829,7 @@ a:active
 {
     padding: 2%;
 }
-#mobContent p
+#mobContent *
 {
     font-size: 36px;
 }

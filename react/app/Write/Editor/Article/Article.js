@@ -90,6 +90,14 @@ export default class Article extends React.Component
                 break;
             case 4:
                 let article = document.getElementById('documentContainer');
+                
+                //Remove inline styling
+                let elems = article.getElementsByTagName('*');
+                for(let i = 0;i < elems.length;i++)
+                {
+                    elems[i].removeAttribute('style');
+                }
+                
                 this.props.onPublish(article.innerHTML);
                 this.setState({ modal: 0 });
                 break;

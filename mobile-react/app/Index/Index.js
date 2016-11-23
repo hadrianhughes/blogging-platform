@@ -83,7 +83,7 @@ export default class Index extends React.Component
     render()
     {
         return(
-            <div className="mobile">
+            <div>
                 <BlogInfo photo={this.state.photo} bio={this.state.bio} open={this.state.blogInfoOpen} closed={this.state.blogInfoClosed} />
                 <div id="arrowDown" onClick={this.handleBlogInfoClick}></div>
                 <Content banner={this.state.banner} title={this.state.title} text={this.state.content} />

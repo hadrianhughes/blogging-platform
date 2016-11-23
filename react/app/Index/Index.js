@@ -110,7 +110,7 @@ export default class Index extends React.Component
     render()
     {
         return(
-            <div>
+            <div className="hideOverflow">
                 {this.state.isModal ? <div id="modal">{this.state.modalContents}</div> : null}
                 <table id="layout-table">
                     <tbody>

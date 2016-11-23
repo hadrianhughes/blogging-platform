@@ -22,7 +22,7 @@ export default class Write extends React.Component
     render()
     {
         return(
-            <div id="mobWriteArticle" className="mobile">
+            <div id="mobWriteArticle">
                 <Editor />
                 <PostOptions banner={this.state.banner} onBannerSubmit={(url) => this.handleBannerSubmit(url)} />
             </div>
