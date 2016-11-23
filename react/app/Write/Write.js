@@ -153,19 +153,29 @@ export default class Write extends React.Component
         };
 
         //Send object to server for adding to DB
-        $.post('/post', { post: post }, function(successful)
+        $.get('/isLoggedIn', function(data)
         {
-            if(successful)
+            if(data.loggedIn)
             {
-                console.log('Succesfully submitted post.');
+                $.post('/post', { post: post }, function(successful)
+                {
+                    if(successful)
+                    {
+                        console.log('Succesfully submitted post.');
+                    }
+                    else
+                    {
+                        console.log('Post creation failed.');
+                    }
+                    
+                    this.props.onPageChange();
+                });
             }
             else
             {
-                console.log('Post creation failed.');
+                alert('You are no longer logged in.');
             }
         });
-        
-        this.props.onPageChange();
     }
 
     render()

@@ -20,7 +20,18 @@ class App extends React.Component
     
     changeToWrite()
     {
-        this.setState({ isIndex: false, isWrite: true, isBlogCreation: false });
+        $.get('/isLoggedIn', function(data)
+        {
+            console.log(data);
+            if(data.loggedIn)
+            {
+                this.setState({ isIndex: false, isWrite: true, isBlogCreation: false });
+            }
+            else
+            {
+                window.location.reload();
+            }
+        }.bind(this));
     }
     
     changeToIndex()
