@@ -125,14 +125,15 @@ export default class Index extends React.Component
                                 <div id="archive">
                                     <Archive postId={this.state.id} commentLength={this.state.commentLength} onReceivePosts={(posts) => this.handleReceivedPosts(posts)} comments={this.state.comments} onSendComment={this.getComments} onPostClick={(postId) => this.loadPost(postId)} />
                                 </div>
-                                <div className="footer">
-                                    <button className="button" onClick={this.props.changeToBlogCreation}>Login/Sign Up</button>
-                                    {this.state.loggedIn ? <button className="button" onClick={this.props.changeToWrite}>Write an article</button> : null}
-                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div className="footer">
+                    <a href="#" onClick={this.props.changeToBlogCreation} className="float-right">Login/Sign up</a>
+                    <a href="#" className="float-right">[BRAND NAME]</a>
+                    {this.state.loggedIn ? <a href="#" onClick={this.props.changeToWrite} className="float-left">Write an article</a> : null}
+                </div>
             </div>
         );
     }

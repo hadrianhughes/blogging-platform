@@ -179,10 +179,6 @@ export default class Write extends React.Component
                                 <div id="postOptionsApp">
                                     <PostOptions allowComments={this.state.allowComments} allowProfanity={this.state.allowProfanity} limit={this.state.limit} onToggleComments={this.toggleComments} onToggleProfanity={this.toggleProfanity} onToggleLimit={this.toggleLimit} onNumChange={this.handleNumChange} tags={this.state.tags} tagInputValue={this.state.tagInputValue} onChangeTagInput={this.handleTagInputChange} onDeleteTag={this.handleDeleteTag} banner={this.state.banner} onSubmitBanner={(url) => this.handleSubmitBanner(url)} />
                                 </div>
-
-                                <div className="footer align-left">
-                                    <button className="button" onClick={this.props.onPageChange}>Back to homepage</button>
-                                </div>
                             </td>
                             <td id="main-window">
                                 <div id="editorApp">
@@ -192,6 +188,9 @@ export default class Write extends React.Component
                         </tr>
                     </tbody>
                 </table>
+                <div className="footer">
+                    <a href="#" onClick={this.props.onPageChange}>Back to homepage</a>
+                </div>
 
                 <div id="test">
                 </div>
