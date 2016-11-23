@@ -12,7 +12,7 @@ export default class Archive extends React.Component
     {
         super();
 
-        this.state = { listOpen: false, currentMonth: '', months: [], posts: [], currentPost: {}, searchResults: [] };
+        this.state = { listOpen: false, currentMonth: {}, currentMonthString: '', months: [], posts: [], currentPost: {}, searchResults: [] };
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleMonthClick = this.handleMonthClick.bind(this);
@@ -21,6 +21,7 @@ export default class Archive extends React.Component
         this.handleSearch = this.handleSearch.bind(this);
         this.sendComment = this.sendComment.bind(this);
         this.addKeys = this.addKeys.bind(this);
+        this.makeMonthString = this.makeMonthString.bind(this);
         this.makeMonth = this.makeMonth.bind(this);
     }
 
@@ -31,7 +32,7 @@ export default class Archive extends React.Component
         {
             let months = this.addKeys(data);
 
-            this.setState({ months: months, currentMonth: months[0], currentMonthString: this.makeMonth(months[0]) });
+            this.setState({ months: months, currentMonth: months[0], currentMonthString: this.makeMonthString(months[0]) });
 
             $.get('/getPostList', { month: this.state.currentMonth }, function(data)
             {
@@ -55,7 +56,7 @@ export default class Archive extends React.Component
 
     handleMonthClick(e)
     {
-        this.setState({ currentMonth: e.target.text });
+        this.setState({ currentMonthString: e.target.text, currentMonth: makeMonth(e.target.text) });
 
         //Get list of posts for current month from server
         $.get('/getPostList', { month: e.target.text }, function(data)
@@ -127,7 +128,7 @@ export default class Archive extends React.Component
         return retSet;
     }
 
-    makeMonth(value)
+    makeMonthString(value)
     {
         //List of all months of year
         const possibleMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -148,6 +149,21 @@ export default class Archive extends React.Component
 
         return retVal;
     }
+    
+    makeMonth(string)
+    {
+        const parts = string.split(' ');
+        const month = parts[0];
+        const year = parts[1];
+        
+        let retVal = { year: year };
+        
+        const possibleMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        retVal.month = possibleMonths.indexOf(month) + 1;
+        
+        return retVal;
+    }
 
     render()
     {
@@ -156,7 +172,7 @@ export default class Archive extends React.Component
         for(let i = 0;i < this.state.months.length;i++)
         {
             months[i] = {};
-            months[i].value = this.makeMonth(this.state.months[i]);
+            months[i].value = this.makeMonthString(this.state.months[i]);
         }
 
         //Add keys to months array
