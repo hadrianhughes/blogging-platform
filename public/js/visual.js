@@ -15,21 +15,24 @@ $(document).ready(function()
     var footerVisible = true;
     $('#app').bind('mousewheel', function()
     {
-        if($('#fullPost').scrollTop() + $('#fullPost').height() == $('#fullPost')[0].scrollHeight)
+        if($('#fullPost').length)
         {
-            //Footer will only animate once
-            if(footerVisible)
+            if($('#fullPost').scrollTop() + $('#fullPost').height() == $('#fullPost')[0].scrollHeight)
             {
-                $('.footer').animate({ bottom: -100 });
-                footerVisible = false;
+                //Footer will only animate once
+                if(footerVisible)
+                {
+                    $('.footer').animate({ bottom: -100 });
+                    footerVisible = false;
+                }
             }
-        }
-        else
-        {
-            if(!footerVisible)
+            else
             {
-                $('.footer').animate({ bottom: 0 });
-                footerVisible = true;
+                if(!footerVisible)
+                {
+                    $('.footer').animate({ bottom: 0 });
+                    footerVisible = true;
+                }
             }
         }
     });

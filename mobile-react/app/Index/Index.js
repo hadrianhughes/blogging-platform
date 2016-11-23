@@ -68,7 +68,7 @@ export default class Index extends React.Component
     {
         $.get('/loadPost', { postId: id }, function(data)
         {
-            this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments, commentLength: data.length });
+            this.setState({ id: data._id, banner: data.banner, title: data.title, content: data.content, comments: data.comments.reverse(), commentLength: data.length });
         }.bind(this));
     }
     
@@ -76,14 +76,14 @@ export default class Index extends React.Component
     {
         $.get('/getComments', { id: this.state.id }, function(data)
         {
-            this.setState({ comments: data });
+            this.setState({ comments: data.reverse() });
         }.bind(this));
     }
     
     render()
     {
         return(
-            <div>
+            <div className="mobile">
                 <BlogInfo photo={this.state.photo} bio={this.state.bio} open={this.state.blogInfoOpen} closed={this.state.blogInfoClosed} />
                 <div id="arrowDown" onClick={this.handleBlogInfoClick}></div>
                 <Content banner={this.state.banner} title={this.state.title} text={this.state.content} />
