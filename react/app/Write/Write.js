@@ -169,13 +169,13 @@ export default class Write extends React.Component
                     }
                     
                     this.props.onPageChange();
-                });
+                }.bind(this));
             }
             else
             {
                 alert('You are no longer logged in.');
             }
-        });
+        }.bind(this));
     }
 
     render()
