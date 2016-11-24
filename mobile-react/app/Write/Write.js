@@ -28,12 +28,11 @@ export default class Write extends React.Component
     
     handleTagChange(e)
     {
-        console.log('.');
         //Get the value of the text box
         const input = e.target.value;
 
         //If it isn't empty...
-            //...if the last character is a comma or a space
+        //...if the last character is a comma or a space
         if(input.length - 1 > 0)
         {
             if((input[input.length - 1] == ',') || (input[input.length - 1] == ' '))

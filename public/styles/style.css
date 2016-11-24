@@ -64,6 +64,11 @@ a:active
     padding: 5%;
 }
 
+.margin-top
+{
+    margin-top: 3%;
+}
+
 .margin-bottom
 {
     margin-bottom: 3%;
@@ -145,6 +150,15 @@ a:active
 .footer a
 {
     margin: 0 1% 0 1%;
+}
+
+.logged-in:hover
+{
+    box-shadow: 0 0 10px 1px #e3f7bb;
+}
+.logged-in-mobile:hover
+{
+    box-shadow: 0 0 20px 10px #e3f7bb;
 }
 /* END OF CLASSES */
 
@@ -391,7 +405,24 @@ a:active
     text-align: center;
     padding: 2%;
 }
-#modal *
+#mobModal
+{
+    position: fixed;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 90vw;
+    border-radius: 10px;
+    
+    background-color: #fbfbfb;
+    border: 1px solid #eaeaea;
+    text-align: center;
+    padding: 2%;
+}
+#modal *,
+#mobModal *
 {
     margin: 0 3% 3% 0;
 }
@@ -734,7 +765,6 @@ a:active
 #mobBio
 {
     overflow-y: auto;
-    
 }
 
 #mobBanner
