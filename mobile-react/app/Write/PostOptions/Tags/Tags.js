@@ -8,7 +8,7 @@ export default class Tags extends React.Component
     render()
     {
         return(
-            <div>
+            <div className="margin-bottom">
                 <h1>Tags</h1>
                 <Input value={this.props.tagValue} onChange={this.props.onChangeTag} />
                 <TagList items={this.props.tags} />

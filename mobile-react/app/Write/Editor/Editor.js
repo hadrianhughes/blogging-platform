@@ -53,7 +53,7 @@ export default class Editor extends React.Component
     render()
     {
         return(
-            <div>
+            <div className="margin-bottom">
                 <Title onChange={this.handleTitleChange} />
                 <div ref="documentEdit" id="mobDocumentContainer" contentEditable></div>
                 <button className="button mobile-font-size" id="mobBtnPublish" onClick={this.publish}>Publish</button>
