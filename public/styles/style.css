@@ -900,6 +900,10 @@ a:active
     padding: 2%;
     text-align: center;
 }
+#mobLoginForm h1
+{
+    font-size: 60px;
+}
 #mobLoginForm input,
 #mobLoginForm button
 {
