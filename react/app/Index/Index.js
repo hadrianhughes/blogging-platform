@@ -116,7 +116,9 @@ export default class Index extends React.Component
                     <tbody>
                         <tr id="body">
                             <td className="content-to-top" id="social-media-container">
-                                <SocialMedia loggedIn={this.state.loggedIn} bio={this.state.bio} photo={this.state.photo} onPhotoClick={(loggedIn) => this.handlePhotoClick(loggedIn)} onBioChange={this.handleBioChange} updateBio={this.updateBio} updateBlog={this.getBlogInfo} />
+                                <div id="social-media">
+                                    <SocialMedia loggedIn={this.state.loggedIn} bio={this.state.bio} photo={this.state.photo} onPhotoClick={(loggedIn) => this.handlePhotoClick(loggedIn)} onBioChange={this.handleBioChange} updateBio={this.updateBio} updateBlog={this.getBlogInfo} />
+                                </div>
                             </td>
                             <td className="content-to-top" id="content-container">
                                 <Article banner={this.state.banner} title={this.state.title} content={this.state.content} />

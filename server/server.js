@@ -47,6 +47,14 @@ var server = app.listen(app.get('port'), function()
 });
 
 /* GETS */
+/* FOR DEV */
+app.get('/removeCookie', function(req, res)
+{
+    res.clearCookie('loggedIn');
+    res.end();
+});
+/* END OF DEV */
+
 app.get('/', function(req, res)
 {
     res.sendFile('index.html', { root: '../public' });
@@ -289,6 +297,11 @@ app.get('/getComments', function(req, res)
             }
         }
     });
+});
+
+app.get('*', function(req, res)
+{
+    res.sendFile('index.html', { root: '../public' });
 });
 /* END OF GETS */
 

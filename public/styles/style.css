@@ -16,6 +16,10 @@
 {
     outline: none;
 }
+*::-moz-focus-inner
+{
+    border: 0;
+}
 
 body > div > div.hideOverflow
 {
@@ -176,12 +180,10 @@ a:active
 #social-media-container
 {
     border-right: 1px solid #eaeaea;
-    overflow-y: auto;
 }
 #archive-container
 {
     border-left: 1px solid #eaeaea;
-    overflow-y: auto;
 }
 
 #content-container
@@ -213,9 +215,12 @@ a:active
 /* END OF MAIN STRUCTURE */
 
 /* ARCHIVE */
-#archive
+#archive,
+#social-media
 {
-    height: 80%;
+    height: 98%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #archive li
@@ -479,11 +484,6 @@ a:active
     padding: 1%;
 }
 
-#documentContainer
-{
-    margin-bottom: 3%;
-}
-
 #articleTitle
 {
     width: 100%;
@@ -501,6 +501,13 @@ a:active
     height: 50vh;
     overflow-y: auto;
     margin-bottom: 1%;
+}
+
+#documentContainer a,
+#mobDocumentContainer a
+{
+    color: blue;
+    text-decoration: underline;
 }
 
 #loginForm

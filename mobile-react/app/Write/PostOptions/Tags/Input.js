@@ -4,7 +4,6 @@ export default class Input extends React.Component
 {
     render()
     {
-        console.log(this.props.value);
         
         return(
             <div>
