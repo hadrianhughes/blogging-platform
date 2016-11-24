@@ -8,7 +8,7 @@ export default class Comments extends React.Component
     render()
     {
         return(
-            <div className="margin-bottom">
+            <div>
                 <h3>Comments</h3>
                 <Button value="Allow comments" active={this.props.allowComments} onClick={this.props.onToggleComments} />
                 <Button value="Allow profanity" active={this.props.allowProfanity} onClick={this.props.onToggleProfanity} />

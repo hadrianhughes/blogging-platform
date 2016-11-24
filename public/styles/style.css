@@ -157,8 +157,6 @@ a:active
     width: 15%;
     background-color: #fbfbfb;
     margin: 0 auto;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 #social-media-container
@@ -250,6 +248,12 @@ a:active
     font-size: 18px;
 }
 
+#postList
+{
+    max-height: 20vh;
+    overflow-y: auto;
+}
+
 #archive h4,
 #commentsBox
 {
@@ -265,7 +269,7 @@ a:active
 
 #commentsBox ul
 {
-    max-height: 75%;
+    max-height: 100%;
     overflow-y: auto;
 }
 
@@ -640,6 +644,8 @@ a:active
 #mobPostList > ul
 {
     margin-bottom: 5%;
+    height: 40vh;
+    overflow-y: auto;
 }
 #mobPostList ul
 {
@@ -659,19 +665,10 @@ a:active
     background-color: #e3f7bb;
 }
 
-/*#mobCommentsBox
-{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    margin-bottom: 5%;
-    width: 90%;
-}*/
 #mobCommentsBox ul
 {
-    max-height: 20vh;
+    height: 20vh;
+    overflow-y: auto;
     text-align: left;
 }
 #mobCommentsBox li
@@ -702,7 +699,7 @@ a:active
 }
 #mobCommentInput
 {
-    margin-top: 2%;
+    margin: 2% 2% 0 0;
     width: 70%;
 }
 #mobSendComment
