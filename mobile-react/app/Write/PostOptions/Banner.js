@@ -27,8 +27,8 @@ export default class Banner extends React.Component
         return(
             <div>
                 <h1>Banner: </h1>
-                <input type="text" placeholder="Image URL..." className="textInput" id="mobBannerInput" onChange={this.handleChange} />
-                <button className="button" onClick={this.handleSubmit}>Load image</button>
+                <input type="text" placeholder="Image URL..." className="textInput mobile-font-size" id="mobBannerInput" onChange={this.handleChange} />
+                <button className="button mobile-font-size" onClick={this.handleSubmit}>Load image</button><br />
                 <img src={this.props.banner} />
             </div>
         );

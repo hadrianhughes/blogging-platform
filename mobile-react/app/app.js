@@ -13,13 +13,29 @@ class App extends React.Component
         
         this.state = { isIndex: true, isWrite: false };
         
+        this.changeToIndex = this.changeToIndex.bind(this);
         this.changeToWrite = this.changeToWrite.bind(this);
         this.changeToLogin = this.changeToLogin.bind(this);
     }
     
+    changeToIndex()
+    {
+        this.setState({ isIndex: true, isWrite: false, isLogin: false });
+    }
+    
     changeToWrite()
     {
-        this.setState({ isIndex: false, isWrite: true, isLogin: false });
+        $.get('/isLoggedIn', function(data)
+        {
+            if(data.loggedIn)
+            {
+                this.setState({ isIndex: false, isWrite: true, isLogin: false });
+            }
+            else
+            {
+                window.location.reload();
+            }
+        }.bind(this));
     }
     
     changeToLogin()
@@ -32,8 +48,8 @@ class App extends React.Component
         return(
             <div>
                 {this.state.isIndex ? <Index onChangePage={this.changeToWrite} onLogin={this.changeToLogin} /> : null}
-                {this.state.isWrite ? <Write /> : null}
-                {this.state.isLogin ? <Login /> : null}
+                {this.state.isWrite ? <Write onChangePage={this.changeToIndex} /> : null}
+                {this.state.isLogin ? <Login onChangePage={this.changeToIndex} /> : null}
             </div>
         );
     }

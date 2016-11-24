@@ -484,6 +484,7 @@ a:active
     background-color: #e3f7bb;
     display: inline-block;
     margin-right: 1%;
+    margin-bottom: 1%;
 }
 .tag:hover
 {
@@ -499,6 +500,8 @@ a:active
     border: 1px solid #eaeaea;
     border-radius: 10px;
     padding: 2%;
+    margin-right: 1%;
+    margin-bottom: 1%;
 
     transition: all 0.2s linear;
 
@@ -750,6 +753,7 @@ a:active
 {
     padding: 2%;
 }
+#mobContent,
 #mobContent *
 {
     font-size: 36px;
@@ -835,8 +839,17 @@ a:active
     font-size: 24px;
     text-align: left;
 }
+#mobDocumentContainer:focus
+{
+    box-shadow: inset 0 0 5px 2px #e3f7bb;
+}
 
 #mobBannerInput
+{
+    width: 50vw;
+    margin-right: 1%;
+}
+#mobTagInput
 {
     width: 70vw;
 }
@@ -858,6 +871,29 @@ a:active
 {
     font-size: 40px;
     border-radius: 20px;
+}
+
+#mobBtnPublish,
+#mobBtnBackFromWrite
+{
+    position: fixed;
+    bottom: 0;
+    opacity: 0.8;
+}
+#mobBtnPublish
+{
+    right: 0;
+    margin: 0 2% 2% 0;
+}
+#mobBtnBackFromWrite
+{
+    left: 0;
+    margin: 0 0 2% 2%;
+}
+
+.mobile-font-size
+{
+    font-size: 40px;
 }
 /* END OF WRITE SECTION OF MOBILE */
 
