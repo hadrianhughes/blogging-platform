@@ -121,12 +121,19 @@ app.get('/login', function(req, res)
 
 app.get('/isLoggedIn', function(req, res)
 {
+    console.log('1');
     if(req.cookies.loggedIn)
     {
-        login.checkCookieValue(req.cookies.loggedIn, function(err, correct)
+        console.log('2');
+        //Get email and random string from cookie
+        var parts = req.cookies.loggedIn.split(':');
+        
+        login.checkCookieValue(database, parts[0], parts[1], function(err, correct)
         {
+            console.log('3');
             if(correct)
             {
+                console.log('4');
                 res.json({ loggedIn: true });
             }
             else
@@ -308,7 +315,7 @@ app.get('/getLoginCookie', function(req, res)
 {
     if(req.query.value)
     {
-        login.checkCookieValue(req.query.value, function(err, correct)
+        login.checkCookieValue(database, req.query.email, req.query.value, function(err, correct)
         {
             if(err)
             {
@@ -319,7 +326,7 @@ app.get('/getLoginCookie', function(req, res)
             {
                 if(correct)
                 {
-                    res.cookie('loggedIn', req.query.value);
+                    res.cookie('loggedIn', req.query.email + ':' + req.query.value);
                     res.end();
                 }
                 else
@@ -340,50 +347,12 @@ app.get('*', function(req, res)
 /* POSTS */
 app.post('/login', function(req, res)
 {
-    /*if(req.body.name && req.body.password)
+    if(req.body.email && req.body.password)
     {
-        login.login(req.post.name, req.post.password, function(err, successful, randString)
+        login.login(database, req.body.email, req.body.password, function(err, successful, randString)
         {
             if(err)
             {
-                console.log(err);
-                res.end();
-            }
-            else
-            {
-                if(successful)
-                {
-                    if(config.settings.cookieExpiration == 0)
-                    {
-                        res.cookie('loggedIn', randString);
-                    }
-                    else
-                    {
-                        res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
-                    }
-                    
-                    res.end();
-                }
-                else
-                {
-                    res.end();
-                }
-            }
-        });
-    }
-    else
-    {
-        res.end();
-    }
-    */
-    
-    if(req.body.name && req.body.password)
-    {
-        login.login(req.body.name, req.body.password, function(err, successful, randString)
-        {
-            if(err)
-            {
-                console.log(err);
                 res.end();
             }
             else
@@ -405,7 +374,7 @@ app.post('/makeBlog', function(req, res)
 {
     if(req.body.name && req.body.password)
     {
-        login.makeBlog(req.body.name, req.body.password, function(err)
+        login.makeBlog(database, req.body.name, req.body.email, req.body.password, function(err)
         {
             if(err)
             {

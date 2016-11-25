@@ -18,11 +18,51 @@ login.getBlogInfo = function(callback)
     }
 };
 
-login.makeBlog = function(name, password, callback)
+login.makeBlog = function(db, name, email, password, callback)
 {
+    try
+    {
+        db.collection('users').findOne({ "email" : email }, function(err, doc)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                callback();
+            }
+            else
+            {
+                try
+                {
+                    db.collection('users').save({ "name" : name, "email" : email, "password" : password, "bio" : "This is your bio. Click here to change it!", "photo" : "http://placehold.it/300x300" }, function(err)
+                    {
+                        if(err)
+                        {
+                            throw err;
+                        }
+                        
+                        callback();
+                    });
+                }
+                catch(ex)
+                {
+                    callback(ex);
+                }
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+    
     //Make JSON object full of login info and default blog info
-    var blogInfo = {
+    /*var blogInfo = {
         "name" : name,
+        "email" : email,
         "password" : password,
         "bio" : "This is your bio. Click here to change it!",
         "photo" : "http://placehold.it/300x300"
@@ -46,7 +86,7 @@ login.makeBlog = function(name, password, callback)
     catch(ex)
     {
         callback(ex);
-    }
+    }*/
 };
 
 login.updateBio = function(bio, callback)
@@ -79,8 +119,60 @@ login.updatePhoto = function(url, callback)
     }
 };
 
-login.login = function(name, password, callback)
+login.login = function(db, email, password, callback)
 {
+    try
+    {
+        db.collection('users').findOne({ "email" : email }, function(err, doc)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                if(doc.password === password)
+                {
+                    makeRandomString(function(string)
+                    {
+                        try
+                        {
+                            db.collection('users').update({ "email" : email }, { $set: { "randString" : string }}, function(err)
+                            {
+                                
+                                if(err)
+                                {
+                                    throw err;
+                                }
+                                
+                                callback(null, true, string);
+                                
+                            });
+                        }
+                        catch(ex)
+                        {
+                            callback(ex);
+                        }
+                    });
+                }
+                else
+                {
+                    callback(null, false);
+                }
+            }
+            else
+            {
+                callback(null, false);
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+    
+    /*
     let correctName = false;
     let correctPass = false;
     
@@ -113,38 +205,43 @@ login.login = function(name, password, callback)
     {
         callback(ex);
     }
+    */
 };
 
-/*login.checkCookie = function(cookie, callback)
+login.checkCookieValue = function(db, email, value, callback)
 {
-    var PREFIX = config.settings.authenticationPrefix;
-    
     try
     {
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        var STRING = jsonData.randomString;
-        
-        var cookiePrefix = cookie.substring(0, 3);
-        var cookieValue = cookie.substring(3);
-        
-        if(cookiePrefix === PREFIX && cookieValue === STRING.substring(3))
+        db.collection('users').findOne({ "email" : email }, function(err, doc)
         {
-            callback(true);
-        }
-        else
-        {
-            callback(false);
-        }
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                if(doc.randString === value)
+                {
+                    callback(null, true);
+                }
+                else
+                {
+                    callback(null, false);
+                }
+            }
+            else
+            {
+                callback();
+            }
+        });
     }
     catch(ex)
     {
-        console.log(ex);
-        callback(false);
+        callback(ex);
     }
-};*/
-
-login.checkCookieValue = function(value, callback)
-{
+    
+    /*
     var PREFIX = config.settings.authenticationPrefix;
     
     try
@@ -168,6 +265,7 @@ login.checkCookieValue = function(value, callback)
     {
         callback(ex);
     }
+    */
 };
 /* END OF FUNCTIONS TO BE EXPORTED */
 
@@ -177,7 +275,6 @@ function makeRandomString(callback)
     var POSSIBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
     
     var retString = '';
-    retString += config.settings.authenticationPrefix;
     
     for(var i = 0;i < 10;i++)
     {
