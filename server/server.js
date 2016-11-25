@@ -47,6 +47,19 @@ var server = app.listen(app.get('port'), function()
 });
 
 /* GETS */
+/* FOR DEV */
+app.get('/removeCookie', function(req, res)
+{
+    res.clearCookie('loggedIn');
+    res.end();
+});
+
+app.get('/checkCookies', function(req, res)
+{
+    console.log(req.cookies);
+});
+/* END OF DEV */
+
 app.get('/', function(req, res)
 {
     res.sendFile('index.html', { root: '../public' });
@@ -82,7 +95,15 @@ app.get('/login', function(req, res)
             {
                 if(successful)
                 {
-                    res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                    if(config.settings.cookieExpiration == 0)
+                    {
+                        res.cookie('loggedIn', randString);
+                    }
+                    else
+                    {
+                        res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                    }
+                    
                     res.end();
                 }
                 else
@@ -102,7 +123,7 @@ app.get('/isLoggedIn', function(req, res)
 {
     if(req.cookies.loggedIn)
     {
-        login.checkCookie(req.cookies.loggedIn, function(correct)
+        login.checkCookieValue(req.cookies.loggedIn, function(err, correct)
         {
             if(correct)
             {
@@ -282,9 +303,104 @@ app.get('/getComments', function(req, res)
         }
     });
 });
+
+app.get('/getLoginCookie', function(req, res)
+{
+    if(req.query.value)
+    {
+        login.checkCookieValue(req.query.value, function(err, correct)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(correct)
+                {
+                    res.cookie('loggedIn', req.query.value);
+                    res.end();
+                }
+                else
+                {
+                    res.end();
+                }
+            }
+        });
+    }
+});
+
+app.get('*', function(req, res)
+{
+    res.sendFile('index.html', { root: '../public' });
+});
 /* END OF GETS */
 
 /* POSTS */
+app.post('/login', function(req, res)
+{
+    /*if(req.body.name && req.body.password)
+    {
+        login.login(req.post.name, req.post.password, function(err, successful, randString)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(successful)
+                {
+                    if(config.settings.cookieExpiration == 0)
+                    {
+                        res.cookie('loggedIn', randString);
+                    }
+                    else
+                    {
+                        res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                    }
+                    
+                    res.end();
+                }
+                else
+                {
+                    res.end();
+                }
+            }
+        });
+    }
+    else
+    {
+        res.end();
+    }
+    */
+    
+    if(req.body.name && req.body.password)
+    {
+        login.login(req.body.name, req.body.password, function(err, successful, randString)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(successful)
+                {
+                    res.send(randString);
+                }
+                else
+                {
+                    res.end();
+                }
+            }
+        });
+    }
+});
+
 app.post('/makeBlog', function(req, res)
 {
     if(req.body.name && req.body.password)

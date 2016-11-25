@@ -309,7 +309,6 @@ blog.sendComment = function(db, id, comment, callback)
                             {
                                 if(containsProfanity)
                                 {
-                                    console.log('contains');
                                     //Reject the comment if it contains profanity
                                     callback();
                                 }

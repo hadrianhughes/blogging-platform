@@ -83,11 +83,6 @@ export default class Article extends React.Component
                 document.execCommand('createLink', false, object.value);
                 this.setState({ modal: 0 });
                 break;
-            case 3:
-                this.moveCaret();
-                document.execCommand('fontSize', false, object.value);
-                this.setState({ modal: 0 });
-                break;
             case 4:
                 let article = document.getElementById('documentContainer');
                 
@@ -137,7 +132,6 @@ export default class Article extends React.Component
                     <FormatButton text="I" onClick={this.italicize} />
                     <FormatButton text="IMG" onClick={this.insertImage} />
                     <FormatButton text="Link" onClick={this.insertLink} />
-                    <FormatButton text="Font Size" onClick={this.handleFontSize} />
                 </div>
                 <div ref="documentEdit" id="documentContainer" contentEditable></div>
                 <Button onClick={this.publish} />

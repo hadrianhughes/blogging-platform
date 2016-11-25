@@ -7,6 +7,6 @@
     
     "settings" : {
         "authenticationPrefix" : "abc",
-        "cookieExpiration" : 60000
+        "cookieExpiration" : 0
     }
 }

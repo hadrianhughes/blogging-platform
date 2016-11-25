@@ -10,15 +10,31 @@ export default class Index extends React.Component
     {
         super();
         
-        this.state = { id: '', banner: '', title: '', content: '', comments: [], commentLength: 100, photo: '', bio: '', blogInfoOpen: false, blogInfoClosed: false, postListOpen: false, postListClosed: false };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], commentLength: 100, photo: '', bio: '', blogInfoOpen: false, blogInfoClosed: false, postListOpen: false, postListClosed: false, loggedIn: false, isModal: false, url: '' };
         
+        this.getBlogInfo = this.getBlogInfo.bind(this);
         this.handleBlogInfoClick = this.handleBlogInfoClick.bind(this);
         this.handlePostListClick = this.handlePostListClick.bind(this);
         this.handlePostClick = this.handlePostClick.bind(this);
         this.getComments = this.getComments.bind(this);
+        this.handleBioChange = this.handleBioChange.bind(this);
+        this.updateBio = this.updateBio.bind(this);
+        this.handlePhotoClick = this.handlePhotoClick.bind(this);
+        this.handleURLChange = this.handleURLChange.bind(this);
+        this.handlePhotoSubmit = this.handlePhotoSubmit.bind(this);
     }
     
     componentDidMount()
+    {
+        $.get('/isLoggedIn', function(data)
+        {
+            this.setState({ loggedIn: data.loggedIn });
+        }.bind(this));
+        
+        this.getBlogInfo();
+    }
+    
+    getBlogInfo()
     {
         $.get('/getBlogInfo', function(data)
         {
@@ -80,15 +96,52 @@ export default class Index extends React.Component
         }.bind(this));
     }
     
+    handleBioChange(e)
+    {
+        if(e.target.value.length <= 300)
+        {
+            this.setState({ bio: e.target.value });
+        }
+    }
+    
+    updateBio()
+    {
+        $.post('/updateBio', { bio: this.state.bio }, function()
+        {
+            this.getBlogInfo();
+        }.bind(this));
+    }
+    
+    handlePhotoClick()
+    {
+        this.setState({ isModal: true });
+    }
+    
+    handleURLChange(e)
+    {
+        this.setState({ url: e.target.value });
+    }
+    
+    handlePhotoSubmit()
+    {
+        $.post('/updatePhoto', { photo: this.state.url }, function(data)
+        {
+            this.getBlogInfo();
+            this.setState({ isModal: false });
+        }.bind(this));
+    }
+    
     render()
     {
         return(
             <div>
-                <BlogInfo photo={this.state.photo} bio={this.state.bio} open={this.state.blogInfoOpen} closed={this.state.blogInfoClosed} />
+                {this.state.isModal ? <div id="mobModal"><input type="text" placeholder="Image URL..." className="textInput mobile-font-size" onChange={this.handleURLChange} /><button className="button mobile-font-size" onClick={this.handlePhotoSubmit}>Submit</button></div> : null}
+                
+                <BlogInfo photo={this.state.photo} bio={this.state.bio} open={this.state.blogInfoOpen} closed={this.state.blogInfoClosed} loggedIn={this.state.loggedIn} onChangeBio={this.handleBioChange} onUpdateBio={this.updateBio} onPhotoClick={this.handlePhotoClick} />
                 <div id="arrowDown" onClick={this.handleBlogInfoClick}></div>
                 <Content banner={this.state.banner} title={this.state.title} text={this.state.content} />
                 <div id="arrowUp" onClick={this.handlePostListClick}></div>
-                <PostList postId={this.state.id} open={this.state.postListOpen} closed={this.state.postListClosed} onClick={(id) => this.handlePostClick(id)} comments={this.state.comments} commentLength={this.state.commentLength} onSendComment={this.getComments} onChangePage={this.props.onChangePage} />
+                <PostList postId={this.state.id} open={this.state.postListOpen} closed={this.state.postListClosed} onClick={(id) => this.handlePostClick(id)} comments={this.state.comments} commentLength={this.state.commentLength} onSendComment={this.getComments} onChangePage={this.props.onChangePage} loggedIn={this.state.loggedIn} onLogin={this.props.onLogin} />
             </div>
         );
     }

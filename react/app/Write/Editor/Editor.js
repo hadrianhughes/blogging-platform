@@ -19,6 +19,7 @@ export default class Editor extends React.Component
     {
         this.setState({ title: e.target.value });
     }
+    
     handlePublish(content)
     {
         const article = { title: this.state.title, content: content };
