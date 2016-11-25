@@ -30,18 +30,6 @@ login.getBlogInfo = function(db, email, callback)
     {
         callback(ex);
     }
-    
-    /*
-    try
-    {
-        var blogInfo = JSON.parse(fs.readFileSync(fileName).toString());
-        callback(null, blogInfo.bio, blogInfo.photo);
-    }
-    catch(ex)
-    {
-        callback(ex);
-    }
-    */
 };
 
 login.makeBlog = function(db, name, email, password, callback)
@@ -84,35 +72,6 @@ login.makeBlog = function(db, name, email, password, callback)
     {
         callback(ex);
     }
-    
-    //Make JSON object full of login info and default blog info
-    /*var blogInfo = {
-        "name" : name,
-        "email" : email,
-        "password" : password,
-        "bio" : "This is your bio. Click here to change it!",
-        "photo" : "http://placehold.it/300x300"
-    };
-    
-    try
-    {
-        //Get data currently stored in blog.json
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        
-        //Change all the data to the details in blogInfo object
-        jsonData.name = blogInfo.name;
-        jsonData.password = blogInfo.password;
-        jsonData.bio = blogInfo.bio;
-        jsonData.photo = blogInfo.photo;
-        
-        //Overwrite file with new details
-        fs.writeFile(fileName, JSON.stringify(jsonData));
-        callback();
-    }
-    catch(ex)
-    {
-        callback(ex);
-    }*/
 };
 
 login.updateBio = function(db, email, bio, callback)
@@ -135,20 +94,6 @@ login.updateBio = function(db, email, bio, callback)
     {
         callback(ex);
     }
-    
-    /*
-    try
-    {
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        jsonData.bio = bio;
-        fs.writeFile(fileName, JSON.stringify(jsonData));
-        callback();
-    }
-    catch(ex)
-    {
-        callback(ex);
-    }
-    */
 };
 
 login.updatePhoto = function(db, email, url, callback)
@@ -225,41 +170,6 @@ login.login = function(db, email, password, callback)
     {
         callback(ex);
     }
-    
-    /*
-    let correctName = false;
-    let correctPass = false;
-    
-    try
-    {
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        if(jsonData.name == name)
-        {
-            correctName = true;
-        }
-        if(jsonData.password == password)
-        {
-            correctPass = true;
-        }
-        
-        if(correctName && correctPass)
-        {
-            makeRandomString(function(string)
-            {
-                updateBlogString(string);
-                callback(null, true, string);
-            });
-        }
-        else
-        {
-            callback(null, false);
-        }
-    }
-    catch(ex)
-    {
-        callback(ex);
-    }
-    */
 };
 
 login.checkCookieValue = function(db, email, value, callback)
@@ -294,32 +204,6 @@ login.checkCookieValue = function(db, email, value, callback)
     {
         callback(ex);
     }
-    
-    /*
-    var PREFIX = config.settings.authenticationPrefix;
-    
-    try
-    {
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        var STRING = jsonData.randomString;
-        
-        var cookiePrefix = value.substring(0, 3);
-        var cookieValue = value.substring(3);
-        
-        if(cookiePrefix == PREFIX && cookieValue == STRING.substring(3))
-        {
-            callback(null, true)
-        }
-        else
-        {
-            callback(null, false);
-        }
-    }
-    catch(ex)
-    {
-        callback(ex);
-    }
-    */
 };
 /* END OF FUNCTIONS TO BE EXPORTED */
 

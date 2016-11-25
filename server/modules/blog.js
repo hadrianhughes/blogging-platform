@@ -3,11 +3,11 @@ var ObjectId = require('mongodb').ObjectID;
 var blog = {};
 
 /* FUNCTIONS TO BE EXPORTED */
-blog.getMonths = function(db, callback)
+blog.getMonths = function(db, email, callback)
 {
     try
     {
-        db.collection('posts').find(function(err, cursor)
+        db.collection('posts').find({ "user" : email }, function(err, cursor)
         {
             if(err)
             {
@@ -71,14 +71,14 @@ blog.getMonths = function(db, callback)
     }
 };
 
-blog.getPosts = function(db, month, callback)
+blog.getPosts = function(db, email, month, callback)
 {
     //Query database
     const monthString = month.month + '/' + month.year;
 
     try
     {
-        db.collection('posts').find({ date: monthString }, function(err, cursor)
+        db.collection('posts').find({ "user" : email, "date" : monthString }, function(err, cursor)
         {
             if(err)
             {
@@ -348,14 +348,14 @@ blog.sendComment = function(db, id, comment, callback)
     });
 };
 
-blog.makePost = function(db, post, callback)
+blog.makePost = function(db, email, post, callback)
 {
     const date = new Date();
     const dateString = (date.getMonth() + 1) + '/' + date.getFullYear();
 
     try
     {
-        db.collection('posts').save({ date: dateString, comments: [], title: post.title, content: post.content, banner: post.banner, tags: post.tags, allowComments: post.allowComments, allowProfanity: post.allowProfanity, limit: post.limit, length: post.length }, function(err)
+        db.collection('posts').save({ "user" : email, "date" : dateString, "comments" : [], "title" : post.title, "content" : post.content, "banner": post.banner, "tags" : post.tags, "allowComments" : post.allowComments, "allowProfanity" : post.allowProfanity, "limit" : post.limit, "length" : post.length }, function(err)
         {
             if(err)
             {

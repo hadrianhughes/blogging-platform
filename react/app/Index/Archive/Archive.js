@@ -56,7 +56,7 @@ export default class Archive extends React.Component
 
     handleMonthClick(e)
     {
-        this.setState({ currentMonthString: e.target.text, currentMonth: makeMonth(e.target.text) });
+        this.setState({ currentMonthString: e.target.text, currentMonth: this.makeMonth(e.target.text) });
 
         //Get list of posts for current month from server
         $.get('/getPostList', { month: e.target.text }, function(data)

@@ -165,49 +165,59 @@ app.get('/getBlogInfo', function(req, res)
 
 app.get('/getMonths', function(req, res)
 {
-    //Get list of months for posts
-    blog.getMonths(database, function(months)
+    if(req.cookies.loggedIn)
     {
-        res.send(months);
-    });
+        var parts = req.cookies.loggedIn.split(':');
+        
+        //Get list of months for posts
+        blog.getMonths(database, parts[0], function(months)
+        {
+            res.send(months);
+        });
+    }
 });
 
 app.get('/getPostList', function(req, res)
 {
-    if(req.query.month)
+    if(req.cookies.loggedIn)
     {
-        blog.getPosts(database, req.query.month, function(err, posts)
+        if(req.query.month)
         {
-            if(err)
+            var parts = req.cookies.loggedIn.split(':');
+            
+            blog.getPosts(database, parts[0], req.query.month, function(err, posts)
             {
-                console.log(err);
-                res.end();
-            }
-            else
-            {
-                if(posts)
+                if(err)
                 {
-                    //Only ID and Title need to be sent in response
-                    let postList = [];
-
-                    for(let i = 0;i < posts.length;i++)
-                    {
-                        let post = {};
-                        post._id = posts[i]._id;
-                        post.title = posts[i].title;
-
-                        postList.push(post);
-                    }
-
-                    postList = postList.reverse();
-                    res.send(postList);
+                    console.log(err);
+                    res.end();
                 }
-            }
-        });
-    }
-    else
-    {
-        res.end();
+                else
+                {
+                    if(posts)
+                    {
+                        //Only ID and Title need to be sent in response
+                        let postList = [];
+    
+                        for(let i = 0;i < posts.length;i++)
+                        {
+                            let post = {};
+                            post._id = posts[i]._id;
+                            post.title = posts[i].title;
+    
+                            postList.push(post);
+                        }
+    
+                        postList = postList.reverse();
+                        res.send(postList);
+                    }
+                }
+            });
+        }
+        else
+        {
+            res.end();
+        }
     }
 });
 
@@ -451,22 +461,30 @@ app.post('/updatePhoto', function(req, res)
 
 app.post('/post', function(req, res)
 {
-    //Send post to database
-    if(req.body.post)
+    if(req.cookies.loggedIn)
     {
-        blog.makePost(database, req.body.post, function(err)
+        if(req.body.post)
         {
-            if(err)
+            var parts = req.cookies.loggedIn.split(':');
+            
+            blog.makePost(database, parts[0], req.body.post, function(err)
             {
-                console.log('Post creation failed with error: ' + err);
-                res.send(false);
-            }
-            else
-            {
-                console.log('Post successfully added to database.');
-                res.send(true);
-            }
-        });
+                if(err)
+                {
+                    console.log('Post creation failed with error: ' + err);
+                    res.send(false);
+                }
+                else
+                {
+                    console.log('Post successfully added to database.');
+                    res.send(true);
+                }
+            });
+        }
+        else
+        {
+            res.end();
+        }
     }
     else
     {
