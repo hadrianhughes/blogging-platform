@@ -516,11 +516,11 @@ app.post('/updatePhoto', function(req, res)
 
 app.post('/post', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_loggedIn)
     {
         if(req.body.post)
         {
-            var parts = req.cookies.loggedIn.split(':');
+            var parts = req.cookies.sy_loggedIn.split(':');
             
             blog.makePost(database, parts[0], req.body.post, function(err)
             {
