@@ -303,25 +303,32 @@ app.get('/getAllPosts', function(req, res)
 
 app.get('/search', function(req, res)
 {
-    blog.searchPosts(database, req.query.query, function(err, results)
+    if(req.cookies.sy_blog)
     {
-        if(err)
+        blog.searchPosts(database, req.cookies.sy_blog, req.query.query, function(err, results)
         {
-            console.log(err);
-            res.end();
-        }
-        else
-        {
-            if(results)
+            if(err)
             {
-                res.send(results);
+                console.log(err);
+                res.end();
             }
             else
             {
-                res.end();
+                if(results)
+                {
+                    res.send(results);
+                }
+                else
+                {
+                    res.end();
+                }
             }
-        }
-    });
+        });
+    }
+    else
+    {
+        res.end();
+    }
 });
 
 app.get('/loadPost', function(req, res)

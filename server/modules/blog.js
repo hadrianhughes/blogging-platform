@@ -187,50 +187,73 @@ blog.getAllPosts = function(db, callback)
     });
 };
 
-blog.searchPosts = function(db, term, callback)
+blog.searchPosts = function(db, userId, term, callback)
 {
     var QUERY = new RegExp(".*" + term + ".*", 'i');
+    
     
     //Query database
     try
     {
-        db.collection('posts').find({
-            "$or": [{
-                "title" : { $regex: QUERY }
-            },{
-                "tags.value" : term.toLowerCase()
-            }]
-        }, function(err, cursor)
+        db.collection('users').findOne({ "_id" : ObjectId(userId) }, function(err, doc)
         {
             if(err)
             {
                 throw err;
             }
             
-            let posts = [];
-            
-            try
+            if(doc)
             {
-                cursor.each(function(err, doc)
+                try
                 {
-                    if(err)
+                    db.collection('posts').find({
+                        "$and" : [{
+                            "user" : doc.email
+                        },{
+                            "$or" : [{
+                                "title" : { $regex: QUERY }
+                            },{
+                                "tags.value" : term.toLowerCase()
+                            }]
+                        }]
+                    }, function(err, cursor)
                     {
-                        throw err;
-                    }
-                    
-                    if(doc)
-                    {
-                        posts.push(doc);
-                    }
-                    else
-                    {
-                        callback(null, posts);
-                    }
-                });
-            }
-            catch(ex)
-            {
-                callback(ex);
+                        if(err)
+                        {
+                            throw err;
+                        }
+                        
+                        let posts = [];
+                        
+                        try
+                        {
+                            cursor.each(function(err, doc)
+                            {
+                                if(err)
+                                {
+                                    throw err;
+                                }
+                                
+                                if(doc)
+                                {
+                                    posts.push(doc);
+                                }
+                                else
+                                {
+                                    callback(null, posts);
+                                }
+                            });
+                        }
+                        catch(ex)
+                        {
+                            callback(ex);
+                        }
+                    });
+                }
+                catch(ex)
+                {
+                    callback(ex);
+                }
             }
         });
     }
