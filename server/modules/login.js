@@ -115,7 +115,7 @@ login.login = function(name, password, callback)
     }
 };
 
-login.checkCookie = function(cookie, callback)
+/*login.checkCookie = function(cookie, callback)
 {
     var PREFIX = config.settings.authenticationPrefix;
     
@@ -140,6 +140,33 @@ login.checkCookie = function(cookie, callback)
     {
         console.log(ex);
         callback(false);
+    }
+};*/
+
+login.checkCookieValue = function(value, callback)
+{
+    var PREFIX = config.settings.authenticationPrefix;
+    
+    try
+    {
+        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
+        var STRING = jsonData.randomString;
+        
+        var cookiePrefix = value.substring(0, 3);
+        var cookieValue = value.substring(3);
+        
+        if(cookiePrefix == PREFIX && cookieValue == STRING.substring(3))
+        {
+            callback(null, true)
+        }
+        else
+        {
+            callback(null, false);
+        }
+    }
+    catch(ex)
+    {
+        callback(ex);
     }
 };
 /* END OF FUNCTIONS TO BE EXPORTED */

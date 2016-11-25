@@ -32,18 +32,19 @@ export default class BlogCreation extends React.Component
     login(details)
     {
         //Send login details to server which will return a cookie to keep user logged in
-        $.get('/login', { name: details.name, password: details.password }, function()
+        $.post('/login', { name: details.name, password: details.password }, function(data)
         {
-            window.location.reload();
+            $.get('/getLoginCookie', { value: data }, function()
+            {
+                window.location.replace('/');
+            });
         });
     }
     
     makeBlog(blogInfo)
     {
-        console.log(blogInfo);
         $.post('/makeBlog', { name: blogInfo.name, password: blogInfo.password }, function()
         {
-            console.log('.');
             window.location.reload();
         });
     }
