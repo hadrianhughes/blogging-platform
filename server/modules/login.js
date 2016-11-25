@@ -1,5 +1,7 @@
 var ObjectId = require('mongodb').ObjectID;
 var fs = require('fs');
+var crypto = require('crypto');
+
 var fileName = './cfg/blog.json';
 var config = require('../cfg/config.json');
 
@@ -96,7 +98,9 @@ login.makeBlog = function(db, name, email, password, callback)
             {
                 try
                 {
-                    db.collection('users').save({ "name" : name, "email" : email, "password" : password, "bio" : "This is your bio. Click here to change it!", "photo" : "http://placehold.it/300x300" }, function(err)
+                    var passwordHash = crypto.createHash('md5').update(password).digest('hex');
+                    
+                    db.collection('users').save({ "name" : name, "email" : email, "password" : passwordHash, "bio" : "This is your bio. Click here to change it!", "photo" : "http://placehold.it/300x300" }, function(err)
                     {
                         if(err)
                         {
@@ -176,7 +180,9 @@ login.login = function(db, email, password, callback)
             
             if(doc)
             {
-                if(doc.password === password)
+                var passwordHash = crypto.createHash('md5').update(password).digest('hex');
+                
+                if(doc.password === passwordHash)
                 {
                     makeRandomString(function(string)
                     {
