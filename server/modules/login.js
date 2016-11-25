@@ -106,6 +106,25 @@ login.makeBlog = function(db, name, email, password, callback)
                             throw err;
                         }
                         
+                        try
+                        {
+                            const date = new Date();
+                            const dateString = (date.getMonth() + 1) + '/' + date.getFullYear();
+                            db.collection('posts').save({ "user" : email, "date" : dateString, "comments" : [], "title" : "Welcome to " + name + "!", "content" : "<h1>Hello world!</h1><br /><p>This is your first post. Login and click on 'Write an article' to get started.</p>", "banner" : "", "tags" : [], "allowComments" : false, "allowProfanity" : false, "limit" : false, "length" : 0 }, function(err)
+                            {
+                                if(err)
+                                {
+                                    throw err;
+                                }
+                                
+                                callback();
+                            });
+                        }
+                        catch(ex)
+                        {
+                            callback(ex);
+                        }
+                        
                         callback();
                     });
                 }
