@@ -146,7 +146,12 @@ app.get('/isLoggedIn', function(req, res)
 
 app.get('/getBlogInfo', function(req, res)
 {
-    login.getBlogInfo(function(err, bio, photo)
+    if(req.cookies.loggedIn)
+    {
+        var parts = req.cookies.loggedIn.split(':');
+    }
+    
+    login.getBlogInfo(database, parts[0], function(err, bio, photo)
     {
         if(err)
         {

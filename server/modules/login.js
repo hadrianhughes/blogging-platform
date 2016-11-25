@@ -5,8 +5,33 @@ var config = require('../cfg/config.json');
 var login = {};
 
 /* FUNCTIONS TO BE EXPORTED */
-login.getBlogInfo = function(callback)
+login.getBlogInfo = function(db, email, callback)
 {
+    try
+    {
+        db.collection('users').findOne({ "email" : email }, function(err, doc)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                callback(null, doc.bio, doc.photo);
+            }
+            else
+            {
+                callback();
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+    
+    /*
     try
     {
         var blogInfo = JSON.parse(fs.readFileSync(fileName).toString());
@@ -16,6 +41,7 @@ login.getBlogInfo = function(callback)
     {
         callback(ex);
     }
+    */
 };
 
 login.makeBlog = function(db, name, email, password, callback)
