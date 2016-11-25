@@ -121,19 +121,15 @@ app.get('/login', function(req, res)
 
 app.get('/isLoggedIn', function(req, res)
 {
-    console.log('1');
     if(req.cookies.loggedIn)
     {
-        console.log('2');
         //Get email and random string from cookie
         var parts = req.cookies.loggedIn.split(':');
         
         login.checkCookieValue(database, parts[0], parts[1], function(err, correct)
         {
-            console.log('3');
             if(correct)
             {
-                console.log('4');
                 res.json({ loggedIn: true });
             }
             else
@@ -392,17 +388,26 @@ app.post('/makeBlog', function(req, res)
 
 app.post('/updateBio', function(req, res)
 {
-    if(req.body.bio)
+    if(req.cookies.loggedIn)
     {
-        login.updateBio(req.body.bio, function(err)
+        if(req.body.bio)
         {
-            if(err)
-            {
-                console.log(err);
-            }
+            var parts = req.cookies.loggedIn.split(':');
             
+            login.updateBio(database, parts[0], req.body.bio, function(err)
+            {
+                if(err)
+                {
+                    console.log(err);
+                }
+                
+                res.end();
+            });
+        }
+        else
+        {
             res.end();
-        });
+        }
     }
     else
     {
@@ -412,17 +417,26 @@ app.post('/updateBio', function(req, res)
 
 app.post('/updatePhoto', function(req, res)
 {
-    if(req.body.photo)
+    if(req.cookies.loggedIn)
     {
-        login.updatePhoto(req.body.photo, function(err)
+        if(req.body.photo)
         {
-            if(err)
-            {
-                console.log(err);
-            }
+            var parts = req.cookies.loggedIn.split(':');
             
+            login.updatePhoto(database, parts[0], req.body.photo, function(err)
+            {
+                if(err)
+                {
+                    console.log(err);
+                }
+                
+                res.end();
+            });
+        }
+        else
+        {
             res.end();
-        });
+        }
     }
     else
     {

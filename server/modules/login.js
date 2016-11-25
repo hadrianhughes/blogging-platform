@@ -89,8 +89,28 @@ login.makeBlog = function(db, name, email, password, callback)
     }*/
 };
 
-login.updateBio = function(bio, callback)
+login.updateBio = function(db, email, bio, callback)
 {
+    try
+    {
+        db.collection('users').update({ "email" : email }, { $set: { "bio" : bio }}, function(err)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            else
+            {
+                callback();
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+    
+    /*
     try
     {
         var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
@@ -102,16 +122,24 @@ login.updateBio = function(bio, callback)
     {
         callback(ex);
     }
+    */
 };
 
-login.updatePhoto = function(url, callback)
+login.updatePhoto = function(db, email, url, callback)
 {
     try
     {
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        jsonData.photo = url;
-        fs.writeFile(fileName, JSON.stringify(jsonData));
-        callback();
+        db.collection('users').update({ "email" : email }, { $set: { "photo" : url }}, function(err)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            else
+            {
+                callback();
+            }
+        });
     }
     catch(ex)
     {

@@ -30,7 +30,6 @@ export default class Index extends React.Component
         {
             if(data.loggedIn)
             {
-                console.log(data.loggedIn);
                 this.setState({ loggedIn: true });
             }
         }.bind(this));
@@ -49,10 +48,20 @@ export default class Index extends React.Component
     handleImageSubmit(url)
     {
         //Send URL to server as new blog photo
-        $.post('/updatePhoto', { photo: url }, function()
+        $.get('/isLoggedIn', function(data)
         {
-            this.getBlogInfo();
-            this.setState({ isModal: false });
+            if(data.loggedIn)
+            {
+                $.post('/updatePhoto', { photo: url }, function()
+                {
+                    this.getBlogInfo();
+                    this.setState({ isModal: false });
+                }.bind(this));
+            }
+            else
+            {
+                this.setState({ loggedIn: false });
+            }
         }.bind(this));
     }
 
@@ -87,9 +96,19 @@ export default class Index extends React.Component
     
     updateBio()
     {
-        $.post('/updateBio', { bio: this.state.bio }, function()
+        $.get('/isLoggedIn', function(data)
         {
-            this.getBlogInfo();
+            if(data.loggedIn)
+            {
+                $.post('/updateBio', { bio: this.state.bio }, function()
+                {
+                    this.getBlogInfo();
+                }.bind(this));
+            }
+            else
+            {
+                this.setState({ loggedIn: false });
+            }
         }.bind(this));
     }
     
