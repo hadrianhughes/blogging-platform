@@ -80,6 +80,42 @@ app.get('/getMobileStyle', function(req, res)
     res.sendFile('styles/style.css');
 });
 
+app.get('/getBlogCookie', function(req, res)
+{
+    if(req.query.blog)
+    {
+        res.cookie('sy_blog', req.query.blog);
+        res.end();
+    }
+    else
+    {
+        res.end();
+    }
+});
+
+app.get('/getBlogs', function(req, res)
+{
+    login.getBlogs(database, function(err, blogs)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.end();
+        }
+        else
+        {
+            if(blogs)
+            {
+                res.send(blogs);
+            }
+            else
+            {
+                res.end();
+            }
+        }
+    });
+});
+
 app.get('/login', function(req, res)
 {
     if(req.query.name && req.query.password)
@@ -97,11 +133,11 @@ app.get('/login', function(req, res)
                 {
                     if(config.settings.cookieExpiration == 0)
                     {
-                        res.cookie('loggedIn', randString);
+                        res.cookie('sy_loggedIn', randString);
                     }
                     else
                     {
-                        res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                        res.cookie('sy_loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
                     }
                     
                     res.end();
@@ -121,10 +157,10 @@ app.get('/login', function(req, res)
 
 app.get('/isLoggedIn', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_loggedIn)
     {
         //Get email and random string from cookie
-        var parts = req.cookies.loggedIn.split(':');
+        var parts = req.cookies.sy_loggedIn.split(':');
         
         login.checkCookieValue(database, parts[0], parts[1], function(err, correct)
         {
@@ -146,46 +182,58 @@ app.get('/isLoggedIn', function(req, res)
 
 app.get('/getBlogInfo', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_blog)
     {
-        var parts = req.cookies.loggedIn.split(':');
-    }
-    
-    login.getBlogInfo(database, parts[0], function(err, bio, photo)
-    {
-        if(err)
+        login.getBlogInfo(database, req.cookies.sy_blog, function(err, bio, photo)
         {
-            console.log(err);
-        }
-        
-        var blogInfo = { bio: bio, photo: photo };
-        res.send(blogInfo);
-    });
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                var blogInfo = { bio: bio, photo: photo };
+                res.send(blogInfo);
+            }
+        });
+    }
 });
 
 app.get('/getMonths', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_blog)
     {
-        var parts = req.cookies.loggedIn.split(':');
-        
         //Get list of months for posts
-        blog.getMonths(database, parts[0], function(months)
+        blog.getMonths(database, req.cookies.sy_blog, function(err, months)
         {
-            res.send(months);
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(months)
+                {
+                    res.send(months);
+                }
+                else
+                {
+                    res.end();
+                }
+            }
         });
     }
 });
 
 app.get('/getPostList', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_blog)
     {
         if(req.query.month)
         {
-            var parts = req.cookies.loggedIn.split(':');
-            
-            blog.getPosts(database, parts[0], req.query.month, function(err, posts)
+            blog.getPosts(database, req.cookies.sy_blog, req.query.month, function(err, posts)
             {
                 if(err)
                 {
@@ -337,7 +385,7 @@ app.get('/getLoginCookie', function(req, res)
             {
                 if(correct)
                 {
-                    res.cookie('loggedIn', req.query.email + ':' + req.query.value);
+                    res.cookie('sy_loggedIn', req.query.email + ':' + req.query.value);
                     res.end();
                 }
                 else

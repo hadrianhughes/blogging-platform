@@ -1,3 +1,4 @@
+var ObjectId = require('mongodb').ObjectID;
 var fs = require('fs');
 var fileName = './cfg/blog.json';
 var config = require('../cfg/config.json');
@@ -5,11 +6,55 @@ var config = require('../cfg/config.json');
 var login = {};
 
 /* FUNCTIONS TO BE EXPORTED */
-login.getBlogInfo = function(db, email, callback)
+login.getBlogs = function(db, callback)
 {
     try
     {
-        db.collection('users').findOne({ "email" : email }, function(err, doc)
+        db.collection('users').find({}, function(err, cursor)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            try
+            {
+                let blogs = [];
+                cursor.each(function(err, doc)
+                {
+                    if(err)
+                    {
+                        throw err;
+                    }
+                    
+                    if(doc)
+                    {
+                        let blog = { _id: doc._id, name: doc.name };
+                        blogs.push(blog);
+                    }
+                    else
+                    {
+                        callback(null, blogs);
+                    }
+                });
+            }
+            catch(ex)
+            {
+                callback(ex);
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+}
+
+login.getBlogInfo = function(db, id, callback)
+{
+    try
+    {
+        db.collection('users').findOne({ "_id" : ObjectId(id) }, function(err, doc)
         {
             if(err)
             {
