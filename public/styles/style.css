@@ -166,6 +166,29 @@ a:active
 }
 /* END OF CLASSES */
 
+/* MENU STYLING */
+#blog-list-cont
+{
+    width: 100vw;
+    height: 100vh;
+    background-color: #fbfbfb;
+}
+#blog-list
+{
+    position: absolute;
+    width: 50%;
+    top: 40%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    
+    text-align: center;
+    list-style-type: none;
+    background-color: white;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+}
+/* END OF MENU STYLING */
 
 
 /* START OF BLOG STYLING */
@@ -254,7 +277,8 @@ a:active
     list-style-type: none;
 }
 
-#archive li:hover
+#archive li:hover,
+#blog-list li:hover
 {
     background-color: #e3f7bb;
 }

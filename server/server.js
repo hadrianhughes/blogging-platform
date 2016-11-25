@@ -50,7 +50,8 @@ var server = app.listen(app.get('port'), function()
 /* FOR DEV */
 app.get('/removeCookie', function(req, res)
 {
-    res.clearCookie('loggedIn');
+    res.clearCookie('sy_loggedIn');
+    res.clearCookie('sy_blog');
     res.end();
 });
 
@@ -157,12 +158,12 @@ app.get('/login', function(req, res)
 
 app.get('/isLoggedIn', function(req, res)
 {
-    if(req.cookies.sy_loggedIn)
+    if(req.cookies.sy_loggedIn && req.cookies.sy_blog)
     {
         //Get email and random string from cookie
         var parts = req.cookies.sy_loggedIn.split(':');
         
-        login.checkCookieValue(database, parts[0], parts[1], function(err, correct)
+        login.checkCookieValue(database, req.cookies.sy_blog, parts[0], parts[1], function(err, correct)
         {
             if(correct)
             {
@@ -379,9 +380,9 @@ app.get('/getComments', function(req, res)
 
 app.get('/getLoginCookie', function(req, res)
 {
-    if(req.query.value)
+    if(req.query.value && req.query.email && req.cookies.sy_blog)
     {
-        login.checkCookieValue(database, req.query.email, req.query.value, function(err, correct)
+        login.checkCookieValue(database, req.cookies.sy_blog, req.query.email, req.query.value, function(err, correct)
         {
             if(err)
             {
@@ -458,11 +459,11 @@ app.post('/makeBlog', function(req, res)
 
 app.post('/updateBio', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_loggedIn)
     {
         if(req.body.bio)
         {
-            var parts = req.cookies.loggedIn.split(':');
+            var parts = req.cookies.sy_loggedIn.split(':');
             
             login.updateBio(database, parts[0], req.body.bio, function(err)
             {
@@ -487,11 +488,11 @@ app.post('/updateBio', function(req, res)
 
 app.post('/updatePhoto', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_loggedIn)
     {
         if(req.body.photo)
         {
-            var parts = req.cookies.loggedIn.split(':');
+            var parts = req.cookies.sy_loggedIn.split(':');
             
             login.updatePhoto(database, parts[0], req.body.photo, function(err)
             {

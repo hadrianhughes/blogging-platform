@@ -217,7 +217,7 @@ login.login = function(db, email, password, callback)
     }
 };
 
-login.checkCookieValue = function(db, email, value, callback)
+login.checkCookieValue = function(db, blog, email, value, callback)
 {
     try
     {
@@ -230,13 +230,16 @@ login.checkCookieValue = function(db, email, value, callback)
             
             if(doc)
             {
-                if(doc.randString === value)
+                if(doc._id == blog)
                 {
-                    callback(null, true);
-                }
-                else
-                {
-                    callback(null, false);
+                    if(doc.randString === value)
+                    {
+                        callback(null, true);
+                    }
+                    else
+                    {
+                        callback(null, false);
+                    }
                 }
             }
             else

@@ -17,7 +17,7 @@ export default class Menu extends React.Component
         $.get('/getBlogs', function(data)
         {
             let blogs = this.addKeys(data);
-            blogs = data.map((blog) => <li key={blog.id} onClick={() => this.handleBlogClick(blog._id)}>{blog.name}</li>);
+            blogs = data.map((blog) => <li key={blog.id}><a href="#" onClick={() => this.handleBlogClick(blog._id)}>{blog.name}</a></li>);
             
             this.setState({ blogs: blogs });
         }.bind(this));
@@ -48,8 +48,8 @@ export default class Menu extends React.Component
     render()
     {
         return(
-            <div>
-                <ul>{this.state.blogs}</ul>
+            <div id="blog-list-cont">
+                <ul id="blog-list" className="border">{this.state.blogs}</ul>
             </div>
         );
     }
