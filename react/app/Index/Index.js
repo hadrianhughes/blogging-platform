@@ -152,6 +152,7 @@ export default class Index extends React.Component
                 </table>
                 <div className="footer">
                     <a href="#" onClick={this.props.changeToBlogCreation} className="float-right">Login/Sign up</a>
+                    <a href="#" onClick={this.props.changeToMenu} className="float-right">Back to menu</a>
                     <a href="#" className="float-right">[BRAND NAME]</a>
                     {this.state.loggedIn ? <a href="#" onClick={this.props.changeToWrite} className="float-left">Write an article</a> : null}
                 </div>

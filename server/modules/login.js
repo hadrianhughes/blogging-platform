@@ -2,7 +2,6 @@ var ObjectId = require('mongodb').ObjectID;
 var fs = require('fs');
 var crypto = require('crypto');
 
-var fileName = './cfg/blog.json';
 var config = require('../cfg/config.json');
 
 var login = {};
@@ -275,20 +274,6 @@ function makeRandomString(callback)
     }
     
     callback(retString);
-}
-
-function updateBlogString(string)
-{
-    try
-    {
-        var jsonData = JSON.parse(fs.readFileSync(fileName).toString());
-        jsonData.randomString = string;
-        fs.writeFile(fileName, JSON.stringify(jsonData));
-    }
-    catch(ex)
-    {
-        console.log(ex);
-    }
 }
 
 module.exports = login;

@@ -38,7 +38,7 @@ export default class SignIn extends React.Component
                 <input type="password" placeholder="Password..." className="textInput margin-bottom" onChange={this.handlePasswordChange} /><br />
                 <button className="button margin-bottom margin-right" onClick={this.handleClick}>Login</button>
                 <button className="button margin-bottom" onClick={this.props.onTogglePage}>Sign Up</button><br />
-                <button className="button margin-bottom" onClick={this.props.onReturn}>Back to Blog</button>
+                <button className="button margin-bottom" onClick={this.props.onReturn}>Back to Menu</button>
             </div>
         );
     }

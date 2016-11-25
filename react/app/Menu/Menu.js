@@ -50,6 +50,11 @@ export default class Menu extends React.Component
         return(
             <div id="blog-list-cont">
                 <ul id="blog-list" className="border">{this.state.blogs}</ul>
+                
+                <div className="footer">
+                    <a href="#" className="float-left" onClick={this.props.changeToBlogCreation}>Make a blog</a>
+                    <a href="#" className="float-right">[BRAND NAME]</a>
+                </div>
             </div>
         );
     }
