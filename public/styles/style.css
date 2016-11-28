@@ -227,6 +227,12 @@ a:active
     font-size: 16px;
 }
 
+#content-container a
+{
+    color: blue;
+    text-decoration: underline;
+}
+
 #content-container > div
 {
     height: 100%;
