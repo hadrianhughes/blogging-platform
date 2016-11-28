@@ -20,6 +20,7 @@ export default class Index extends React.Component
         this.handleBioChange = this.handleBioChange.bind(this);
         this.updateBio = this.updateBio.bind(this);
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.handleURLChange = this.handleURLChange.bind(this);
         this.handlePhotoSubmit = this.handlePhotoSubmit.bind(this);
     }
@@ -117,6 +118,11 @@ export default class Index extends React.Component
         this.setState({ isModal: true });
     }
     
+    closeModal()
+    {
+        this.setState({ isModal: false });
+    }
+    
     handleURLChange(e)
     {
         this.setState({ url: e.target.value });
@@ -135,13 +141,13 @@ export default class Index extends React.Component
     {
         return(
             <div>
-                {this.state.isModal ? <div id="mobModal"><input type="text" placeholder="Image URL..." className="textInput mobile-font-size" onChange={this.handleURLChange} /><button className="button mobile-font-size" onClick={this.handlePhotoSubmit}>Submit</button></div> : null}
+                {this.state.isModal ? <div id="mobModal"><input type="text" placeholder="Image URL..." className="textInput mobile-font-size" onChange={this.handleURLChange} /><button className="button mobile-font-size" onClick={this.handlePhotoSubmit}>Submit</button><br /><button className="button mobile-font-size" onClick={this.closeModal}>Close</button></div> : null}
                 
                 <BlogInfo photo={this.state.photo} bio={this.state.bio} open={this.state.blogInfoOpen} closed={this.state.blogInfoClosed} loggedIn={this.state.loggedIn} onChangeBio={this.handleBioChange} onUpdateBio={this.updateBio} onPhotoClick={this.handlePhotoClick} />
                 <div id="arrowDown" onClick={this.handleBlogInfoClick}></div>
                 <Content banner={this.state.banner} title={this.state.title} text={this.state.content} />
                 <div id="arrowUp" onClick={this.handlePostListClick}></div>
-                <PostList postId={this.state.id} open={this.state.postListOpen} closed={this.state.postListClosed} onClick={(id) => this.handlePostClick(id)} comments={this.state.comments} commentLength={this.state.commentLength} onSendComment={this.getComments} onChangePage={this.props.onChangePage} loggedIn={this.state.loggedIn} onLogin={this.props.onLogin} />
+                <PostList postId={this.state.id} open={this.state.postListOpen} closed={this.state.postListClosed} onClick={(id) => this.handlePostClick(id)} comments={this.state.comments} commentLength={this.state.commentLength} onSendComment={this.getComments} onChangePage={this.props.onChangePage} loggedIn={this.state.loggedIn} onLogin={this.props.onLogin} backToMenu={this.props.backToMenu} />
             </div>
         );
     }

@@ -50,7 +50,8 @@ var server = app.listen(app.get('port'), function()
 /* FOR DEV */
 app.get('/removeCookie', function(req, res)
 {
-    res.clearCookie('loggedIn');
+    res.clearCookie('sy_loggedIn');
+    res.clearCookie('sy_blog');
     res.end();
 });
 
@@ -80,6 +81,54 @@ app.get('/getMobileStyle', function(req, res)
     res.sendFile('styles/style.css');
 });
 
+app.get('/hasBlogCookie', function(req, res)
+{
+    if(req.cookies.sy_blog)
+    {
+        res.json({ hasCookie : true });
+    }
+    else
+    {
+        res.json({ hasCookie : false });
+    }
+});
+
+app.get('/getBlogCookie', function(req, res)
+{
+    if(req.query.blog)
+    {
+        res.cookie('sy_blog', req.query.blog);
+        res.end();
+    }
+    else
+    {
+        res.end();
+    }
+});
+
+app.get('/getBlogs', function(req, res)
+{
+    login.getBlogs(database, function(err, blogs)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.end();
+        }
+        else
+        {
+            if(blogs)
+            {
+                res.send(blogs);
+            }
+            else
+            {
+                res.end();
+            }
+        }
+    });
+});
+
 app.get('/login', function(req, res)
 {
     if(req.query.name && req.query.password)
@@ -97,11 +146,11 @@ app.get('/login', function(req, res)
                 {
                     if(config.settings.cookieExpiration == 0)
                     {
-                        res.cookie('loggedIn', randString);
+                        res.cookie('sy_loggedIn', randString);
                     }
                     else
                     {
-                        res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                        res.cookie('sy_loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration)});
                     }
                     
                     res.end();
@@ -121,9 +170,12 @@ app.get('/login', function(req, res)
 
 app.get('/isLoggedIn', function(req, res)
 {
-    if(req.cookies.loggedIn)
+    if(req.cookies.sy_loggedIn && req.cookies.sy_blog)
     {
-        login.checkCookieValue(req.cookies.loggedIn, function(err, correct)
+        //Get email and random string from cookie
+        var parts = req.cookies.sy_loggedIn.split(':');
+        
+        login.checkCookieValue(database, req.cookies.sy_blog, parts[0], parts[1], function(err, correct)
         {
             if(correct)
             {
@@ -143,32 +195,9 @@ app.get('/isLoggedIn', function(req, res)
 
 app.get('/getBlogInfo', function(req, res)
 {
-    login.getBlogInfo(function(err, bio, photo)
+    if(req.cookies.sy_blog)
     {
-        if(err)
-        {
-            console.log(err);
-        }
-        
-        var blogInfo = { bio: bio, photo: photo };
-        res.send(blogInfo);
-    });
-});
-
-app.get('/getMonths', function(req, res)
-{
-    //Get list of months for posts
-    blog.getMonths(database, function(months)
-    {
-        res.send(months);
-    });
-});
-
-app.get('/getPostList', function(req, res)
-{
-    if(req.query.month)
-    {
-        blog.getPosts(database, req.query.month, function(err, posts)
+        login.getBlogInfo(database, req.cookies.sy_blog, function(err, bio, photo)
         {
             if(err)
             {
@@ -177,29 +206,79 @@ app.get('/getPostList', function(req, res)
             }
             else
             {
-                if(posts)
+                var blogInfo = { bio: bio, photo: photo };
+                res.send(blogInfo);
+            }
+        });
+    }
+});
+
+app.get('/getMonths', function(req, res)
+{
+    if(req.cookies.sy_blog)
+    {
+        //Get list of months for posts
+        blog.getMonths(database, req.cookies.sy_blog, function(err, months)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.end();
+            }
+            else
+            {
+                if(months)
                 {
-                    //Only ID and Title need to be sent in response
-                    let postList = [];
-
-                    for(let i = 0;i < posts.length;i++)
-                    {
-                        let post = {};
-                        post._id = posts[i]._id;
-                        post.title = posts[i].title;
-
-                        postList.push(post);
-                    }
-
-                    postList = postList.reverse();
-                    res.send(postList);
+                    res.send(months);
+                }
+                else
+                {
+                    res.end();
                 }
             }
         });
     }
-    else
+});
+
+app.get('/getPostList', function(req, res)
+{
+    if(req.cookies.sy_blog)
     {
-        res.end();
+        if(req.query.month)
+        {
+            blog.getPosts(database, req.cookies.sy_blog, req.query.month, function(err, posts)
+            {
+                if(err)
+                {
+                    console.log(err);
+                    res.end();
+                }
+                else
+                {
+                    if(posts)
+                    {
+                        //Only ID and Title need to be sent in response
+                        let postList = [];
+    
+                        for(let i = 0;i < posts.length;i++)
+                        {
+                            let post = {};
+                            post._id = posts[i]._id;
+                            post.title = posts[i].title;
+    
+                            postList.push(post);
+                        }
+    
+                        postList = postList.reverse();
+                        res.send(postList);
+                    }
+                }
+            });
+        }
+        else
+        {
+            res.end();
+        }
     }
 });
 
@@ -237,25 +316,32 @@ app.get('/getAllPosts', function(req, res)
 
 app.get('/search', function(req, res)
 {
-    blog.searchPosts(database, req.query.query, function(err, results)
+    if(req.cookies.sy_blog)
     {
-        if(err)
+        blog.searchPosts(database, req.cookies.sy_blog, req.query.query, function(err, results)
         {
-            console.log(err);
-            res.end();
-        }
-        else
-        {
-            if(results)
+            if(err)
             {
-                res.send(results);
+                console.log(err);
+                res.end();
             }
             else
             {
-                res.end();
+                if(results)
+                {
+                    res.send(results);
+                }
+                else
+                {
+                    res.end();
+                }
             }
-        }
-    });
+        });
+    }
+    else
+    {
+        res.end();
+    }
 });
 
 app.get('/loadPost', function(req, res)
@@ -306,9 +392,9 @@ app.get('/getComments', function(req, res)
 
 app.get('/getLoginCookie', function(req, res)
 {
-    if(req.query.value)
+    if(req.query.value && req.query.email && req.cookies.sy_blog)
     {
-        login.checkCookieValue(req.query.value, function(err, correct)
+        login.checkCookieValue(database, req.cookies.sy_blog, req.query.email, req.query.value, function(err, correct)
         {
             if(err)
             {
@@ -319,7 +405,7 @@ app.get('/getLoginCookie', function(req, res)
             {
                 if(correct)
                 {
-                    res.cookie('loggedIn', req.query.value);
+                    res.cookie('sy_loggedIn', req.query.email + ':' + req.query.value);
                     res.end();
                 }
                 else
@@ -340,50 +426,12 @@ app.get('*', function(req, res)
 /* POSTS */
 app.post('/login', function(req, res)
 {
-    /*if(req.body.name && req.body.password)
+    if(req.body.email && req.body.password)
     {
-        login.login(req.post.name, req.post.password, function(err, successful, randString)
+        login.login(database, req.body.email, req.body.password, function(err, successful, randString)
         {
             if(err)
             {
-                console.log(err);
-                res.end();
-            }
-            else
-            {
-                if(successful)
-                {
-                    if(config.settings.cookieExpiration == 0)
-                    {
-                        res.cookie('loggedIn', randString);
-                    }
-                    else
-                    {
-                        res.cookie('loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
-                    }
-                    
-                    res.end();
-                }
-                else
-                {
-                    res.end();
-                }
-            }
-        });
-    }
-    else
-    {
-        res.end();
-    }
-    */
-    
-    if(req.body.name && req.body.password)
-    {
-        login.login(req.body.name, req.body.password, function(err, successful, randString)
-        {
-            if(err)
-            {
-                console.log(err);
                 res.end();
             }
             else
@@ -405,7 +453,7 @@ app.post('/makeBlog', function(req, res)
 {
     if(req.body.name && req.body.password)
     {
-        login.makeBlog(req.body.name, req.body.password, function(err)
+        login.makeBlog(database, req.body.name, req.body.email, req.body.password, function(err)
         {
             if(err)
             {
@@ -423,17 +471,26 @@ app.post('/makeBlog', function(req, res)
 
 app.post('/updateBio', function(req, res)
 {
-    if(req.body.bio)
+    if(req.cookies.sy_loggedIn)
     {
-        login.updateBio(req.body.bio, function(err)
+        if(req.body.bio)
         {
-            if(err)
-            {
-                console.log(err);
-            }
+            var parts = req.cookies.sy_loggedIn.split(':');
             
+            login.updateBio(database, parts[0], req.body.bio, function(err)
+            {
+                if(err)
+                {
+                    console.log(err);
+                }
+                
+                res.end();
+            });
+        }
+        else
+        {
             res.end();
-        });
+        }
     }
     else
     {
@@ -443,17 +500,26 @@ app.post('/updateBio', function(req, res)
 
 app.post('/updatePhoto', function(req, res)
 {
-    if(req.body.photo)
+    if(req.cookies.sy_loggedIn)
     {
-        login.updatePhoto(req.body.photo, function(err)
+        if(req.body.photo)
         {
-            if(err)
-            {
-                console.log(err);
-            }
+            var parts = req.cookies.sy_loggedIn.split(':');
             
+            login.updatePhoto(database, parts[0], req.body.photo, function(err)
+            {
+                if(err)
+                {
+                    console.log(err);
+                }
+                
+                res.end();
+            });
+        }
+        else
+        {
             res.end();
-        });
+        }
     }
     else
     {
@@ -463,22 +529,30 @@ app.post('/updatePhoto', function(req, res)
 
 app.post('/post', function(req, res)
 {
-    //Send post to database
-    if(req.body.post)
+    if(req.cookies.sy_loggedIn)
     {
-        blog.makePost(database, req.body.post, function(err)
+        if(req.body.post)
         {
-            if(err)
+            var parts = req.cookies.sy_loggedIn.split(':');
+            
+            blog.makePost(database, parts[0], req.body.post, function(err)
             {
-                console.log('Post creation failed with error: ' + err);
-                res.send(false);
-            }
-            else
-            {
-                console.log('Post successfully added to database.');
-                res.send(true);
-            }
-        });
+                if(err)
+                {
+                    console.log('Post creation failed with error: ' + err);
+                    res.send(false);
+                }
+                else
+                {
+                    console.log('Post successfully added to database.');
+                    res.send(true);
+                }
+            });
+        }
+        else
+        {
+            res.end();
+        }
     }
     else
     {

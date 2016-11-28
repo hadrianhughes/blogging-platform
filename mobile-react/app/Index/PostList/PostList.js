@@ -73,6 +73,7 @@ export default class PostList extends React.Component
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments)} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
                         {this.props.loggedIn ? <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button> : <button className="button" id="btnChangePage" onClick={this.props.onLogin}>Login/Sign up</button>}
+                        <button className="button" id="mobBtnBackToMenu" onClick={this.props.backToMenu}>Back to Menu</button>
                     </div>;
         }
         else if(this.props.closed)
@@ -81,6 +82,7 @@ export default class PostList extends React.Component
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments)} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
                         {this.props.loggedIn ? <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button> : <button className="button" id="btnChangePage" onClick={this.props.onLogin}>Login/Sign up</button>}
+                        <button className="button" id="mobBtnBackToMenu" onClick={this.props.backToMenu}>Back to Menu</button>
                     </div>;
         }
         else
@@ -90,6 +92,7 @@ export default class PostList extends React.Component
                         <ul>{postList}</ul>
                         <Comments items={this.addKeys(this.props.comments)} charLimit={this.props.commentLength} onSendComment={(comment) => this.sendComment(comment)} />
                         {this.props.loggedIn ? <button className="button" id="btnChangePage" onClick={this.props.onChangePage}>Write an article</button> : <button className="button" id="btnChangePage" onClick={this.props.onLogin}>Login/Sign up</button>}
+                        <button className="button" id="mobBtnBackToMenu" onClick={this.props.backToMenu}>Back to Menu</button>
                     </div>;
         }
         

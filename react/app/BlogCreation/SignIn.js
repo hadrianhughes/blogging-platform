@@ -8,14 +8,14 @@ export default class SignIn extends React.Component
 
         this.state = { name: '', password: '' };
 
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-
-    handleUsernameChange(e)
+    
+    handleEmailChange(e)
     {
-        this.setState({ name: e.target.value });
+        this.setState({ email: e.target.value });
     }
 
     handlePasswordChange(e)
@@ -25,7 +25,7 @@ export default class SignIn extends React.Component
 
     handleClick()
     {
-        const login = { name: this.state.name, password: this.state.password };
+        const login = { name: this.state.name, email: this.state.email, password: this.state.password };
         this.props.onSubmit(login);
     }
 
@@ -34,11 +34,11 @@ export default class SignIn extends React.Component
         return(
             <div id="loginForm" className="center-text">
                 <h1 className="margin-bottom">Login</h1>
-                <input type="text" placeholder="Username" className="textInput margin-bottom" onChange={this.handleUsernameChange} /><br />
-                <input type="password" placeholder="Password" className="textInput margin-bottom" onChange={this.handlePasswordChange} /><br />
+                <input type="text" placeholder="Email..." className="textInput margin-bottom" onChange={this.handleEmailChange} /><br />
+                <input type="password" placeholder="Password..." className="textInput margin-bottom" onChange={this.handlePasswordChange} /><br />
                 <button className="button margin-bottom margin-right" onClick={this.handleClick}>Login</button>
                 <button className="button margin-bottom" onClick={this.props.onTogglePage}>Sign Up</button><br />
-                <button className="button margin-bottom" onClick={this.props.onReturn}>Back to Blog</button>
+                <button className="button margin-bottom" onClick={this.props.onReturn}>Back to Menu</button>
             </div>
         );
     }
