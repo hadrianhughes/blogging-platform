@@ -24,7 +24,7 @@ class App extends React.Component
     {
         $.get('/hasBlogCookie', function(data)
         {
-            if(data)
+            if(data.hasCookie)
             {
                 this.setState({ isMenu: false, isIndex: true, isWrite: false, isBlogCreation: false });
             }

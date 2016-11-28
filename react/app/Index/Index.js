@@ -11,7 +11,7 @@ export default class Index extends React.Component
     {
         super();
 
-        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '', commentLength: 100, loggedIn: false };
+        this.state = { id: '', banner: '', title: '', content: '', comments: [], isModal: false, modalContents: '', bio: '', photo: '', commentLength: 100, loggedIn: false, emailInput: '' };
 
         this.handlePhotoClick = this.handlePhotoClick.bind(this);
         this.handleImageSubmit = this.handleImageSubmit.bind(this);
@@ -22,6 +22,9 @@ export default class Index extends React.Component
         this.updateBio = this.updateBio.bind(this);
         this.handleReceivedPosts = this.handleReceivedPosts.bind(this);
         this.loadPost = this.loadPost.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.deleteBlog = this.deleteBlog.bind(this);
     }
 
     componentDidMount()
@@ -125,6 +128,31 @@ export default class Index extends React.Component
             
         }.bind(this));
     }
+    
+    handleDelete()
+    {
+        this.setState({ isModal: true, modalContents: <div><h3>Enter your email if you're sure</h3><br /><input type="text" placeholder="Email..." className="textInput" onChange={this.handleEmailChange} /><br /><button className="button" onClick={this.deleteBlog}>Delete blog</button><button className="button" onClick={this.closeModal}>Cancel</button></div> });
+    }
+    
+    handleEmailChange(e)
+    {
+        this.setState({ emailInput: e.target.value });
+    }
+    
+    deleteBlog()
+    {
+        $.get('/deleteBlog', { email: this.state.emailInput }, function(data)
+        {
+            if(data.successful)
+            {
+                window.location.replace('/');
+            }
+            else
+            {
+                alert('Blog deletion failed.');
+            }
+        });
+    }
 
     render()
     {
@@ -155,6 +183,7 @@ export default class Index extends React.Component
                     <a href="#" onClick={this.props.changeToMenu} className="float-right">Back to menu</a>
                     <a href="#" className="float-right">[BRAND NAME]</a>
                     {this.state.loggedIn ? <a href="#" onClick={this.props.changeToWrite} className="float-left">Write an article</a> : null}
+                    {this.state.loggedIn ? <a href="#" onClick={this.handleDelete} className="float-left">Delete blog</a> : null}
                 </div>
             </div>
         );
