@@ -340,7 +340,6 @@ blog.sendComment = function(db, id, comment, callback)
                         //If profanity is allowed
                         if(doc.allowProfanity == 'true')
                         {
-                            console.log('1');
                             try
                             {
                                 //Add the comment to the post

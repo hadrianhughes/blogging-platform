@@ -6,16 +6,16 @@ export default class Login extends React.Component
     {
         super();
         
-        this.state = { name: '', password: '' };
+        this.state = { email: '', password: '' };
         
-        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
     
-    handleNameChange(e)
+    handleEmailChange(e)
     {
-        this.setState({ name: e.target.value });
+        this.setState({ email: e.target.value });
     }
     
     handlePasswordChange(e)
@@ -25,10 +25,13 @@ export default class Login extends React.Component
     
     handleLogin()
     {
-        $.get('/login', { name: this.state.name, password: this.state.password }, function()
+        $.post('/login', { email: this.state.email, password: this.state.password }, function(data)
         {
-            window.location.reload();
-        });
+            $.get('/getLoginCookie', { email: this.state.email, value: data }, function()
+            {
+                window.location.replace('/');
+            });
+        }.bind(this));
     }
     
     render()
@@ -36,7 +39,7 @@ export default class Login extends React.Component
         return(
             <div id="mobLoginForm">
                 <h1>Login</h1>
-                <input type="text" placeholder="Name..." className="textInput margin-bottom" onChange={this.handleNameChange} />
+                <input type="text" placeholder="Email..." className="textInput margin-bottom" onChange={this.handleEmailChange} />
                 <br />
                 <input type="password" placeholder="Password..." className="textInput margin-bottom" onChange={this.handlePasswordChange} />
                 <br />

@@ -81,6 +81,18 @@ app.get('/getMobileStyle', function(req, res)
     res.sendFile('styles/style.css');
 });
 
+app.get('/hasBlogCookie', function(req, res)
+{
+    if(req.cookies.sy_blog)
+    {
+        res.json({ hasCookie : true });
+    }
+    else
+    {
+        res.json({ hasCookie : false });
+    }
+});
+
 app.get('/getBlogCookie', function(req, res)
 {
     if(req.query.blog)

@@ -961,6 +961,15 @@ a:active
     margin: 0 0 2% 2%;
 }
 
+#mobBtnBackToMenu
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5% 2% 2% 2%;
+    border-radius: 20px;
+}
+
 .mobile-font-size
 {
     font-size: 40px;

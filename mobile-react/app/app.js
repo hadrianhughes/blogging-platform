@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Menu from './Menu/Menu';
 import Index from './Index/Index';
 import Write from './Write/Write';
 import Login from './Login/Login';
@@ -11,16 +12,33 @@ class App extends React.Component
     {
         super();
         
-        this.state = { isIndex: true, isWrite: false };
+        this.state = { isMenu: true, isIndex: false, isWrite: false, isLogin: false };
         
+        this.changeToMenu = this.changeToMenu.bind(this);
         this.changeToIndex = this.changeToIndex.bind(this);
         this.changeToWrite = this.changeToWrite.bind(this);
         this.changeToLogin = this.changeToLogin.bind(this);
     }
     
+    componentDidMount()
+    {
+        $.get('/hasBlogCookie', function(data)
+        {
+            if(data)
+            {
+                this.setState({ isMenu: false, isIndex: true, isWrite: false, isLogin: false });
+            }
+        }.bind(this));
+    }
+    
+    changeToMenu()
+    {
+        this.setState({ isMenu: true, isIndex: false, isWrite: false, isLogin: false });
+    }
+    
     changeToIndex()
     {
-        this.setState({ isIndex: true, isWrite: false, isLogin: false });
+        this.setState({ isMenu: false, isIndex: true, isWrite: false, isLogin: false });
     }
     
     changeToWrite()
@@ -29,7 +47,7 @@ class App extends React.Component
         {
             if(data.loggedIn)
             {
-                this.setState({ isIndex: false, isWrite: true, isLogin: false });
+                this.setState({ isMenu: false, isIndex: false, isWrite: true, isLogin: false });
             }
             else
             {
@@ -40,14 +58,15 @@ class App extends React.Component
     
     changeToLogin()
     {
-        this.setState({ isIndex: false, isWrite: false, isLogin: true });
+        this.setState({ isMenu: false, isIndex: false, isWrite: false, isLogin: true });
     }
     
     render()
     {
         return(
             <div>
-                {this.state.isIndex ? <Index onChangePage={this.changeToWrite} onLogin={this.changeToLogin} /> : null}
+                {this.state.isMenu ? <Menu onChangePage={this.changeToIndex} changeToLogin={this.changeToLogin} /> : null}
+                {this.state.isIndex ? <Index onChangePage={this.changeToWrite} onLogin={this.changeToLogin} backToMenu={this.changeToMenu} /> : null}
                 {this.state.isWrite ? <Write onChangePage={this.changeToIndex} /> : null}
                 {this.state.isLogin ? <Login onChangePage={this.changeToIndex} /> : null}
             </div>

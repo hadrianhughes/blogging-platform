@@ -20,6 +20,17 @@ class App extends React.Component
         this.changeToBlogCreation = this.changeToBlogCreation.bind(this);
     }
     
+    componentDidMount()
+    {
+        $.get('/hasBlogCookie', function(data)
+        {
+            if(data)
+            {
+                this.setState({ isMenu: false, isIndex: true, isWrite: false, isBlogCreation: false });
+            }
+        }.bind(this));
+    }
+    
     changeToMenu()
     {
         this.setState({ isMenu: true, isIndex: false, isWrite: false, isBlogCreation: false });
