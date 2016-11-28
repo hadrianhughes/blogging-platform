@@ -150,7 +150,7 @@ app.get('/login', function(req, res)
                     }
                     else
                     {
-                        res.cookie('sy_loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration) });
+                        res.cookie('sy_loggedIn', randString, { maxAge: parseInt(config.settings.cookieExpiration)});
                     }
                     
                     res.end();
