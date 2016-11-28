@@ -417,6 +417,35 @@ app.get('/getLoginCookie', function(req, res)
     }
 });
 
+app.get('/deleteBlog', function(req, res)
+{
+    if(req.query.email)
+    {
+        login.deleteBlog(database, req.query.email, req.cookies.sy_blog, function(err, successful)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.json({ successful : false });
+            }
+            else
+            {
+                if(successful)
+                {
+                    console.log('Blog belonging to user ' + req.query.email + ' was removed.');
+                    res.clearCookie('sy_blog');
+                    res.clearCookie('sy_loggedIn');
+                    res.json({ successful : true });
+                }
+                else
+                {
+                    res.json({ successful : false });
+                }
+            }
+        });
+    }
+});
+
 app.get('*', function(req, res)
 {
     res.sendFile('index.html', { root: '../public' });

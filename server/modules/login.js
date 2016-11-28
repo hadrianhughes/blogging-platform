@@ -277,6 +277,66 @@ login.checkCookieValue = function(db, blog, email, value, callback)
         callback(ex);
     }
 };
+
+login.deleteBlog = function(db, email, blog, callback)
+{
+    try
+    {
+        db.collection('users').findOne({ "_id" : ObjectId(blog) }, function(err, doc)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            if(doc)
+            {
+                if(doc.email == email)
+                {
+                    try
+                    {
+                        db.collection('users').deleteOne({ "_id" : ObjectId(blog) }, function(err)
+                        {
+                            if(err)
+                            {
+                                throw err;
+                            }
+                            
+                            try
+                            {
+                                db.collection('posts').remove({ "user" : email }, function(err)
+                                {
+                                    if(err)
+                                    {
+                                        throw err;
+                                    }
+                                    
+                                    callback(null, true);
+                                });
+                            }
+                            catch(ex)
+                            {
+                                callback(ex);
+                            }
+                        });
+                    }
+                    catch(ex)
+                    {
+                        callback(ex);
+                    }
+                }
+                else
+                {
+                    callback(null, false);
+                }
+            }
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+}
 /* END OF FUNCTIONS TO BE EXPORTED */
 
 //Used for authenticating cookies
