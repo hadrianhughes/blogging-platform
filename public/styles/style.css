@@ -487,6 +487,11 @@ a:active
     margin-bottom: 3%;
 }
 
+#imgBanner
+{
+    width: 100%;
+}
+
 #postOptionsApp .textInput,
 #editorApp .textInput
 {
