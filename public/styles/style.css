@@ -158,6 +158,9 @@ a:active
 .footer a
 {
     margin: 0 1% 0 1%;
+    bottom: 0;
+    padding-bottom: 1%;
+    font-size: 16px;
 }
 
 .logged-in:hover
