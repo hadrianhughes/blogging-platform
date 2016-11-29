@@ -417,6 +417,22 @@ app.get('/getLoginCookie', function(req, res)
     }
 });
 
+app.get('/deletePost', function(req, res)
+{
+    if(req.query.id)
+    {
+        blog.deletePost(database, req.query.id, function(err)
+        {
+            if(err)
+            {
+                console.log(err);
+            }
+            
+            res.end();
+        });
+    }
+});
+
 app.get('/deleteBlog', function(req, res)
 {
     if(req.query.email)

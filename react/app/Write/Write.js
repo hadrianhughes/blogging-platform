@@ -87,7 +87,8 @@ export default class Write extends React.Component
 
         //If it isn't empty...
             //...if the last character is a comma or a space
-        if(input.length - 1 > 0)
+        //if(input.length - 1 > 0)
+        if((input.length - 1 >= 3) && (!input.includes(' ')))
         {
             if((input[input.length - 1] == ',') || (input[input.length - 1] == ' '))
             {
@@ -140,10 +141,20 @@ export default class Write extends React.Component
 
     handlePublish(article)
     {
+        let tagString = '';
+        for(let i = 0;i < this.state.tags.length;i++)
+        {
+            tagString += this.state.tags[i].value;
+            if(i < this.state.tags.length - 1)
+            {
+                tagString += ', ';
+            }
+        }
+        
         //Compile all post information into JSON object
         let post = {
             title: article.title,
-            content: article.content,
+            content: article.content + '<br><div><i>' + tagString + '</i></div>',
             banner: this.state.banner,
             tags: this.state.tags,
             allowComments: this.state.allowComments,

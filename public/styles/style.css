@@ -124,6 +124,10 @@ a:active
 {
     box-shadow: inset 0 0 5px 2px #e3f7bb;
 }
+.textInput.invalid:focus
+{
+    box-shadow: inset 0 0 5px 2px #f7bebb;
+}
 
 .red-text
 {

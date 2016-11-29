@@ -206,49 +206,56 @@ blog.searchPosts = function(db, userId, term, callback)
             {
                 try
                 {
-                    db.collection('posts').find({
-                        "$and" : [{
-                            "user" : doc.email
-                        },{
-                            "$or" : [{
-                                "title" : { $regex: QUERY }
-                            },{
-                                "tags.value" : term.toLowerCase()
-                            }]
-                        }]
-                    }, function(err, cursor)
+                    if(term.length >= 3)
                     {
-                        if(err)
+                        db.collection('posts').find({
+                            "$and" : [{
+                                "user" : doc.email
+                            },{
+                                "$or" : [{
+                                    "title" : { $regex: QUERY }
+                                },{
+                                    "tags.value" : term.toLowerCase()
+                                }]
+                            }]
+                        }, function(err, cursor)
                         {
-                            throw err;
-                        }
-                        
-                        let posts = [];
-                        
-                        try
-                        {
-                            cursor.each(function(err, doc)
+                            if(err)
                             {
-                                if(err)
+                                throw err;
+                            }
+                            
+                            let posts = [];
+                            
+                            try
+                            {
+                                cursor.each(function(err, doc)
                                 {
-                                    throw err;
-                                }
-                                
-                                if(doc)
-                                {
-                                    posts.push(doc);
-                                }
-                                else
-                                {
-                                    callback(null, posts);
-                                }
-                            });
-                        }
-                        catch(ex)
-                        {
-                            callback(ex);
-                        }
-                    });
+                                    if(err)
+                                    {
+                                        throw err;
+                                    }
+                                    
+                                    if(doc)
+                                    {
+                                        posts.push(doc);
+                                    }
+                                    else
+                                    {
+                                        callback(null, posts);
+                                    }
+                                });
+                            }
+                            catch(ex)
+                            {
+                                callback(ex);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        callback(null, []);
+                    }
                 }
                 catch(ex)
                 {
@@ -426,6 +433,26 @@ blog.makePost = function(db, email, post, callback)
         callback(ex);
     }
 };
+
+blog.deletePost = function(db, id, callback)
+{
+    try
+    {
+        db.collection('posts').deleteOne({ "_id" : ObjectId(id) }, function(err)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            callback();
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+}
 /* END OF FUNCTIONS TO BE EXPORTED */
 
 /* FUNCTIONS USED INTERNALLY */
