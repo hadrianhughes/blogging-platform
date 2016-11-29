@@ -22,7 +22,9 @@ export default class Index extends React.Component
         this.updateBio = this.updateBio.bind(this);
         this.handleReceivedPosts = this.handleReceivedPosts.bind(this);
         this.loadPost = this.loadPost.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
+        this.handleDeletePost = this.handleDeletePost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
+        this.handleDeleteBlog = this.handleDeleteBlog.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.deleteBlog = this.deleteBlog.bind(this);
     }
@@ -129,9 +131,32 @@ export default class Index extends React.Component
         }.bind(this));
     }
     
-    handleDelete()
+    handleDeletePost()
     {
-        this.setState({ isModal: true, modalContents: <div><h3>Enter your email if you're sure</h3><br /><input type="text" placeholder="Email..." className="textInput" onChange={this.handleEmailChange} /><br /><button className="button" onClick={this.deleteBlog}>Delete blog</button><button className="button" onClick={this.closeModal}>Cancel</button></div> });
+        this.setState({ isModal: true, modalContents: <div><h3>Do you want to delete this post?</h3><br /><button className="button" onClick={this.deletePost}>Yes</button><button className="button" onClick={this.closeModal}>No</button></div> });
+    }
+    
+    deletePost()
+    {
+        $.get('/isLoggedIn', function(data)
+        {
+            if(data.loggedIn)
+            {
+                $.get('/deletePost', { id: this.state.id }, function()
+                {
+                    window.location.reload();
+                });
+            }
+            else
+            {
+                window.location.reload();
+            }
+        }.bind(this));
+    }
+    
+    handleDeleteBlog()
+    {
+        this.setState({ isModal: true, modalContents: <div><h3>Enter your email if youre sure</h3><br /><input type="text" placeholder="Email..." className="textInput" onChange={this.handleEmailChange} /><br /><button className="button" onClick={this.deleteBlog}>Delete blog</button><button className="button" onClick={this.closeModal}>Cancel</button></div> });
     }
     
     handleEmailChange(e)
@@ -183,7 +208,8 @@ export default class Index extends React.Component
                     <a href="#" onClick={this.props.changeToMenu} className="float-right">Back to menu</a>
                     <a href="#" className="float-right">[BRAND NAME]</a>
                     {this.state.loggedIn ? <a href="#" onClick={this.props.changeToWrite} className="float-left">Write an article</a> : null}
-                    {this.state.loggedIn ? <a href="#" onClick={this.handleDelete} className="float-left">Delete blog</a> : null}
+                    {this.state.loggedIn ? <a href="#" onClick={this.handleDeletePost} className="float-left">Delete post</a> : null}
+                    {this.state.loggedIn ? <a href="#" onClick={this.handleDeleteBlog} className="float-left">Delete blog</a> : null}
                 </div>
             </div>
         );

@@ -426,6 +426,26 @@ blog.makePost = function(db, email, post, callback)
         callback(ex);
     }
 };
+
+blog.deletePost = function(db, id, callback)
+{
+    try
+    {
+        db.collection('posts').deleteOne({ "_id" : ObjectId(id) }, function(err)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            
+            callback();
+        });
+    }
+    catch(ex)
+    {
+        callback(ex);
+    }
+}
 /* END OF FUNCTIONS TO BE EXPORTED */
 
 /* FUNCTIONS USED INTERNALLY */
