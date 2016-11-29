@@ -88,7 +88,7 @@ export default class Write extends React.Component
         //If it isn't empty...
             //...if the last character is a comma or a space
         //if(input.length - 1 > 0)
-        if((input.length - 1 >= 3) && (!input.includes(' ')))
+        if(input.length - 1 >= 3)
         {
             if((input[input.length - 1] == ',') || (input[input.length - 1] == ' '))
             {
