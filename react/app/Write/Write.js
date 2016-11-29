@@ -140,10 +140,20 @@ export default class Write extends React.Component
 
     handlePublish(article)
     {
+        let tagString = '';
+        for(let i = 0;i < this.state.tags.length;i++)
+        {
+            tagString += this.state.tags[i].value;
+            if(i < this.state.tags.length - 1)
+            {
+                tagString += ', ';
+            }
+        }
+        
         //Compile all post information into JSON object
         let post = {
             title: article.title,
-            content: article.content,
+            content: article.content + '<br><div><i>' + tagString + '</i></div>',
             banner: this.state.banner,
             tags: this.state.tags,
             allowComments: this.state.allowComments,
